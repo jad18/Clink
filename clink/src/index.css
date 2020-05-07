@@ -40,3 +40,27 @@ code {
   align-items: center;
   height: 200px;
 }
+
+.normal-body {
+  text-align: center;
+  margin-left: 30px;
+  margin-right: 30px;
+}
+
+.big-header {
+  font-size: 50px;
+}
+
+.form-body {
+  margin-left: 25%;
+  margin-right: 25%;
+  font-size: 20px;
+}
+
+.form-row {
+  display: flex;
+}
+
+.form-column {
+  flex: 50%;
+}

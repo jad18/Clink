@@ -23,15 +23,58 @@ code {
   border: 1px solid white;
   font-size: 24px;
   margin: 3px;
-  max-width: 300px;
-  align-items: center;
+  width: 170px;
+  height: 38px;
 }
 
-.link-button1:hover {
+#change-profile-button {
+  background-color: rgb(64, 77, 255);
+  color: white;
+  border-radius: 12px;
+  transition-duration: 0.4s;
+  float: left;
+  border: 1px solid white;
+  font-size: 24px;
+  margin: 3px;
+  width: 170px;
+  height: 38px;
+}
+
+.link-button2 {
+  background-color: rgb(64, 77, 255);
+  color: white;
+  border-radius: 12px;
+  transition-duration: 0.4s;
+  border: 1px solid white;
+  font-size: 18px;
+  margin: 3px;
+  width: 250px;
+  text-align: center;
+}
+
+.link-button3 {
+  background-color: rgb(64, 77, 255);
+  color: white;
+  transition-duration: 0.4s;
+  border: 1px solid white;
+  font-size: 18px;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+
+.link-button1:hover, .link-button2:hover, 
+#change-profile-button:hover {
   background-color: white;
   color: rgb(64, 77, 255);
   border: 1px solid rgb(64, 77, 255);
   border-radius: 12px;
+}
+
+.link-button3:hover {
+  background-color: white;
+  color: rgb(64, 77, 255);
+  border: 1px solid rgb(64, 77, 255);
 }
 
 .button-group {
@@ -51,6 +94,12 @@ code {
   font-size: 50px;
 }
 
+#top-header {
+  font-size: 60px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
 .form-body {
   margin-left: 25%;
   margin-right: 25%;
@@ -63,4 +112,18 @@ code {
 
 .form-column {
   flex: 50%;
+}
+
+#profile-link-table {
+  border: 1px solid white;
+  border-collapse: collapse;
+  width: 60%;
+  margin-left: 20%;
+  margin-right: 20%;
+  height: 300px;
+}
+
+.table-row, .table-column {
+  border: 1px solid white;
+  height: 100px;
 }

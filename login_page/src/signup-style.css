@@ -1,0 +1,41 @@
+
+.inputs-signup
+{
+  
+  background-color: #e2e2e2;
+  padding:23px;
+  margin:centered;
+  border:4px solid;
+  border-color: #ebebe9;
+  width:300px;
+  height: 370px;
+  margin-left:auto;
+  margin-right:auto;
+  shape-outside: 10px;
+  font-family: sans-serif;
+  margin-top: 50px
+}
+
+.create-button
+{
+  white-space: 45;
+  margin-top: 60px;
+  border: none;
+  outline: none;
+  display: inline-block;
+  height: 35px;
+  width: 180px;
+  line-height: 30px;
+  padding: center;
+  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+  color: rgb(255, 255, 255);
+  border-radius: 5px;
+  font-size: 12px;
+  font-weight: 650;
+  letter-spacing: 0.055em;
+  background-color: #9b9baa;
+  text-decoration: none;
+  -webkit-transition: all 150ms ease;
+  transition: all 150ms ease;
+  
+}

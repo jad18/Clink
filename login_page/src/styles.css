@@ -1,0 +1,122 @@
+.App {
+  text-align: center;
+  
+}
+h1 {
+  color: rgb(155, 180, 218);
+  font:sans-serif;
+  font-size:50px;
+  text-shadow: #cfcfcf;
+  font-weight: 400;
+}
+h2 {
+  color: rgb(157, 158, 158);
+  font-family: 'Myriad Pro Regular';
+  font-size:10; 
+  text-shadow: #88888a;
+  font-weight: 500;
+}
+form {
+  background-color: #e2e2e2;
+  padding:23px;
+  margin:centered;
+  border:4px solid;
+  border-color: #ebebe9;
+  width:300px;
+  height: 370px;
+  margin-left:auto;
+  margin-right:auto;
+  shape-outside: 10px
+}
+
+input{
+  border: 2px solid rgb(173, 168, 168);
+  -webkit-box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.1),
+    0 0 16px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.1), 0 0 16px rgba(0, 0, 0, 0.1);
+  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.1), 0 0 16px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.5);
+  margin: 0 0 0 0;
+  width: 180px;
+  height: 7px;
+}
+.login {
+  white-space: 45;
+  border: none;
+  outline: none;
+  display: inline-block;
+  height: 35px;
+  width: 180px;
+  line-height: 30px;
+  padding: center;
+  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+  color: rgb(255, 255, 255);
+  border-radius: 5px;
+  font-size: 12px;
+  font-weight: 650;
+  letter-spacing: 0.055em;
+  background-color: #9b9baa;
+  text-decoration: none;
+  -webkit-transition: all 150ms ease;
+  transition: all 150ms ease;
+  margin-top: 60px;
+}
+
+button:hover {
+  color: rgb(144, 147, 155);
+  cursor: pointer;
+  background-color: #4f5166;
+  transform: translateY(-1px);
+  box-shadow: 0 7px 14px rgba(129, 129, 168, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+
+}
+.signup-link {
+  white-space: 45;
+  border: none;
+  outline: none;
+  display: inline-block;
+  height: 35px;
+  width: 100px;
+  line-height: 30px;
+  padding: center;
+  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+  color: rgb(255, 255, 255);
+  border-radius: 5px;
+  font-size: 12px;
+  font-weight: 650;
+  letter-spacing: 0.055em;
+  background-color: #9b9baa;
+  text-decoration: none;
+  -webkit-transition: all 150ms ease;
+  transition: all 150ms ease;
+  margin-top: 20px;
+}
+.account {
+  color: rgb(133, 131, 131);
+  padding: 15;
+  font-family: -moz-box-shadow;
+  margin-top: 90px;
+  margin-bottom: -10px;
+}
+.inputs-login{
+font-family: sans-serif;
+margin-top:70px;
+}
+body{
+background-color:rgb(255, 253, 253);
+
+}
+form{
+background-color: #e2e2e2;
+padding:23px;
+margin:centered;
+border:4px solid;
+border-color: #ebebe9;
+width:300px;
+height: 370px;
+margin-left:auto;
+margin-right:auto;
+}
+
+

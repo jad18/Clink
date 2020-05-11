@@ -1,38 +1,57 @@
 import React from "react";
-import "./styles.css";
-import SignupPage from "./Signup_page.js";
-import {Link,Switch, Route} from 'react-router-dom';
+//import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+import "./App.css";
+import "./index.css";
+import {
+  BrowserRouter as Router,
+  Container,
+  Navbar,
+  Switch,
+  Route,
+  Link,
+} from "react-router-dom";
 
-export default function App() {
+import Login from "./components/login";
+import SignUp from "./components/signup";
+
+function App() {
   return (
-    <div className="App"> 
-    <body>
-      <h1>Welcome To Clink</h1>
-      <h2>Lets find some friends</h2>
-   
-    <form> 
-      <div className="inputs-login">
-          <p>username/ID</p>
-          <input type="username" />
-          <p>Password</p>
-          <input type="password" />
-     </div>  
-      <Link to ='/log'>
-        <button className="login">Login</button>
-        </Link>
-      </form>
-    
-      <p className="account">Dont have an account?</p>
-    
-      </body>
-      <div><Link to='/sign'>
-        <button class="signup-link">Signup</button>
-      </Link>
+    <Router>
+      <div className="App">
+        <nav className="navbar">
+          <div className="container">
+            <Link className="navclink" to={"/sign-in"}>
+              Clink
+            </Link>
+            <div className="collapse" id="navbarToggle">
+              <ul className="navitem">
+                <li className="item">
+                  <Link className="navlink" to={"/sign-in"}>
+                    Login
+                  </Link>
+                </li>
+                <li className="item">
+                  <Link className="nuplink" to={"/sign-up"}>
+                    Sign up
+                  </Link>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+
+        <div className="inputBox">
+          <div className="insideTheBox">
+            <Switch>
+              <Route exact path="/" component={Login} />
+              <Route path="/sign-in" component={Login} />
+              <Route path="/sign-up" component={SignUp} />
+            </Switch>
+          </div>
+        </div>
       </div>
-      <Switch>
-          <Route exact path="/sign" component={SignupPage}/>
-        </Switch>
-   
-    </div>
+    </Router>
   );
 }
+
+export default App;

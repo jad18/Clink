@@ -104,6 +104,7 @@ code {
   margin-left: 25%;
   margin-right: 25%;
   font-size: 20px;
+  text-align: center;
 }
 
 .form-row {
@@ -126,4 +127,77 @@ code {
 .table-row, .table-column {
   border: 1px solid white;
   height: 100px;
+}
+
+.inputBox {
+  width: 100%;
+  height: 100%;
+}
+
+.navbar {
+  background-color: #e9e9e9;
+  margin-top: -9px;
+  margin-left: -9px;
+  box-shadow: 10px 14px 80px rgba(34, 35, 58, 0.2);
+}
+
+.inputBox {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  text-align: left;
+}
+
+.insideTheBox {
+  margin: auto;
+  background: #ffffff;
+  box-shadow: inset 0 0 8px rgba(253, 218, 218, 0.1),
+    0 0 16px rgba(0, 0, 0, 0.1);
+  padding: 40px 55px 45px 55px;
+  -moz-box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.1), 0 0 16px rgba(0, 0, 0, 0.1);
+  border: 2px solid rgb(173, 168, 168);
+  -webkit-box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.1),
+    0 0 16px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  transition: all 0.3s;
+
+  background-color: #e2e2e2;
+  padding: 29px;
+  border: 5px solid;
+  border-color: #e2e2e2;
+  width: 300px;
+  height: 450px;
+  margin-left: auto;
+  margin-right: auto;
+  shape-outside: 10px;
+}
+
+.inputCheckBox {
+  font-weight: 400;
+}
+
+.forgotPassword,
+.forgotPassword a {
+  text-align: right;
+  font-size: 11px;
+  padding-top: 10px;
+  color: #9b9b9b;
+  margin: 0;
+}
+
+.formControl {
+  border: 2px solid rgb(173, 168, 168);
+  -webkit-box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.1),
+    0 0 16px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.1), 0 0 16px rgba(0, 0, 0, 0.1);
+  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.1), 0 0 16px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.5);
+  margin: center;
+  width: 140px;
+  height: 6px;
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
 }

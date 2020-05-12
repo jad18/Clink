@@ -172,6 +172,37 @@ code {
   shape-outside: 10px;
 }
 
+.login-button {
+  border: none;
+  outline: none;
+  display: inline-block;
+  height: 35px;
+  width: 180px;
+  line-height: 30px;
+  padding: center;
+  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+  color: rgb(255, 255, 255);
+  border-radius: 5px;
+  font-size: 12px;
+  font-weight: 650;
+  letter-spacing: 0.055em;
+  background-color: #9b9baa;
+  text-decoration: none;
+  -webkit-transition: all 150ms ease;
+  transition: all 150ms ease;
+  margin-top: 60px;
+}
+
+.login-button:hover {
+  color: rgb(145, 174, 253);
+  cursor: pointer;
+  background-color: #bfc3f3;
+  transform: translateY(-1px);
+  box-shadow: 0 7px 14px rgba(188, 188, 255, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+}
+
+
+
 .inputCheckBox {
   font-weight: 400;
 }
@@ -183,6 +214,21 @@ code {
   padding-top: 10px;
   color: #9b9b9b;
   margin: 0;
+}
+
+.login-form {
+  padding: 39px;
+  margin: center;
+  padding-bottom: 10p;
+  font-size: 17px;
+  font-style: serif;
+  border-radius: 5px;
+}
+.inputBox h3 {
+  text-align: center;
+  margin: 0;
+  line-height: 1.2;
+  padding-bottom: 18px;
 }
 
 .formControl {

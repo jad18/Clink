@@ -10,21 +10,12 @@ import GeneralForm from './general_form.js';
 import LoginPage from './login_page.js';
 import SignupPage from './signup_page.js';
 
-class App extends React.Component {
-  constructor(props)
+
+function getLinkButtons(loggedIn)
+{
+  if(loggedIn)
   {
-    super(props);
-    this.state = {
-      isLoggedIn: false
-    }
-  }
-
-  render() {
-  return (
-    <div className="App">
-      <img src='clink_logo.jpg' alt="Clink logo" id="page-logo"/>
-
-      <hr/>
+    return (
       <div className="button-group">
 
         <Link to='/about'>
@@ -45,31 +36,119 @@ class App extends React.Component {
           <button id="change-profile-button">Change Profile</button>
         </Link>
 
-        </div>
+      </div>
+    );
+  }
+  else
+  {
+    return (
+      <div className="button-group">
+
+        <Link to='/about'>
+          <button className="link-button1">About</button>
+        </Link>
+
+        <Link to='/login'>
+          <button className="link-button1">Log In</button>
+        </Link>
+
+        <Link to='/signup'>
+          <button className="link-button1">Sign Up</button>
+        </Link>
+
+      </div>
+    );
+  }
+}
+
+function getRouter(loggedIn)
+{
+  if(loggedIn)
+  {
+    return (
+      <Switch>
+        <Route exact path="/" component={AboutPage}/>
+        <Route exact path="/about" component={AboutPage}/>
+        <Route exact path="/change_profile" component={NextPage}/>
+        <Route exact path="/change_profile/sports" 
+          render={(props) =>
+            <GeneralForm {...props}
+              title={"Sports Information"}
+              entries={['Football', 'Soccer', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']}
+              trueEntries={['Soccer']}
+              maxEntries={4}
+            />
+          }
+        />
+        <Route exact path="/404_error" component={ErrorPage}/>
+        <Redirect to="/404_error"/>
+      </Switch>
+    );
+  }
+  else
+  {
+    return (
+      <Switch>
+        <Route exact path="/" component={AboutPage}/>
+        <Route exact path="/about" component={AboutPage}/>
+        <Route exact path="/login" component={LoginPage}/>
+        <Route exact path="/signup" component={SignupPage}/>
+      
+        <Redirect to="/login"/>
+      </Switch>
+    );
+  }
+}
+
+class App extends React.Component
+{
+  constructor(props)
+  {
+    super(props);
+    this.state = {
+      hasSetLogin: false
+    }
+  }
+
+  render()
+  {
+    var loggedIn;
+
+    if(this.state.hasSetLogin)
+    {
+      loggedIn = sessionStorage.getItem("isLoggedIn");
+    }
+    else
+    {
+      loggedIn = false;
+      this.setState({ hasSetLogin: true });
+    }
+    
+    /*= sessionStorage.getItem('isLoggedIn');
+    alert(loggedIn);
+    if(loggedIn === null)
+    {
+      alert("this is null!");
+      sessionStorage.setItem('isLoggedIn', false);
+      loggedIn = false;
+      alert("Initializing to false");
+    }
+    else alert("App: is logged in = " + loggedIn);*/
+
+    //loggedIn = false;
+
+    return (
+      <div className="App">
+        <img src='clink_logo.jpg' alt="Clink logo" id="page-logo"/>
+
+        <hr/>
+        {getLinkButtons(loggedIn)}
         <hr/>
 
-        <Switch>
-          <Route exact path="/" component={AboutPage}/>
-          <Route exact path="/about" component={AboutPage}/>
-          <Route exact path="/login" component={LoginPage}/>
-          <Route exact path="/signup" component={SignupPage}/>
-          <Route exact path="/change_profile" component={NextPage}/>
-          <Route exact path="/change_profile/sports" 
-            render={(props) =>
-              <GeneralForm {...props}
-                title={"Sports Information"}
-                entries={['Football', 'Soccer', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']}
-                trueEntries={['Soccer']}
-                maxEntries={4}
-              />
-            }
-          />
-          <Route exact path="/404_error" component={ErrorPage}/>
-          <Redirect to="/404_error"/>
-        </Switch>
+        {getRouter(loggedIn)}
       
-    </div>
-  );
+      </div>
+    );
   }
 }
 

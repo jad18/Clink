@@ -1,6 +1,34 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 
+function getLinkButton(loggedIn)
+{
+    alert("Got item: " + loggedIn);
+    if(loggedIn === true)
+    {
+        return(
+            <div>
+                <p className="about-page-para"><strong>
+                    Set up your profile and hit the Search button to start looking!
+                </strong></p>
+            </div>
+        );
+    }
+    else
+    {
+        return(
+            <div>
+                <p className="about-page-para"><strong>
+                    Sign up now and be searching in minutes!
+                </strong></p>
+                <Link to='/signup'>
+                    <button className="link-button2">Sign Up</button>
+                </Link>
+            </div>
+        );
+    }
+}
+
 const AboutPage = () => {
     return (
         <div className="App">
@@ -22,13 +50,10 @@ const AboutPage = () => {
             a hassle-free experience.
             </p>
             <p className="about-page-para">
-            Looking to meet some new friends from college while stuck inside? Sign up now and be searching
-            in minutes.
+            Looking to meet some new friends from college while stuck inside?
             </p>
 
-            <Link to='/signup'>
-                <button className="link-button2">Sign Up</button>
-            </Link>
+            {getLinkButton(sessionStorage.getItem('isLoggedIn'))}
         </div>
     );
 }

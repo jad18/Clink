@@ -1,9 +1,23 @@
 import React from "react";
+import {withRouter} from 'react-router-dom';
 
-const LoginPage = () =>
+
+class LoginPage extends React.Component
 {
+  submitLoginForm(event)
+  { 
+    event.preventDefault();
+    alert("Pull the lever, Gronk");
+    sessionStorage.setItem('loggedIn', true);
+    alert("Login Page result: " + sessionStorage.getItem('loggedIn'));
+
+    window.location = "/about";
+  }
+
+  render()
+  {
     return (
-      <form className="login-form">
+      <form onSubmit={this.submitLoginForm} className="login-form">
         <h3>Sign In</h3>
 
         <div className="formGroup">
@@ -32,6 +46,7 @@ const LoginPage = () =>
         </p>
       </form>
     );
+  }
 }
 
-export default LoginPage;
+export default withRouter(LoginPage);

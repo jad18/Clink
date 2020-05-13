@@ -2,7 +2,6 @@ import React from 'react';
 
 const ErrorPage = () => {
     return (
-        <>
         <div className="normal-body">
             <h1 className="big-header">404 Error</h1>
             <p>
@@ -12,7 +11,6 @@ const ErrorPage = () => {
                 Please use our navigation buttons instead.
             </p>
         </div>
-        </>
     );
 }
 

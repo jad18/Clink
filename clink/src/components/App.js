@@ -3,25 +3,32 @@ import '../App.css';
 import {Route, Switch, Link, Redirect} from 'react-router-dom';
 
 //Page imports
-import HomePage from './home_page.js';
+import AboutPage from './about_page.js';
 import NextPage from './profile_change_home.js';
 import ErrorPage from './404_error.js';
 import GeneralForm from './general_form.js';
 import LoginPage from './login_page.js';
 import SignupPage from './signup_page.js';
 
-function App() {
+class App extends React.Component {
+  constructor(props)
+  {
+    super(props);
+    this.state = {
+      isLoggedIn: false
+    }
+  }
+
+  render() {
   return (
-    <>
     <div className="App">
-      <h1 id='top-header'>Welcome to Clink!</h1>
-      <h2>Find friends anonymously</h2>
+      <img src='clink_logo.jpg' alt="Clink logo" id="page-logo"/>
 
       <hr/>
       <div className="button-group">
 
-        <Link to='/home'>
-          <button className="link-button1">Home</button>
+        <Link to='/about'>
+          <button className="link-button1">About</button>
         </Link>
 
         <Link to='/login'>
@@ -42,8 +49,8 @@ function App() {
         <hr/>
 
         <Switch>
-          <Route exact path="/" component={HomePage}/>
-          <Route exact path="/home" component={HomePage}/>
+          <Route exact path="/" component={AboutPage}/>
+          <Route exact path="/about" component={AboutPage}/>
           <Route exact path="/login" component={LoginPage}/>
           <Route exact path="/signup" component={SignupPage}/>
           <Route exact path="/change_profile" component={NextPage}/>
@@ -62,8 +69,8 @@ function App() {
         </Switch>
       
     </div>
-    </>
   );
+  }
 }
 
 export default App;

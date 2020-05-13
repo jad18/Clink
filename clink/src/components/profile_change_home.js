@@ -3,9 +3,12 @@ import {Link} from 'react-router-dom';
 
 const NextPage = () => {
     return (
-        <>
         <div className="App">
             <h2>Choose a section of your profile to change:</h2>
+
+            <Link to='/change_profile/sports'>
+                <button className="link-button2">Start from the beginning</button>
+            </Link>
 
             <table id="profile-link-table">
                 <tr className='table-row'>
@@ -31,7 +34,6 @@ const NextPage = () => {
                 <button className="link-button2">Back to Home</button>
             </Link>
         </div>
-        </>
     );
 }
 

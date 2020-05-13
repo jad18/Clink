@@ -134,11 +134,11 @@ class GeneralForm extends React.Component {
         return(
             Object.keys(this.state.entries).map(function(key, index)
             {
-                numEntriesLeft--;
                 isFirstKey = !isFirstKey;
 
                 if(numEntriesLeft === 1)
                 {
+                    numEntriesLeft--;
                     return this.makeOneCheckbox(key);
                 }
                 else if(isFirstKey)
@@ -148,6 +148,7 @@ class GeneralForm extends React.Component {
                 }
                 else
                 {
+                    numEntriesLeft -= 2;
                     return this.makeTwoCheckboxes(firstKey, key);
                 }
             }, this)
@@ -232,7 +233,7 @@ class GeneralForm extends React.Component {
     render()
     {
         return (
-            <>
+            <div>
             <div className="App">
                 <h1>{this.title}</h1>
                 <h4>
@@ -257,7 +258,7 @@ class GeneralForm extends React.Component {
                     <button className="link-button2">Next Profile Section</button>
                 </Link>
             </p>
-            </>
+            </div>
         );
     }
 }

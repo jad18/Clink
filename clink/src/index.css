@@ -186,7 +186,6 @@ code {
   height: 35px;
   width: 180px;
   line-height: 30px;
-  padding: center;
   box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
   color: rgb(255, 255, 255);
   border-radius: 5px;
@@ -197,7 +196,7 @@ code {
   text-decoration: none;
   -webkit-transition: all 150ms ease;
   transition: all 150ms ease;
-  margin-top: 60px;
+  margin-top: 20px;
 }
 
 .login-button:hover {
@@ -220,13 +219,12 @@ code {
   font-size: 11px;
   padding-top: 10px;
   color: #9b9b9b;
-  margin: 0;
+  margin-bottom: 20px;
 }
 
 .login-form {
-  padding: 39px;
-  margin: center;
-  padding-bottom: 10p;
+  margin-left: 30%;
+  margin-right: 30%;
   font-size: 17px;
   font-style: serif;
   border-radius: 5px;
@@ -238,7 +236,7 @@ code {
   padding-bottom: 18px;
 }
 
-.formControl {
+.login-input {
   border: 2px solid rgb(173, 168, 168);
   -webkit-box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.1),
     0 0 16px rgba(0, 0, 0, 0.1);
@@ -246,12 +244,13 @@ code {
   box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.1), 0 0 16px rgba(0, 0, 0, 0.1);
   padding: 15px;
   background: rgba(255, 255, 255, 0.5);
-  margin: center;
-  width: 140px;
-  height: 6px;
-  width: 100%;
-  padding: 12px 20px;
-  margin: 8px 0;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  margin-left: 30%;
+  margin-right: 30%;
+  height: 40px;
+  width: 40%;
+  font-size: 16px;
   box-sizing: border-box;
 }
 

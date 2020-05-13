@@ -4,38 +4,44 @@ import {Link} from 'react-router-dom';
 const SignupPage = () =>
 {
     return (
-      <form>
+      <form className='login-form'>
         <h3>Sign Up</h3>
 
-        <div className="formGroup">
+        <div>
           <label>First name</label>
-          <input type="text" className="formControl" placeholder="First name" />
+          <input
+            type="text"
+            className="login-input"
+            placeholder="First name" />
         </div>
 
-        <div className="formGroup">
+        <div>
           <label>Last name</label>
-          <input type="text" className="formControl" placeholder="Last name" />
+          <input
+            type="text"
+            className="login-input"
+            placeholder="Last name" />
         </div>
 
-        <div className="formGroup">
+        <div>
           <label>Email address</label>
           <input
             type="email"
-            className="formControl"
+            className="login-input"
             placeholder="Enter username"
           />
         </div>
 
-        <div className="formGroup">
+        <div>
           <label>Password</label>
           <input
             type="password"
-            className="formControl"
+            className="login-input"
             placeholder="Enter password"
           />
         </div>
 
-        <button type="submit" className="submitButton">
+        <button type="submit" className="login-button">
           Sign Up
         </button>
         <p className="forgotPassword">

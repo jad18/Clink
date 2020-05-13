@@ -3,8 +3,7 @@ import {Link} from 'react-router-dom';
 
 function getLinkButton(loggedIn)
 {
-    alert("Got item: " + loggedIn);
-    if(loggedIn === true)
+    if(loggedIn)
     {
         return(
             <div>
@@ -28,6 +27,7 @@ function getLinkButton(loggedIn)
         );
     }
 }
+
 
 const AboutPage = () => {
     return (
@@ -53,7 +53,7 @@ const AboutPage = () => {
             Looking to meet some new friends from college while stuck inside?
             </p>
 
-            {getLinkButton(sessionStorage.getItem('isLoggedIn'))}
+            {getLinkButton(sessionStorage.getItem("isLoggedIn"))}
         </div>
     );
 }

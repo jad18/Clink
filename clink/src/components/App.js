@@ -10,6 +10,24 @@ import GeneralForm from './general_form.js';
 import LoginPage from './login_page.js';
 import SignupPage from './signup_page.js';
 
+// ///////////////
+//Form selection arrays
+// ///////////////
+
+var sportsList = ['Archery', 'Badminton', 'Baseball', 'Basketball',
+'Boxing', 'Bowling', 'Cricket', 'Cross Country', 'Cycling',
+'Competitive Cheerleading', 'Darts', 'Field Hockey',
+'Figure Skating', 'Fishing', 'Football', 'Gymnastics',
+'Horseback Riding', 'Ice Hockey', 'Lacrosse', 'Martial Arts',
+'Rock Climbing', 'Rugby', 'Soccer', 'Surfing', 'Swimming & Diving',
+'Tennis', 'Track & Field', 'Triathlon', 'Volleyball',
+'Water Polo', 'Weightlifting', 'Wrestling'];
+
+
+// ///////////////
+// End
+// ///////////////
+
 
 function getLinkButtons(loggedIn)
 {
@@ -74,7 +92,7 @@ function getRouter(loggedIn)
           render={(props) =>
             <GeneralForm {...props}
               title={"Sports Information"}
-              entries={['Football', 'Soccer', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']}
+              entries={sportsList}
               trueEntries={['Soccer']}
               maxEntries={4}
             />
@@ -123,19 +141,6 @@ class App extends React.Component
       loggedIn = false;
       this.setState({ hasSetLogin: true });
     }
-    
-    /*= sessionStorage.getItem('isLoggedIn');
-    alert(loggedIn);
-    if(loggedIn === null)
-    {
-      alert("this is null!");
-      sessionStorage.setItem('isLoggedIn', false);
-      loggedIn = false;
-      alert("Initializing to false");
-    }
-    else alert("App: is logged in = " + loggedIn);*/
-
-    //loggedIn = false;
 
     return (
       <div className="App">

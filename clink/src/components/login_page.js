@@ -1,5 +1,5 @@
 import React from "react";
-import {withRouter} from 'react-router-dom';
+import {withRouter, Link} from 'react-router-dom';
 
 
 class LoginPage extends React.Component
@@ -7,10 +7,8 @@ class LoginPage extends React.Component
   submitLoginForm(event)
   { 
     event.preventDefault();
-    alert("Pull the lever, Gronk");
-    sessionStorage.setItem('loggedIn', true);
-    alert("Login Page result: " + sessionStorage.getItem('loggedIn'));
-
+    
+    sessionStorage.setItem('isLoggedIn', true);
     window.location = "/about";
   }
 
@@ -20,20 +18,20 @@ class LoginPage extends React.Component
       <form onSubmit={this.submitLoginForm} className="login-form">
         <h3>Sign In</h3>
 
-        <div className="formGroup">
+        <div>
           <label>Email address</label>
           <input
             type="email"
-            className="formControl"
+            className="login-input"
             placeholder="Enter username"
           />
         </div>
 
-        <div className="formGroup">
+        <div>
           <label>Password</label>
           <input
             type="password"
-            className="formControl"
+            className="login-input"
             placeholder="Enter password"
           />
         </div>
@@ -42,7 +40,7 @@ class LoginPage extends React.Component
           Submit
         </button>
         <p className="forgotPassword">
-          Forgot password?
+          Not registered? <Link to='/signup'>Sign up</Link>
         </p>
       </form>
     );

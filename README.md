@@ -1,6 +1,6 @@
 # Clink
 
-Commands to install current dependencies for server backend. 
+Commands to install current dependencies for server backend.  
 npm install  
 npm i express ejs  
 npm i --save-dev nodemon dotenv  

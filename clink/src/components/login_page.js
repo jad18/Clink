@@ -8,7 +8,7 @@ class LoginPage extends React.Component
   { 
     event.preventDefault();
     
-    sessionStorage.setItem('isLoggedIn', true);
+    sessionStorage.setItem('isLoggedIn', "true");
     window.location = "/about";
   }
 

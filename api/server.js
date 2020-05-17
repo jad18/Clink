@@ -12,11 +12,11 @@ const methodOverride = require('method-override');
 
 const initializePassport = require('./passport-config');
 initializePassport(passport,
-		   email => users.find(user => user.email === email),
+		   username => users.find(user => user.username === username),
 		   id => users.find(user => user.id === id)
 		  );
 
-const users = []  //should connect to a database for storage in final product
+const users = [{username: 'test1', id: 'test1'}]  //should connect to a database for storage in final product
 
 app.set('view-engine', 'ejs');
 app.use(express.json());
@@ -49,20 +49,16 @@ app.get('/login', checkNotAuthenticated, (req, res) => {
     res.render('templogin.ejs');
 });
 
-app.post('/login', /*checkNotAuthenticated,*/ function(req, res) {/*passport.authenticate('local', {
-    successRedirect: '/',
-    failureRedirect: '/login',
-    failureFlash: true
-    }*/
-    console.log(req.body);
-
-    let retVal;
-
-    if(req.body.password) retVal = true;
-    else retVal = false;
-    console.log("retVal:", retVal);
-    
-    res.json(retVal);
+app.post('/login', checkNotAuthenticated, function(req, res, next) {
+    passport.authenticate('local', function(err, user, info) {
+        console.log('got here');
+        console.log(user, err);
+        res.json(true);
+        /*console.log(err);
+        if(err) { res.json(err); }
+        else { console.log(user); res.json(user); }if(!user) { console.log(user); res.json(false); }
+        else { console.log(user); res.json(true); }*/
+    }) (req, res, next);
 });
 
 app.get('/register', checkNotAuthenticated, (req, res) => {
@@ -77,7 +73,7 @@ app.post('/register', checkNotAuthenticated, async (req, res) => {
 	users.push({
 	    id: Date.now().toString(),
 	    name: req.body.name,
-	    email: req.body.email,
+	    username: req.body.username,
 	    password: hashedPassword
 	});
 	res.redirect('/login');

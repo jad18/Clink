@@ -7,99 +7,54 @@ class LoginPage extends React.Component
   constructor() 
   {
     super();
+    this.makeLoginRequest = this.makeLoginRequest.bind(this);
     this.submitLoginForm = this.submitLoginForm.bind(this);
   }
-  submitLoginForm(event)
-  { 
-    event.preventDefault();
 
-    //sessionStorage.setItem('isLoggedIn', "true");
-    //window.location = "/about";
+  async makeLoginRequest(event)
+  {
+    var loginData = {username: event.target.elements['login-username'].value,
+                      password: event.target.elements['login-password'].value};
+    console.log(loginData);
 
     const options = {
       method: 'POST',
       headers: {'content-type' : 'application/json'},
-      body: JSON.stringify({
-        username: true,
-        password: false
-      })
+      body: JSON.stringify(loginData)
     }
 
-    //const loginData = FormData(event.target);
-
-    fetch("http://192.168.1.29:3000/login", options)
-      .then(res => res.json())
-      .then(data => {alert(data); console.log(data)})
-      .catch(error => {alert(error); console.log(error)});
+    const response = await fetch("http://[localhost]:3000/login", options) //change [localhost] to your local IP address
+    const jsonData = await response.json();
+    return jsonData;
+  }
 
 
+  submitLoginForm(event)
+  { 
+    event.preventDefault();
 
-    /*
-    const loginData = new FormData(event.target);
+    var loginPromise = this.makeLoginRequest(event);
 
-    const options = {
-      method: 'POST',
-      headers: {'Content-type': '/login'},
-      body: loginData
-    }
-
-    //const loginData = FormData(event.target);
-
-    fetch("localhost:3000", options)
-      .then(request => request.json())
-      .then(data => alert(data))
-      .catch();
-    */
-    //const loginReq = new XMLHttpRequest();
-    //loginReq.onload = function () {
-      //alert("Got response");
-      //sessionStorage.setItem('isLoggedIn', "true");
-      //window.location = "/about";
-    //}
-
-    /*loginReq.open("GET", "localhost:3000");
-    loginReq.setRequestHeader("Content-type", "/login");
-    loginReq.send();
-
-    loginReq.onreadystatechange = function()
-    {
-      if(this.readyState===4) alert(loginReq.responseText);
-      else alert("Failed!");
-    }*/
+    loginPromise.then(function(result) {
+      if(result===true)
+      {
+        sessionStorage.setItem('isLoggedIn', "true");
+        window.location = "/about";
+      }
+    })
   }
 
   render()
   {
-    /*
-    return (
-      <div>
-      {this.errorMessage(messages.error)}
-      <form action="/login" method="POST">
-        <div>
-	          <label for="email">Email: </label>
-	          <input type="text" id="email" name="email"
-	            required/>
-        </div>
-        <div>
-	        <label for="password">Password: </label>
-	        <input type="text" id="password" name="password"
-	          required/>
-        </div>
-          <button type="submit">Login</button>
-      </form>
-      </div>
-
-    );
-      */
-    
     return (
       <form onSubmit={this.submitLoginForm} className="login-form">
         <h3>Sign In</h3>
 
         <div>
-          <label>Email address</label>
+          <label>Username</label>
           <input
-            type="email"
+            type="text"
+            id="login-username"
             className="login-input"
             placeholder="Enter username"
           />
@@ -109,6 +64,7 @@ class LoginPage extends React.Component
           <label>Password</label>
           <input
             type="password"
+            id='login-password'
             className="login-input"
             placeholder="Enter password"
           />

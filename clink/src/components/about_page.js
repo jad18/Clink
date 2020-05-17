@@ -3,7 +3,6 @@ import {Link} from 'react-router-dom';
 
 function getLinkButton(loggedIn)
 {
-    alert(loggedIn)
     if(loggedIn)
     {
         return(

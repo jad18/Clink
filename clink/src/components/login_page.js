@@ -13,8 +13,26 @@ class LoginPage extends React.Component
   { 
     event.preventDefault();
 
-    sessionStorage.setItem('isLoggedIn', "true");
-    window.location = "/about";
+    //sessionStorage.setItem('isLoggedIn', "true");
+    //window.location = "/about";
+
+    const options = {
+      method: 'POST',
+      headers: {'content-type' : 'application/json'},
+      body: JSON.stringify({
+        username: true,
+        password: false
+      })
+    }
+
+    //const loginData = FormData(event.target);
+
+    fetch("http://192.168.1.29:3000/login", options)
+      .then(res => res.json())
+      .then(data => {alert(data); console.log(data)})
+      .catch(error => {alert(error); console.log(error)});
+
+
 
     /*
     const loginData = new FormData(event.target);

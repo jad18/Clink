@@ -19,7 +19,8 @@ initializePassport(passport,
 const users = []  //should connect to a database for storage in final product
 
 app.set('view-engine', 'ejs');
-app.use(express.urlencoded({extended: false}));
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
 app.use(flash());
 app.use(session({
     secret: process.env.SESSION_SECRET,
@@ -30,6 +31,15 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(methodOverride('_method'));
 
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header(
+      "Access-Control-Allow-Headers",
+      "Origin, X-Requested-With, Content-Type, Accept"
+    );
+    next();
+});
+
 app.get('/', checkAuthentication, (req, res) =>
 	{
 	    res.render('temphomescreen.ejs');
@@ -39,11 +49,21 @@ app.get('/login', checkNotAuthenticated, (req, res) => {
     res.render('templogin.ejs');
 });
 
-app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
+app.post('/login', /*checkNotAuthenticated,*/ function(req, res) {/*passport.authenticate('local', {
     successRedirect: '/',
     failureRedirect: '/login',
     failureFlash: true
-}));
+    }*/
+    console.log(req.body);
+
+    let retVal;
+
+    if(req.body.password) retVal = true;
+    else retVal = false;
+    console.log("retVal:", retVal);
+    
+    res.json(retVal);
+});
 
 app.get('/register', checkNotAuthenticated, (req, res) => {
     res.render('tempregister.ejs');

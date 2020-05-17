@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 
-const NextPage = () => {
+const ChangeProfilePage = () => {
     return (
         <div className="App">
             <h2>Choose a section of your profile to change:</h2>
@@ -37,4 +37,4 @@ const NextPage = () => {
     );
 }
 
-export default NextPage;
+export default ChangeProfilePage;

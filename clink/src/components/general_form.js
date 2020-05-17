@@ -36,6 +36,9 @@ class GeneralForm extends React.Component {
         }
         this.handleChange = this.handleChange.bind(this);
         this.submitForm = this.submitForm.bind(this);
+        this.makeOneCheckbox = this.makeOneCheckbox.bind(this);
+        this.makeTwoCheckboxes = this.makeTwoCheckboxes.bind(this);
+        this.makeCheckboxes = this.makeCheckboxes.bind(this);
     }
 
     handleChange = event =>
@@ -130,7 +133,7 @@ class GeneralForm extends React.Component {
                 else if(isFirstKey)
                 {
                     firstKey = key;
-                    return(<></>);
+                    return(<div></div>);
                 }
                 else
                 {

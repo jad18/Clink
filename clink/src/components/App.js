@@ -4,7 +4,7 @@ import {Route, Switch, Link, Redirect} from 'react-router-dom';
 
 //Page imports
 import AboutPage from './about_page.js';
-import NextPage from './profile_change_home.js';
+import ChangeProfilePage from './profile_change_home.js';
 import GeneralForm from './general_form.js';
 import LoginPage from './login_page.js';
 import SignupPage from './signup_page.js';
@@ -40,7 +40,7 @@ var sportsList = ['Archery', 'Badminton', 'Baseball', 'Basketball',
     if(!JSON.parse(sessionStorage.getItem("initProfile")))
     {
       sessionStorage.setItem("initProfile", "true");
-      sessionStorage.setItem("profile_sports", JSON.stringify(["Soccer", "Volleyball"]));
+      sessionStorage.setItem("profile_sports", JSON.stringify(["Soccer", "Baseball"]));
     }
   }
   else if(loggedIn === null)
@@ -123,7 +123,7 @@ function getRouter(loggedIn)
       <Switch>
         <Route exact path="/" component={AboutPage}/>
         <Route exact path="/about" component={AboutPage}/>
-        <Route exact path="/change_profile" component={NextPage}/>
+        <Route exact path="/change_profile" component={ChangeProfilePage}/>
         <Route exact path="/change_profile/sports" 
           render={(props) =>
             <GeneralForm {...props}

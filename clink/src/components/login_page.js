@@ -7,6 +7,11 @@ class LoginPage extends React.Component
   constructor() 
   {
     super();
+
+    this.state = {
+      errorMsg: ''
+    }
+
     this.makeLoginRequest = this.makeLoginRequest.bind(this);
     this.submitLoginForm = this.submitLoginForm.bind(this);
   }
@@ -23,9 +28,19 @@ class LoginPage extends React.Component
       body: JSON.stringify(loginData)
     }
 
-    const response = await fetch("http://[localhost]:3000/login", options) //change [localhost] to your local IP address
-    const jsonData = await response.json();
-    return jsonData;
+    try {
+      const response = await fetch("http://[localhost]:3000/login", options) //change [localhost] to your local IP address
+      if(!response.ok)
+      {
+        alert(response.statusText);
+        return null;
+      }
+      const jsonData = await response.json();
+      return jsonData;
+    } catch(error) {
+        console.log(error);
+        return null;
+    }
   }
 
 
@@ -33,13 +48,23 @@ class LoginPage extends React.Component
   { 
     event.preventDefault();
 
-    var loginPromise = this.makeLoginRequest(event);
+    var loginResult = this.makeLoginRequest(event); //returns a promise
+    const tempThis = this;
 
-    loginPromise.then(function(result) {
+    loginResult.then(function(result) {
       if(result===true)
       {
+        tempThis.setState({ errorMsg: ''});
         sessionStorage.setItem('isLoggedIn', "true");
         window.location = "/about";
+      }
+      else if(result===null)
+      {
+        tempThis.setState({ errorMsg: "An error occurred when requesting from the server"});
+      }
+      else
+      {
+        tempThis.setState({ errorMsg: "Incorrect username or password"});
       }
     })
   }
@@ -69,6 +94,8 @@ class LoginPage extends React.Component
             placeholder="Enter password"
           />
         </div>
+
+        <p>{this.state.errorMsg}</p>
 
         <button type="submit" className="login-button">
           Submit

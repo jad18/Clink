@@ -55,7 +55,7 @@ app.post('/login', checkNotAuthenticated, function(req, res, next) {
         console.log(user, err);
     
         if(err) { res.json(err); }
-        else if(!user) { console.log("Not valid user"); res.json(true); }
+        else if(!user) { console.log("Not valid user"); res.json(false); }
         else { console.log(user); res.json(true); }
     }) (req, res, next);
 });

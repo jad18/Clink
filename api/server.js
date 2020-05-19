@@ -16,7 +16,7 @@ initializePassport(passport,
 		   id => users.find(user => user.id === id)
 		  );
 
-const users = [{username: 'test1', id: 'test1'}]  //should connect to a database for storage in final product
+const users = []  //should connect to a database for storage in final product
 
 app.set('view-engine', 'ejs');
 app.use(express.json());
@@ -53,11 +53,10 @@ app.post('/login', checkNotAuthenticated, function(req, res, next) {
     passport.authenticate('local', function(err, user, info) {
         console.log('got here');
         console.log(user, err);
-        res.json(true);
-        /*console.log(err);
+    
         if(err) { res.json(err); }
-        else { console.log(user); res.json(user); }if(!user) { console.log(user); res.json(false); }
-        else { console.log(user); res.json(true); }*/
+        else if(!user) { console.log("Not valid user"); res.json(true); }
+        else { console.log(user); res.json(true); }
     }) (req, res, next);
 });
 

@@ -53,13 +53,13 @@ app.get('/login', checkNotAuthenticated, (req, res) => {
 
 app.post('/login', checkNotAuthenticated, function (req, res, next) {
     passport.authenticate('local', function (err, user, info) { //function willl serve as done in the local strategy (passport-config)
-        if (err) { 
+        if (err) {
             return req.send(err);
             //return next(err); 
         }
         if (!user) { //login failed
             console.log('login failed');
-            return res.redirect('/login'); 
+            return res.redirect('/login');
         }
         //login successful
         req.logIn(user, function (err) {
@@ -103,14 +103,14 @@ app.post('/register', checkNotAuthenticated, async (req, res) => {
         //see if username is used before
         if (databaseContainsUser(req.body.username)) {
             res.send('Username unavailable. Try something else.');
+        } else {
+            users.push({
+                id: Date.now().toString(), //what's the point of this if we have an username?
+                username: req.body.username,
+                password: req.body.password
+            });
+            res.redirect('/login');
         }
-        users.push({
-            id: Date.now().toString(), //what's the point of this if we have an username?
-            name: req.body.name,
-            username: req.body.username,
-            password: req.body.password
-        });
-        res.redirect('/login');
     }
     catch
     {

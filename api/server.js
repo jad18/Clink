@@ -68,18 +68,33 @@ app.get('/register', checkNotAuthenticated, (req, res) => {
 app.post('/register', checkNotAuthenticated, async (req, res) => {
     try
     {
-	const hashedPassword = await bcrypt.hash(req.body.password, 10);
-	users.push({
-	    id: Date.now().toString(),
-	    name: req.body.name,
-	    username: req.body.username,
-	    password: hashedPassword
-	});
-	res.json(true);
+    
+    let hasFoundMatch = false;
+    for(let i=0; i<users.length; i++)
+    {
+        if(req.body.username === users[i].username)
+        {
+            hasFoundMatch = true;
+            break;
+        }
+    }
+
+    if(hasFoundMatch) res.json(false);
+    else
+    {  
+        const hashedPassword = await bcrypt.hash(req.body.password, 10);
+	    users.push({
+	        id: Date.now().toString(),
+	        name: req.body.name,
+	        username: req.body.username,
+	        password: hashedPassword
+        });
+        res.json(true);
+    }
     }
     catch
     {
-	res.json(false);
+	res.json(null);
     }	
 });
 

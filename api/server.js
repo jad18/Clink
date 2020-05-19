@@ -12,14 +12,15 @@ const methodOverride = require('method-override');
 
 const initializePassport = require('./passport-config');
 initializePassport(passport,
-		   email => users.find(user => user.email === email),
+		   username => users.find(user => user.username === username),
 		   id => users.find(user => user.id === id)
 		  );
 
 const users = []  //should connect to a database for storage in final product
 
 app.set('view-engine', 'ejs');
-app.use(express.urlencoded({extended: false}));
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
 app.use(flash());
 app.use(session({
     secret: process.env.SESSION_SECRET,
@@ -30,6 +31,15 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(methodOverride('_method'));
 
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header(
+      "Access-Control-Allow-Headers",
+      "Origin, X-Requested-With, Content-Type, Accept"
+    );
+    next();
+});
+
 app.get('/', checkAuthentication, (req, res) =>
 	{
 	    res.render('temphomescreen.ejs');
@@ -39,11 +49,16 @@ app.get('/login', checkNotAuthenticated, (req, res) => {
     res.render('templogin.ejs');
 });
 
-app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
-    successRedirect: '/',
-    failureRedirect: '/login',
-    failureFlash: true
-}));
+app.post('/login', checkNotAuthenticated, function(req, res, next) {
+    passport.authenticate('local', function(err, user, info) {
+        console.log('got here');
+        console.log(user, err);
+    
+        if(err) { res.json(err); }
+        else if(!user) { console.log("Not valid user"); res.json(false); }
+        else { console.log(user); res.json(true); }
+    }) (req, res, next);
+});
 
 app.get('/register', checkNotAuthenticated, (req, res) => {
     res.render('tempregister.ejs');
@@ -53,18 +68,33 @@ app.get('/register', checkNotAuthenticated, (req, res) => {
 app.post('/register', checkNotAuthenticated, async (req, res) => {
     try
     {
-	const hashedPassword = await bcrypt.hash(req.body.password, 10);
-	users.push({
-	    id: Date.now().toString(),
-	    name: req.body.name,
-	    email: req.body.email,
-	    password: hashedPassword
-	});
-	res.redirect('/login');
+    
+    let hasFoundMatch = false;
+    for(let i=0; i<users.length; i++)
+    {
+        if(req.body.username === users[i].username)
+        {
+            hasFoundMatch = true;
+            break;
+        }
+    }
+
+    if(hasFoundMatch) res.json(false);
+    else
+    {  
+        const hashedPassword = await bcrypt.hash(req.body.password, 10);
+	    users.push({
+	        id: Date.now().toString(),
+	        name: req.body.name,
+	        username: req.body.username,
+	        password: hashedPassword
+        });
+        res.json(true);
+    }
     }
     catch
     {
-	res.redirect('/register');
+	res.json(null);
     }	
 });
 

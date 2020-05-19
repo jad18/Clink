@@ -20,6 +20,7 @@ class GeneralForm extends React.Component {
         this.maxEntries = props.maxEntries;
         this.totalOptions = props.entries.length;
         this.title = props.title;
+        this.profileType = props.profileType;
 
         this.state = {
             entries: props.entries.reduce(
@@ -35,6 +36,9 @@ class GeneralForm extends React.Component {
         }
         this.handleChange = this.handleChange.bind(this);
         this.submitForm = this.submitForm.bind(this);
+        this.makeOneCheckbox = this.makeOneCheckbox.bind(this);
+        this.makeTwoCheckboxes = this.makeTwoCheckboxes.bind(this);
+        this.makeCheckboxes = this.makeCheckboxes.bind(this);
     }
 
     handleChange = event =>
@@ -59,13 +63,18 @@ class GeneralForm extends React.Component {
 
     submitForm(event)
     {
+        var trueEntries = [];
         event.preventDefault();
         Object.keys(this.state.entries)
             .filter(checkbox => this.state.entries[checkbox])
             .forEach(checkbox => {
-            alert(checkbox, "is selected.");
+            trueEntries.push(checkbox);
       });
+
+      alert(trueEntries);
+      sessionStorage.setItem("profile_" + this.profileType, JSON.stringify(trueEntries));
     }
+
 
     makeOneCheckbox(key)
     {
@@ -82,6 +91,7 @@ class GeneralForm extends React.Component {
         );
     }
 
+    
     makeTwoCheckboxes(key1, key2) {
         return (
             <div className = "form-row">
@@ -100,27 +110,6 @@ class GeneralForm extends React.Component {
             </div>
         );
     }
-    //makeCheckboxes2() {
-        //var needsRowDiv = false;
-       /* const func1 = this.makeCheckbox;
-        const func2 = this.handleChange;
-        const entries = this.state.entries;
-        const thisComp = this;*/
-        // var elementArr = [];
-        
-        /*return (
-            Object.keys(this.state.entries).map(function(key, index) {
-                needsRowDiv = !needsRowDiv
-                return this.makeCheckbox(key, needsRowDiv)
-            }, this)
-        )*/
-            //Object.keys(this.state.entries)
-            //    .forEach(key => {
-            //        elementArr.push(this.makeCheckbox(key, needsRowDiv));
-            //        needsRowDiv = !needsRowDiv;
-            //    })
-        //return(elementArr);
-    //}
 
 
     makeCheckboxes()
@@ -144,7 +133,7 @@ class GeneralForm extends React.Component {
                 else if(isFirstKey)
                 {
                     firstKey = key;
-                    return(<></>);
+                    return(<div></div>);
                 }
                 else
                 {
@@ -153,81 +142,6 @@ class GeneralForm extends React.Component {
                 }
             }, this)
         );
-
-/*
-            result += "<div className='form-column'> <p><FormButton value='" +
-                      key + "' isChecked={this.state.entries['" + key +
-                      "']} onChange={this.handleChange} /></p> </div>";
-            
-            if(needsRowDiv) result += "</div>";
-
-        //Special case: odd number of entries
-        if(!needsRowDiv) result += "</div>";
-
-
-        console.log(result);
-
-        var formDiv = document.createElement('div');
-        formDiv.innerHTML = result;
-        return (formDiv);
-*/
-        //document.getElementById("formops").innerHTML = result;
-
-        //return(<div>{result}</div>);
-        /*
-        return (
-            <>
-                <div className='form-row'>
-                <div className='form-column'>
-                <p><FormButton value='Football' isChecked={this.state.entries['Football']} onChange={this.handleChange} /></p>
-                </div>
-    
-                <div className='form-column'>
-                <p><FormButton value='Soccer' isChecked={this.state.entries['Soccer']} onChange={this.handleChange} /></p>
-                </div>
-                </div>
-      
-                <div className='form-row'>
-                <div className='form-column'>
-                <p><FormButton value='a' isChecked={this.state.entries['a']} onChange={this.handleChange} /></p>
-                </div>
-    
-                <div className='form-column'>
-                <p><FormButton value='b' isChecked={this.state.entries['b']} onChange={this.handleChange}/></p>
-                </div>
-                </div>
-    
-                <div className='form-row'>
-                <div className='form-column'>
-                <p><FormButton value='c' isChecked={this.state.entries['c']} onChange={this.handleChange}/></p>
-                </div>
-    
-                <div className='form-column'>
-                <p><FormButton value='d' isChecked={this.state.entries['d']} onChange={this.handleChange}/></p>
-                </div>
-                </div>
-    
-                <div className='form-row'>
-                <div className='form-column'>
-                <p><FormButton value='e' isChecked={this.state.entries['e']} onChange={this.handleChange}/></p>
-                </div>
-    
-                <div className='form-column'>
-                <p><FormButton value='f' isChecked={this.state.entries['f']} onChange={this.handleChange}/></p>
-                </div>
-                </div>
-    
-                <div className='form-row'>
-                <div className='form-column'>
-                <p><FormButton value='g' isChecked={this.state.entries['g']} onChange={this.handleChange}/></p>
-                </div>
-    
-                <div className='form-column'>
-                <p><FormButton value='h' isChecked={this.state.entries['h']} onChange={this.handleChange}/></p>
-                </div>
-                </div>
-            </>
-        );*/
     }
 
     render()
@@ -239,6 +153,9 @@ class GeneralForm extends React.Component {
                 <h4>
                     Choose your preferences out of the following (up to {this.maxEntries} selections):
                 </h4>
+                <p>
+                    (Note: You must hit the 'Submit Changes' button to confirm any changes)
+                </p>
             </div>
             <form onSubmit={this.submitForm} className="form-body">
                 {this.makeCheckboxes()}

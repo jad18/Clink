@@ -12,23 +12,18 @@ const SignupPage = () =>
           <input
             type="text"
             className="login-input"
-            placeholder="First name" />
+            placeholder="First name"
+            required
+            />
         </div>
 
         <div>
-          <label>Last name</label>
+          <label>Username</label>
           <input
             type="text"
             className="login-input"
-            placeholder="Last name" />
-        </div>
-
-        <div>
-          <label>Email address</label>
-          <input
-            type="email"
-            className="login-input"
             placeholder="Enter username"
+            required
           />
         </div>
 
@@ -38,6 +33,7 @@ const SignupPage = () =>
             type="password"
             className="login-input"
             placeholder="Enter password"
+            required
           />
         </div>
 

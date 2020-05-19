@@ -58,13 +58,13 @@ class LoginPage extends React.Component
         sessionStorage.setItem('isLoggedIn', "true");
         window.location = "/about";
       }
-      else if(result===null)
+      else if(result===false)
       {
-        tempThis.setState({ errorMsg: "An error occurred when requesting from the server"});
+        tempThis.setState({ errorMsg: "Incorrect username or password"});
       }
       else
       {
-        tempThis.setState({ errorMsg: "Incorrect username or password"});
+        tempThis.setState({ errorMsg: "An error occurred when requesting from the server"});
       }
     })
   }
@@ -82,6 +82,7 @@ class LoginPage extends React.Component
             id="login-username"
             className="login-input"
             placeholder="Enter username"
+            required
           />
         </div>
 
@@ -92,6 +93,7 @@ class LoginPage extends React.Component
             id='login-password'
             className="login-input"
             placeholder="Enter password"
+            required
           />
         </div>
 

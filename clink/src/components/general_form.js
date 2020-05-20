@@ -115,11 +115,11 @@ class GeneralForm extends React.Component {
 
     makeCheckboxes()
     {
-        //Want to start of with isFirstKey=true and numEntriesLeft=this.totalOptions,
-        //but must change each of these once first --> intentionally flip isFirstKey
-        //and add one to numEntriesLeft
+        //Want to start of with isFirstKey=true, but must change this
+        //this once first because region below returns is unreachable
+        // --> intentionally flip isFirstKey
         var firstKey, isFirstKey = false;
-        var numEntriesLeft = this.totalOptions+1;
+        var numEntriesLeft = this.totalOptions;
 
         return(
             Object.keys(this.state.entries).map(function(key, index)

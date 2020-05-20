@@ -22,6 +22,12 @@ var sportsList = ['Archery', 'Badminton', 'Baseball', 'Basketball',
 'Tennis', 'Track & Field', 'Triathlon', 'Volleyball',
 'Water Polo', 'Weightlifting', 'Wrestling'];
 
+var movieList = ['Action', 'Adventure', 'Anime', 'Biographical',
+'Comedy', 'Drama', 'Documentary', 'Dystopian', 'Experimental',
+'Fantasy', 'Family', 'First Responder', 'Historical', 'Horror',
+'Independent', 'Mystery', 'Musical', 'Noir', 'Psychological/Suspense',
+'Reality', 'Romance', 'Sci-fi', 'Thriller', 'War', 'Western'];
+
 
 // ///////////////
 // End
@@ -41,6 +47,7 @@ var sportsList = ['Archery', 'Badminton', 'Baseball', 'Basketball',
     {
       sessionStorage.setItem("initProfile", "true");
       sessionStorage.setItem("profile_sports", JSON.stringify(["Soccer", "Baseball"]));
+      sessionStorage.setItem("profile_movies", JSON.stringify(["Comedy", "Western"]));
     }
   }
   else if(loggedIn === null)
@@ -127,10 +134,22 @@ function getRouter(loggedIn)
         <Route exact path="/change_profile/sports" 
           render={(props) =>
             <GeneralForm {...props}
-              title={"Sports Information"}
+              title={"Sports Preferences"}
               entries={sportsList}
               profileType={"sports"}
               trueEntries={JSON.parse(sessionStorage.getItem("profile_sports"))}
+              maxEntries={5}
+              nextPageLink="/change_profile/movies"
+            />
+          }
+        />
+        <Route exact path="/change_profile/movies" 
+          render={(props) =>
+            <GeneralForm {...props}
+              title={"TV/Movie Preferences"}
+              entries={movieList}
+              profileType={"movies"}
+              trueEntries={JSON.parse(sessionStorage.getItem("profile_movies"))}
               maxEntries={4}
               nextPageLink="/change_profile"
             />

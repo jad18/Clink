@@ -132,6 +132,7 @@ function getRouter(loggedIn)
               profileType={"sports"}
               trueEntries={JSON.parse(sessionStorage.getItem("profile_sports"))}
               maxEntries={4}
+              nextPageLink="/change_profile"
             />
           }
         />

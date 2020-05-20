@@ -21,6 +21,7 @@ class GeneralForm extends React.Component {
         this.totalOptions = props.entries.length;
         this.title = props.title;
         this.profileType = props.profileType;
+        this.nextPageLink = props.nextPageLink;
 
         this.state = {
             entries: props.entries.reduce(
@@ -171,7 +172,7 @@ class GeneralForm extends React.Component {
                 <Link to='/change_profile'>
                     <button className="link-button2">Back to Profile Change</button>
                 </Link>
-                <Link to='/'>
+                <Link to={this.nextPageLink}>
                     <button className="link-button2">Next Profile Section</button>
                 </Link>
             </p>

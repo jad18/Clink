@@ -5,7 +5,8 @@ import {Route, Switch, Link, Redirect} from 'react-router-dom';
 //Page imports
 import AboutPage from './about_page.js';
 import ChangeProfilePage from './profile_change_home.js';
-import GeneralForm from './general_form.js';
+import SportsForm from './sports_form.js';
+import MoviesForm from './movies_form.js';
 import LoginPage from './login_page.js';
 import SignupPage from './signup_page.js';
 
@@ -133,25 +134,25 @@ function getRouter(loggedIn)
         <Route exact path="/change_profile" component={ChangeProfilePage}/>
         <Route exact path="/change_profile/sports" 
           render={(props) =>
-            <GeneralForm {...props}
+            <SportsForm {...props}
               title={"Sports Preferences"}
               entries={sportsList}
               profileType={"sports"}
               trueEntries={JSON.parse(sessionStorage.getItem("profile_sports"))}
               maxEntries={5}
-              nextPageLink="/change_profile/movies"
+              nextPageLink={"/change_profile/movies"}
             />
           }
         />
         <Route exact path="/change_profile/movies" 
           render={(props) =>
-            <GeneralForm {...props}
+            <MoviesForm {...props}
               title={"TV/Movie Preferences"}
               entries={movieList}
               profileType={"movies"}
               trueEntries={JSON.parse(sessionStorage.getItem("profile_movies"))}
               maxEntries={4}
-              nextPageLink="/change_profile"
+              nextPageLink={"/change_profile"}
             />
           }
         />

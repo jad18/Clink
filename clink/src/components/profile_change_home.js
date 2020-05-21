@@ -11,6 +11,7 @@ const ChangeProfilePage = () => {
             </Link>
 
             <table id="profile-link-table">
+                <tbody>
                 <tr className='table-row'>
                     <td className='table-column'>
                         <Link to='/change_profile/sports'>
@@ -31,6 +32,7 @@ const ChangeProfilePage = () => {
                     <td className='table-column'>This is number 5.</td>
                     <td className='table-column'>This is number 6.</td>
                 </tr>
+                </tbody>
             </table>
 
             <p></p>

@@ -21,6 +21,7 @@ class GeneralForm extends React.Component {
         this.totalOptions = props.entries.length;
         this.title = props.title;
         this.profileType = props.profileType;
+        this.nextPageLink = props.nextPageLink;
 
         this.state = {
             entries: props.entries.reduce(
@@ -114,11 +115,11 @@ class GeneralForm extends React.Component {
 
     makeCheckboxes()
     {
-        //Want to start of with isFirstKey=true and numEntriesLeft=this.totalOptions,
-        //but must change each of these once first --> intentionally flip isFirstKey
-        //and add one to numEntriesLeft
+        //Want to start of with isFirstKey=true, but must change this
+        //this once first because region below returns is unreachable
+        // --> intentionally flip isFirstKey
         var firstKey, isFirstKey = false;
-        var numEntriesLeft = this.totalOptions+1;
+        var numEntriesLeft = this.totalOptions;
 
         return(
             Object.keys(this.state.entries).map(function(key, index)
@@ -171,7 +172,7 @@ class GeneralForm extends React.Component {
                 <Link to='/change_profile'>
                     <button className="link-button2">Back to Profile Change</button>
                 </Link>
-                <Link to='/'>
+                <Link to={this.nextPageLink}>
                     <button className="link-button2">Next Profile Section</button>
                 </Link>
             </p>

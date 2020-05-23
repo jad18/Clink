@@ -11,13 +11,18 @@ const ChangeProfilePage = () => {
             </Link>
 
             <table id="profile-link-table">
+                <tbody>
                 <tr className='table-row'>
                     <td className='table-column'>
                         <Link to='/change_profile/sports'>
                             <button className='link-button3'>Sports</button>
                         </Link>
                     </td>
-                    <td className='table-column'>This is number 2.</td>
+                    <td className='table-column'>
+                    <Link to='/change_profile/movies'>
+                            <button className='link-button3'>TV/Movies</button>
+                        </Link>
+                    </td>
                 </tr>
                 <tr className='table-row'>
                     <td className='table-column'>This is number 3.</td>
@@ -27,6 +32,7 @@ const ChangeProfilePage = () => {
                     <td className='table-column'>This is number 5.</td>
                     <td className='table-column'>This is number 6.</td>
                 </tr>
+                </tbody>
             </table>
 
             <p></p>

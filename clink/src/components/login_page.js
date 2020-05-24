@@ -49,22 +49,28 @@ class LoginPage extends React.Component
     event.preventDefault();
 
     var loginResult = this.makeLoginRequest(event); //returns a promise
-    const tempThis = this;
+    const self = this;
 
     loginResult.then(function(result) {
-      if(result===true)
+      if(result.status===true)
       {
-        tempThis.setState({ errorMsg: ''});
+        self.setState({ errorMsg: ''});
         sessionStorage.setItem('isLoggedIn', "true");
+        for(var element in result.profile)
+        {
+          sessionStorage.setItem('profile_' + String(element), JSON.stringify(result.profile[element]));
+        }
+        alert(sessionStorage.getItem('profile_sports'));
+        //sessionStorage.setItem('profile_sports', JSON.stringify(result.profile.sports))
         window.location = "/about";
       }
-      else if(result===false)
+      else if(result.status===false)
       {
-        tempThis.setState({ errorMsg: "Incorrect username or password"});
+        self.setState({ errorMsg: "Incorrect username or password"});
       }
       else
       {
-        tempThis.setState({ errorMsg: "An error occurred when requesting from the server"});
+        self.setState({ errorMsg: "An error occurred when requesting from the server"});
       }
     })
   }

@@ -72,7 +72,7 @@ var artsList = ['Drawing', 'Dance', 'Fashion', 'Graphic Design',
     if(!JSON.parse(sessionStorage.getItem("initProfile")))
     {
       sessionStorage.setItem("initProfile", "true");
-      sessionStorage.setItem("profile_sports", JSON.stringify(["Soccer", "Baseball"]));
+      //sessionStorage.setItem("profile_sports", JSON.stringify(["Soccer", "Baseball"]));
       sessionStorage.setItem("profile_movies", JSON.stringify(["Comedy", "Western"]));
     }
   }
@@ -202,7 +202,7 @@ function getRouter(loggedIn)
             <IndoorForm {...props}
               title={"Favorite Indoor Activities"}
               entries={indoorList}
-              profileType={"Indoor"}
+              profileType={"indoor"}
               trueEntries={[]}
               maxEntries={3}
               nextPageLink={"/change_profile/cuisines"}

@@ -16,9 +16,9 @@ class LoginPage extends React.Component
     this.submitLoginForm = this.submitLoginForm.bind(this);
   }
 
-  async makeLoginRequest(event)
+  async makeLoginRequest(event, received_username)
   {
-    var loginData = {username: event.target.elements['login-username'].value,
+    var loginData = {username: received_username,
                       password: event.target.elements['login-password'].value};
     console.log(loginData);
 
@@ -48,7 +48,9 @@ class LoginPage extends React.Component
   { 
     event.preventDefault();
 
-    var loginResult = this.makeLoginRequest(event); //returns a promise
+    const received_username = event.target.elements['login-username'].value;
+
+    var loginResult = this.makeLoginRequest(event, received_username); //returns a promise
     const self = this;
 
     loginResult.then(function(result) {
@@ -56,6 +58,7 @@ class LoginPage extends React.Component
       {
         self.setState({ errorMsg: ''});
         sessionStorage.setItem('isLoggedIn', "true");
+        sessionStorage.setItem('username', received_username)
         for(var element in result.profile)
         {
           sessionStorage.setItem('profile_' + String(element), JSON.stringify(result.profile[element]));

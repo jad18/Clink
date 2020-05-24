@@ -5,8 +5,14 @@ import {Route, Switch, Link, Redirect} from 'react-router-dom';
 //Page imports
 import AboutPage from './about_page.js';
 import ChangeProfilePage from './profile_change_home.js';
+
 import SportsForm from './sports_form.js';
 import MoviesForm from './movies_form.js';
+import OutdoorForm from './outdoor_form.js';
+import IndoorForm from './indoor_form.js';
+import CuisineForm from './cuisine_form.js';
+import ArtsForm from './arts_form.js';
+
 import LoginPage from './login_page.js';
 import SignupPage from './signup_page.js';
 
@@ -28,6 +34,25 @@ var movieList = ['Action', 'Adventure', 'Anime', 'Biographical',
 'Fantasy', 'Family', 'First Responder', 'Historical', 'Horror',
 'Independent', 'Mystery', 'Musical', 'Noir', 'Psychological/Suspense',
 'Reality', 'Romance', 'Sci-fi', 'Thriller', 'War', 'Western'];
+
+var outdoorList = ['Camping', 'Canoeing', 'Fishing', 'Gardening',
+'Hiking', 'Ice Skating', 'Kayaking', 'Running', 'Snowboarding',
+'Skiing', 'Stargazing', 'Walking', 'Woodwork', 'Yardwork'];
+
+var indoorList = ['Art Projects', 'Board Games', 'Card Games',
+'Cleaning', 'Cooking', 'DIY Projects', 'Napping', 
+'Reading Books', 'TV/Movies', 'Video Games'];
+
+var cuisineList = ['African', 'American', 'British', 'Cajun', 
+'Caribbean', 'Chinese', 'French', 'Greek', 'Indian', 'Indonesian',
+'Italian', 'Japanese', 'Korean',  'Lebanese', 'Mexican',
+'Middle Eastern', 'Moroccan', 'Peruvian', 'Polish', 'Spanish',
+'Thai', 'Turkish', 'Vietnamese'];
+
+var artsList = ['Drawing', 'Dance', 'Fashion', 'Graphic Design',
+'Instrument', 'Opera', 'Painting', 'Photography', 'Photoshop',
+'Pottery', 'Singing', 'Scenic Design', 'Sculpting',
+'Theater Performance', 'Video Editing'];
 
 
 // ///////////////
@@ -132,6 +157,7 @@ function getRouter(loggedIn)
         <Route exact path="/" component={AboutPage}/>
         <Route exact path="/about" component={AboutPage}/>
         <Route exact path="/change_profile" component={ChangeProfilePage}/>
+
         <Route exact path="/change_profile/sports" 
           render={(props) =>
             <SportsForm {...props}
@@ -144,6 +170,7 @@ function getRouter(loggedIn)
             />
           }
         />
+
         <Route exact path="/change_profile/movies" 
           render={(props) =>
             <MoviesForm {...props}
@@ -152,10 +179,63 @@ function getRouter(loggedIn)
               profileType={"movies"}
               trueEntries={JSON.parse(sessionStorage.getItem("profile_movies"))}
               maxEntries={4}
+              nextPageLink={"/change_profile/outdoor_activities"}
+            />
+          }
+        />
+
+        <Route exact path="/change_profile/outdoor_activities" 
+          render={(props) =>
+            <OutdoorForm {...props}
+              title={"Favorite Outdoor Activities"}
+              entries={outdoorList}
+              profileType={"outdoor"}
+              trueEntries={[]}
+              maxEntries={3}
+              nextPageLink={"/change_profile/indoor_activities"}
+            />
+          }
+        />
+
+        <Route exact path="/change_profile/indoor_activities" 
+          render={(props) =>
+            <IndoorForm {...props}
+              title={"Favorite Indoor Activities"}
+              entries={indoorList}
+              profileType={"Indoor"}
+              trueEntries={[]}
+              maxEntries={3}
+              nextPageLink={"/change_profile/cuisines"}
+            />
+          }
+        />
+
+        <Route exact path="/change_profile/cuisines" 
+          render={(props) =>
+            <CuisineForm {...props}
+              title={"Favorite Cuisines"}
+              entries={cuisineList}
+              profileType={"cuisines"}
+              trueEntries={[]}
+              maxEntries={4}
+              nextPageLink={"/change_profile/arts_and_media"}
+            />
+          }
+        />
+
+        <Route exact path="/change_profile/arts_and_media" 
+          render={(props) =>
+            <ArtsForm {...props}
+              title={"Arts, Theater, and Media Activities"}
+              entries={artsList}
+              profileType={"arts"}
+              trueEntries={[]}
+              maxEntries={3}
               nextPageLink={"/change_profile"}
             />
           }
         />
+
         <Redirect to="/about"/>
       </Switch>
     );

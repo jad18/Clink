@@ -4,8 +4,10 @@ import {Route, Switch, Link, Redirect} from 'react-router-dom';
 
 //Page imports
 import AboutPage from './about_page.js';
-import ChangeProfilePage from './profile_change_home.js';
 
+import SearchHomePage from './search_home.js';
+
+import ChangeProfilePage from './profile_change_home.js';
 import SportsForm from './sports_form.js';
 import MoviesForm from './movies_form.js';
 import OutdoorForm from './outdoor_form.js';
@@ -89,7 +91,7 @@ function getLinkButtons(loggedIn)
           <button className="link-button1">About</button>
         </Link>
 
-        <Link to='/login'>
+        <Link to='/search'>
           <button className="link-button1">Search</button>
         </Link>
 
@@ -140,6 +142,7 @@ function getRouter(loggedIn)
       <Switch>
         <Route exact path="/" component={AboutPage}/>
         <Route exact path="/about" component={AboutPage}/>
+        <Route exact path="/search" component={SearchHomePage} />
         <Route exact path="/change_profile" component={ChangeProfilePage}/>
 	<Route exact path="/messages" component={MessagesPage}/>
 	    

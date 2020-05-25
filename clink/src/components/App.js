@@ -215,7 +215,7 @@ function getRouter(loggedIn)
           }
         />
 
-        <Redirect to="/"/>
+        <Redirect to={sessionStorage.getItem("lastValidPage")}/>
       </Switch>
     );
   }

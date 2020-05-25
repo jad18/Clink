@@ -1,7 +1,9 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 
-const ChangeProfilePage = () => {
+function ChangeProfilePage() {
+    sessionStorage.setItem("lastValidPage", "/change_profile");
+
     return (
         <div className="App">
             <h2>Choose a section of your profile to change:</h2>

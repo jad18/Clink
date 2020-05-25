@@ -29,7 +29,9 @@ function getLinkButton(loggedIn)
 }
 
 
-const AboutPage = () => {
+function AboutPage() {
+    sessionStorage.setItem("lastValidPage", "/about");
+    
     return (
         <div className="App">
             <h1>About Clink</h1>

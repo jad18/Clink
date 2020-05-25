@@ -16,9 +16,9 @@ class LoginPage extends React.Component
     this.submitLoginForm = this.submitLoginForm.bind(this);
   }
 
-  async makeLoginRequest(event)
+  async makeLoginRequest(event, received_username)
   {
-    var loginData = {username: event.target.elements['login-username'].value,
+    var loginData = {username: received_username,
                       password: event.target.elements['login-password'].value};
       console.log(loginData);  
     sessionStorage.setItem('username', event.target.elements['login-username'].value);  
@@ -29,7 +29,7 @@ class LoginPage extends React.Component
     }
 
     try {
-      const response = await fetch("http://[localhost]:3000/login", options) //change [localhost] to your local IP address
+      const response = await fetch("http://192.168.1.166:3000/login", options) //change [localhost] to your local IP address
       if(!response.ok)
       {
         alert(response.statusText);
@@ -48,23 +48,32 @@ class LoginPage extends React.Component
   { 
     event.preventDefault();
 
-    var loginResult = this.makeLoginRequest(event); //returns a promise
-    const tempThis = this;
+    const received_username = event.target.elements['login-username'].value;
+
+    var loginResult = this.makeLoginRequest(event, received_username); //returns a promise
+    const self = this;
 
     loginResult.then(function(result) {
-      if(result===true)
+      if(result.status===true)
       {
-        tempThis.setState({ errorMsg: ''});
+        self.setState({ errorMsg: ''});
         sessionStorage.setItem('isLoggedIn', "true");
+        sessionStorage.setItem('username', received_username)
+        for(var element in result.profile)
+        {
+          sessionStorage.setItem('profile_' + String(element), JSON.stringify(result.profile[element]));
+        }
+        alert(sessionStorage.getItem('profile_sports'));
+        //sessionStorage.setItem('profile_sports', JSON.stringify(result.profile.sports))
         window.location = "/about";
       }
-      else if(result===false)
+      else if(result.status===false)
       {
-        tempThis.setState({ errorMsg: "Incorrect username or password"});
+        self.setState({ errorMsg: "Incorrect username or password"});
       }
       else
       {
-        tempThis.setState({ errorMsg: "An error occurred when requesting from the server"});
+        self.setState({ errorMsg: "An error occurred when requesting from the server"});
       }
     })
   }

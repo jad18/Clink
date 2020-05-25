@@ -60,32 +60,11 @@ var artsList = ['Drawing', 'Dance', 'Fashion', 'Graphic Design',
 // ///////////////
 
 
-// ///////////////
-// Initialization of profile
-// ///////////////
-
+//If first time rendering, set login status to false
+if(JSON.parse(sessionStorage.getItem("isLoggedIn")) === null)
 {
-  let loggedIn = JSON.parse(sessionStorage.getItem("isLoggedIn"));
-
-  if(loggedIn)
-  {
-    if(!JSON.parse(sessionStorage.getItem("initProfile")))
-    {
-      sessionStorage.setItem("initProfile", "true");
-      //sessionStorage.setItem("profile_sports", JSON.stringify(["Soccer", "Baseball"]));
-      sessionStorage.setItem("profile_movies", JSON.stringify(["Comedy", "Western"]));
-    }
-  }
-  else if(loggedIn === null)
-  {
-    sessionStorage.setItem("isLoggedIn", "false");
-  }
+  sessionStorage.setItem("isLoggedIn", "false");
 }
-
-
-// ///////////////
-// End
-// ///////////////
 
 
 function logOut()
@@ -236,7 +215,7 @@ function getRouter(loggedIn)
           }
         />
 
-        <Redirect to="/about"/>
+        <Redirect to="/"/>
       </Switch>
     );
   }

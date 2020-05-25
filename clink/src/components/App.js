@@ -4,11 +4,18 @@ import { Route, Switch, Link, Redirect } from "react-router-dom";
 
 //Page imports
 import AboutPage from "./about_page.js";
-import NextPage from "./profile_change_home.js";
-import ErrorPage from "./404_error.js";
-import GeneralForm from "./general_form.js";
+import ChangeProfilePage from "./profile_change_home.js";
+
+import SportsForm from "./sports_form.js";
+import MoviesForm from "./movies_form.js";
+import OutdoorForm from "./outdoor_form.js";
+import IndoorForm from "./indoor_form.js";
+import CuisineForm from "./cuisine_form.js";
+import ArtsForm from "./arts_form.js";
+
 import LoginPage from "./login_page.js";
 import SignupPage from "./signup_page.js";
+import MessagesPage from "./messages.js";
 
 // ///////////////
 //Form selection arrays
@@ -48,6 +55,7 @@ var sportsList = [
   "Weightlifting",
   "Wrestling",
 ];
+
 var movieList = [
   "Action",
   "Adventure",
@@ -60,13 +68,14 @@ var movieList = [
   "Experimental",
   "Fantasy",
   "Family",
+  "First Responder",
   "Historical",
   "Horror",
   "Independent",
   "Mystery",
   "Musical",
   "Noir",
-  "Psychological/suspenseful",
+  "Psychological/Suspense",
   "Reality",
   "Romance",
   "Sci-fi",
@@ -74,12 +83,100 @@ var movieList = [
   "War",
   "Western",
 ];
+
+var outdoorList = [
+  "Camping",
+  "Canoeing",
+  "Fishing",
+  "Gardening",
+  "Hiking",
+  "Ice Skating",
+  "Kayaking",
+  "Running",
+  "Snowboarding",
+  "Skiing",
+  "Stargazing",
+  "Walking",
+  "Woodwork",
+  "Yardwork",
+];
+
+var indoorList = [
+  "Art Projects",
+  "Board Games",
+  "Card Games",
+  "Cleaning",
+  "Cooking",
+  "DIY Projects",
+  "Napping",
+  "Reading Books",
+  "TV/Movies",
+  "Video Games",
+];
+
+var cuisineList = [
+  "African",
+  "American",
+  "British",
+  "Cajun",
+  "Caribbean",
+  "Chinese",
+  "French",
+  "Greek",
+  "Indian",
+  "Indonesian",
+  "Italian",
+  "Japanese",
+  "Korean",
+  "Lebanese",
+  "Mexican",
+  "Middle Eastern",
+  "Moroccan",
+  "Peruvian",
+  "Polish",
+  "Spanish",
+  "Thai",
+  "Turkish",
+  "Vietnamese",
+];
+
+var artsList = [
+  "Drawing",
+  "Dance",
+  "Fashion",
+  "Graphic Design",
+  "Instrument",
+  "Opera",
+  "Painting",
+  "Photography",
+  "Photoshop",
+  "Pottery",
+  "Singing",
+  "Scenic Design",
+  "Sculpting",
+  "Theater Performance",
+  "Video Editing",
+];
+
 // ///////////////
 // End
 // ///////////////
 
+//If first time rendering, set login status to false
+if (JSON.parse(sessionStorage.getItem("isLoggedIn")) === null) {
+  sessionStorage.setItem("isLoggedIn", "false");
+}
+
+function logOut() {
+  sessionStorage.clear();
+  sessionStorage.setItem("isLoggedIn", "false");
+  window.location = "/login";
+}
+
 function getLinkButtons(loggedIn) {
   if (loggedIn) {
+    const name = sessionStorage.getItem("username");
+    const room = "clink";
     return (
       <div className="button-group">
         <Link to="/about">
@@ -94,11 +191,17 @@ function getLinkButtons(loggedIn) {
           <button className="link-button1">Profile</button>
         </Link>
 
-        <button className="link-button1">Messages</button>
+        <Link to={`/messages?name=${name}&room=${room}`}>
+          <button className="link-button1">Messages</button>
+        </Link>
 
         <Link to="/change_profile">
           <button id="change-profile-button">Change Profile</button>
         </Link>
+
+        <button className="link-button1" onClick={logOut}>
+          Log Out
+        </button>
       </div>
     );
   } else {
@@ -126,22 +229,106 @@ function getRouter(loggedIn) {
       <Switch>
         <Route exact path="/" component={AboutPage} />
         <Route exact path="/about" component={AboutPage} />
-        <Route exact path="/change_profile" component={NextPage} />
+        <Route exact path="/change_profile" component={ChangeProfilePage} />
+        <Route exact path="/messages" component={MessagesPage} />
+
         <Route
           exact
           path="/change_profile/sports"
           render={(props) => (
-            <GeneralForm
+            <SportsForm
               {...props}
-              title={"Sports Information"}
+              title={"Sports Preferences"}
               entries={sportsList}
-              trueEntries={["Soccer"]}
-              maxEntries={4}
+              profileType={"sports"}
+              trueEntries={JSON.parse(sessionStorage.getItem("profile_sports"))}
+              maxEntries={5}
+              nextPageLink={"/change_profile/movies"}
             />
           )}
         />
-        <Route exact path="/404_error" component={ErrorPage} />
-        <Redirect to="/404_error" />
+
+        <Route
+          exact
+          path="/change_profile/movies"
+          render={(props) => (
+            <MoviesForm
+              {...props}
+              title={"TV/Movie Preferences"}
+              entries={movieList}
+              profileType={"movies"}
+              trueEntries={JSON.parse(sessionStorage.getItem("profile_movies"))}
+              maxEntries={4}
+              nextPageLink={"/change_profile/outdoor_activities"}
+            />
+          )}
+        />
+
+        <Route
+          exact
+          path="/change_profile/outdoor_activities"
+          render={(props) => (
+            <OutdoorForm
+              {...props}
+              title={"Favorite Outdoor Activities"}
+              entries={outdoorList}
+              profileType={"outdoor"}
+              trueEntries={[]}
+              maxEntries={3}
+              nextPageLink={"/change_profile/indoor_activities"}
+            />
+          )}
+        />
+
+        <Route
+          exact
+          path="/change_profile/indoor_activities"
+          render={(props) => (
+            <IndoorForm
+              {...props}
+              title={"Favorite Indoor Activities"}
+              entries={indoorList}
+              profileType={"indoor"}
+              trueEntries={[]}
+              maxEntries={3}
+              nextPageLink={"/change_profile/cuisines"}
+            />
+          )}
+        />
+
+        <Route
+          exact
+          path="/change_profile/cuisines"
+          render={(props) => (
+            <CuisineForm
+              {...props}
+              title={"Favorite Cuisines"}
+              entries={cuisineList}
+              profileType={"cuisines"}
+              trueEntries={[]}
+              maxEntries={4}
+              nextPageLink={"/change_profile/arts_and_media"}
+            />
+          )}
+        />
+
+        <Route
+          exact
+          path="/change_profile/arts_and_media"
+          render={(props) => (
+            <ArtsForm
+              {...props}
+              title={"Arts, Theater, and Media Activities"}
+              entries={artsList}
+              profileType={"arts"}
+              trueEntries={[]}
+              maxEntries={3}
+              nextPageLink={"/change_profile"}
+            />
+          )}
+        />
+
+        <Redirect to={sessionStorage.getItem("lastValidPage")} />
       </Switch>
     );
   } else {
@@ -170,7 +357,7 @@ class App extends React.Component {
     var loggedIn;
 
     if (this.state.hasSetLogin) {
-      loggedIn = sessionStorage.getItem("isLoggedIn");
+      loggedIn = JSON.parse(sessionStorage.getItem("isLoggedIn"));
     } else {
       loggedIn = false;
       this.setState({ hasSetLogin: true });
@@ -178,7 +365,7 @@ class App extends React.Component {
 
     return (
       <div className="App">
-        <img src="clink_logo.jpg" alt="Clink logo" id="page-logo" />
+        <img src="/clink_logo.jpg" alt="Clink logo" id="page-logo" />
 
         <hr />
         {getLinkButtons(loggedIn)}

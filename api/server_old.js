@@ -32,7 +32,7 @@ app.use(methodOverride('_method'));
 
 app.get('/', checkAuthentication, (req, res) =>
 	{
-
+	    res.render('temphomescreen.ejs');
 	});
 
 app.get('/login', checkNotAuthenticated, (req, res) => {

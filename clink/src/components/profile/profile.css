@@ -1,0 +1,85 @@
+.App {
+  font-family: sans-serif;
+  text-align: center;
+}
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #8564ff;
+  font-family: Montserrat, sans-serif;
+  display: flex;
+  align-items: 30px;
+  justify-content: center;
+  margin: 100px;
+}
+
+h2 {
+  margin-left: justify-content;
+  margin-left: 280px;
+  text-transform: uppercase;
+  text-emphasis-color: rgb(194, 193, 183);
+  font-weight: 800;
+}
+h6 {
+  margin: 10px;
+  text-transform: uppercase;
+}
+
+.card {
+  background-color: #dce7e7;
+  border: 6px solid #c0c9c9;
+  border-radius: 7px;
+  color: #000000;
+
+  font-family: Montserrat, sans-serif;
+  font-weight: 500;
+  padding: 10px 25px;
+}
+
+.stripes {
+  background-color: rgb(194, 193, 183);
+  color: #c8f9ff;
+  font: bold;
+  border-radius: 7px;
+  color: rgb(0, 0, 0);
+  font-family: Montserrat, sans-serif;
+  font-weight: 500;
+  padding: 10px 25px;
+  height: px;
+}
+.stripes:hover {
+  background-color: rgb(173, 166, 166);
+  color: rgb(255, 248, 234);
+}
+
+.hobies {
+  background-color: #f6f5fc;
+  text-align: left;
+  padding: 15px;
+  margin-top: 30px;
+  background-color: #dce7e7;
+  border: 6px solid #c0c9c9;
+  border-radius: 15px;
+}
+
+.hobies ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  background-color: #dce7e7;
+}
+
+.hobies li {
+  border: 1px solid #2d2747;
+  border-radius: 7px;
+  display: inline-block;
+  font-size: 12px;
+  margin: 7px 7px 7px 0;
+  padding: 7px;
+  background-color: rgb(194, 193, 183);
+  background-color: #dce7e7;
+  border: 6px solid #c0c9c9;
+  border-radius: 15px;
+}

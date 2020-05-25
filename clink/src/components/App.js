@@ -260,7 +260,7 @@ class App extends React.Component
 
     return (
       <div className="App">
-        <img src='clink_logo.jpg' alt="Clink logo" id="page-logo"/>
+        <img src='/clink_logo.jpg' alt="Clink logo" id="page-logo"/>
 
         <hr/>
         {getLinkButtons(loggedIn)}

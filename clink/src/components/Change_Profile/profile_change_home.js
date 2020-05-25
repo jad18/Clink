@@ -41,7 +41,7 @@ function ChangeProfilePage() {
                 <tr className='table-row'>
                     <td className='table-column'>
                         <Link to='/change_profile/cuisines'>
-                            <button className='link-button3'>Cuisines</button>
+                            <button className='link-button3'>Types of Food</button>
                         </Link>
                     </td>
                     <td className='table-column'>

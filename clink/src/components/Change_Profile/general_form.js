@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import FormButton from './form_button.js';
+import FormButton from '../form_button.js';
 
 
 function hasTrueValue(trueValues, value)
@@ -12,7 +12,7 @@ function hasTrueValue(trueValues, value)
     return false;
 }
 
-class SearchGeneralForm extends React.Component {
+class GeneralForm extends React.Component {
     constructor(props)
     {
         super(props);
@@ -73,7 +73,7 @@ class SearchGeneralForm extends React.Component {
       });
 
       alert(trueEntries);
-      sessionStorage.setItem("search_" + this.profileType, JSON.stringify(trueEntries));
+      sessionStorage.setItem("profile_" + this.profileType, JSON.stringify(trueEntries));
     }
 
 
@@ -152,7 +152,7 @@ class SearchGeneralForm extends React.Component {
             <div className="App">
                 <h1>{this.title}</h1>
                 <h4>
-                    Choose what you're looking for (up to {this.maxEntries} selections):
+                    Choose your preferences out of the following (up to {this.maxEntries} selections):
                 </h4>
                 <p>
                     (Note: You must hit the 'Submit Changes' button to confirm any changes)
@@ -169,11 +169,11 @@ class SearchGeneralForm extends React.Component {
             </form>
     
             <p>
-                <Link to='/search'>
-                    <button className="link-button2">Back to Search Home</button>
+                <Link to='/change_profile'>
+                    <button className="link-button2">Back to Profile Change</button>
                 </Link>
                 <Link to={this.nextPageLink}>
-                    <button className="link-button2">Next Search Section</button>
+                    <button className="link-button2">Next Profile Section</button>
                 </Link>
             </p>
             </div>
@@ -181,4 +181,4 @@ class SearchGeneralForm extends React.Component {
     }
 }
 
-export default SearchGeneralForm;
+export default GeneralForm;

@@ -5,15 +5,21 @@ import {Route, Switch, Link, Redirect} from 'react-router-dom';
 //Page imports
 import AboutPage from './about_page.js';
 
-import SearchHomePage from './search_home.js';
+import SearchHomePage from './Search/search_home.js';
+import SearchSportsForm from './Search/search_sports_form.js';
+import SearchMoviesForm from './Search/search_movies_form.js';
+import SearchOutdoorForm from './Search/search_outdoor_form.js';
+import SearchIndoorForm from './Search/search_indoor_form.js';
+import SearchCuisineForm from './Search/search_cuisine_form.js';
+import SearchArtsForm from './Search/search_arts_form.js';
 
-import ChangeProfilePage from './profile_change_home.js';
-import SportsForm from './sports_form.js';
-import MoviesForm from './movies_form.js';
-import OutdoorForm from './outdoor_form.js';
-import IndoorForm from './indoor_form.js';
-import CuisineForm from './cuisine_form.js';
-import ArtsForm from './arts_form.js';
+import ChangeProfilePage from './Change_Profile/profile_change_home.js';
+import SportsForm from './Change_Profile/sports_form.js';
+import MoviesForm from './Change_Profile/movies_form.js';
+import OutdoorForm from './Change_Profile/outdoor_form.js';
+import IndoorForm from './Change_Profile/indoor_form.js';
+import CuisineForm from './Change_Profile/cuisine_form.js';
+import ArtsForm from './Change_Profile/arts_form.js';
 
 import LoginPage from './login_page.js';
 import SignupPage from './signup_page.js';
@@ -144,7 +150,85 @@ function getRouter(loggedIn)
         <Route exact path="/about" component={AboutPage}/>
         <Route exact path="/search" component={SearchHomePage} />
         <Route exact path="/change_profile" component={ChangeProfilePage}/>
-	<Route exact path="/messages" component={MessagesPage}/>
+	      <Route exact path="/messages" component={MessagesPage}/>
+
+        <Route exact path="/search/sports" 
+          render={(props) =>
+            <SearchSportsForm {...props}
+              title={"Sports Preferences"}
+              entries={sportsList}
+              searchType={"sports"}
+              trueEntries={[]}
+              maxEntries={5}
+              nextPageLink={"/search/movies"}
+            />
+          }
+        />
+
+        <Route exact path="/search/movies" 
+          render={(props) =>
+            <SearchMoviesForm {...props}
+              title={"TV/Movie Preferences"}
+              entries={movieList}
+              searchType={"movies"}
+              trueEntries={[]}
+              maxEntries={4}
+              nextPageLink={"/search/outdoor_activities"}
+            />
+          }
+        />
+
+        <Route exact path="/search/outdoor_activities" 
+          render={(props) =>
+            <SearchOutdoorForm {...props}
+              title={"Favorite Outdoor Activities"}
+              entries={outdoorList}
+              searchType={"outdoor"}
+              trueEntries={[]}
+              maxEntries={3}
+              nextPageLink={"/search/indoor_activities"}
+            />
+          }
+        />
+
+        <Route exact path="/search/indoor_activities" 
+          render={(props) =>
+            <SearchIndoorForm {...props}
+              title={"Favorite Indoor Activities"}
+              entries={indoorList}
+              searchType={"indoor"}
+              trueEntries={[]}
+              maxEntries={3}
+              nextPageLink={"/search/cuisines"}
+            />
+          }
+        />
+
+        <Route exact path="/search/cuisines" 
+          render={(props) =>
+            <SearchCuisineForm {...props}
+              title={"Favorite Types of Food"}
+              entries={cuisineList}
+              searchType={"cuisines"}
+              trueEntries={[]}
+              maxEntries={4}
+              nextPageLink={"/search/arts_and_media"}
+            />
+          }
+        />
+
+        <Route exact path="/search/arts_and_media" 
+          render={(props) =>
+            <SearchArtsForm {...props}
+              title={"Arts, Theater, and Media Activities"}
+              entries={artsList}
+              searchType={"arts"}
+              trueEntries={[]}
+              maxEntries={3}
+              nextPageLink={"/search"}
+            />
+          }
+        />
 	    
         <Route exact path="/change_profile/sports" 
           render={(props) =>
@@ -201,7 +285,7 @@ function getRouter(loggedIn)
         <Route exact path="/change_profile/cuisines" 
           render={(props) =>
             <CuisineForm {...props}
-              title={"Favorite Cuisines"}
+              title={"Favorite Types of Food"}
               entries={cuisineList}
               profileType={"cuisines"}
               trueEntries={[]}

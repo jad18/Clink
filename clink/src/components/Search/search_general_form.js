@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import FormButton from './form_button.js';
+import FormButton from '../form_button.js';
 
 
 function hasTrueValue(trueValues, value)
@@ -12,7 +12,7 @@ function hasTrueValue(trueValues, value)
     return false;
 }
 
-class GeneralForm extends React.Component {
+class SearchGeneralForm extends React.Component {
     constructor(props)
     {
         super(props);
@@ -20,7 +20,7 @@ class GeneralForm extends React.Component {
         this.maxEntries = props.maxEntries;
         this.totalOptions = props.entries.length;
         this.title = props.title;
-        this.profileType = props.profileType;
+        this.searchType = props.searchType;
         this.nextPageLink = props.nextPageLink;
 
         this.state = {
@@ -73,7 +73,7 @@ class GeneralForm extends React.Component {
       });
 
       alert(trueEntries);
-      sessionStorage.setItem("profile_" + this.profileType, JSON.stringify(trueEntries));
+      sessionStorage.setItem("search_" + this.searchType, JSON.stringify(trueEntries));
     }
 
 
@@ -152,7 +152,7 @@ class GeneralForm extends React.Component {
             <div className="App">
                 <h1>{this.title}</h1>
                 <h4>
-                    Choose your preferences out of the following (up to {this.maxEntries} selections):
+                    Choose what you're looking for (up to {this.maxEntries} selections):
                 </h4>
                 <p>
                     (Note: You must hit the 'Submit Changes' button to confirm any changes)
@@ -169,11 +169,11 @@ class GeneralForm extends React.Component {
             </form>
     
             <p>
-                <Link to='/change_profile'>
-                    <button className="link-button2">Back to Profile Change</button>
+                <Link to='/search'>
+                    <button className="link-button2">Back to Search Home</button>
                 </Link>
                 <Link to={this.nextPageLink}>
-                    <button className="link-button2">Next Profile Section</button>
+                    <button className="link-button2">Next Search Section</button>
                 </Link>
             </p>
             </div>
@@ -181,4 +181,4 @@ class GeneralForm extends React.Component {
     }
 }
 
-export default GeneralForm;
+export default SearchGeneralForm;

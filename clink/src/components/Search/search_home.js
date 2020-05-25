@@ -48,7 +48,7 @@ class SearchHomePage extends React.Component {
             {this.getUnresolved()}
 
             <p>
-                <Link to='/search'>
+                <Link to='/search/sports'>
                     <button className="link-button2">Start from the beginning</button>
                 </Link>
                 <button className="link-button2" onClick={this.clearSearch}>Clear Entries</button>
@@ -58,48 +58,48 @@ class SearchHomePage extends React.Component {
                 <tbody>
                 <tr className='table-row'>
                     <td className='table-column'>
-                        <Link to='/search'>
+                        <Link to='/search/sports'>
                             <button className='link-button3'>Sports</button>
                         </Link>
                     </td>
                     <td className='table-column'>
-                        <Link to='/search'>
+                        <Link to='/search/movies'>
                             <button className='link-button3'>TV/Movies</button>
                         </Link>
                     </td>
                 </tr>
                 <tr className='table-row'>
                     <td className='table-column'>
-                        <Link to='/search'>
+                        <Link to='/search/outdoor'>
                             <button className='link-button3'>Outdoor Activities</button>
                         </Link>
                     </td>
                     <td className='table-column'>
-                        <Link to='/search'>
+                        <Link to='/search/indoor'>
                             <button className='link-button3'>Indoor Activities</button>
                         </Link>
                     </td>
                 </tr>
                 <tr className='table-row'>
                     <td className='table-column'>
-                        <Link to='/search'>
-                            <button className='link-button3'>Cuisines</button>
+                        <Link to='/search/cuisines'>
+                            <button className='link-button3'>Types of Food</button>
                         </Link>
                     </td>
                     <td className='table-column'>
-                        <Link to='/search'>
+                        <Link to='/search/arts_and_media'>
                             <button className='link-button3'>Arts and Media</button>
                         </Link>
                     </td>
                 </tr>
                 <tr className='table-row'>
                     <td className='table-column'>
-                        <Link to='/change_profile/cuisines'>
+                        <Link to='/search/cuisines'>
                             <button className='link-button3'>Personality</button>
                         </Link>
                     </td>
                     <td className='table-column'>
-                        <Link to='/change_profile/arts_and_media'>
+                        <Link to='/search/arts_and_media'>
                             <button className='link-button3'>Personal Information</button>
                         </Link>
                     </td>

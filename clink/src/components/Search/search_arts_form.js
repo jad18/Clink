@@ -5,7 +5,7 @@ class SearchArtsForm extends SearchGeneralForm
     constructor(props)
     {
         super(props);
-        sessionStorage.setItem("lastValidPage", "/change_profile/arts_and_media");
+        sessionStorage.setItem("lastValidPage", "/search/arts_and_media");
     }
 }
 

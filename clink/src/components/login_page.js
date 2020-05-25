@@ -21,7 +21,7 @@ class LoginPage extends React.Component
     var loginData = {username: received_username,
                       password: event.target.elements['login-password'].value};
       console.log(loginData);  
-    sessionStorage.setItem('username', event.target.elements['login-username'].value);  
+      
     const options = {
       method: 'POST',
       headers: {'content-type' : 'application/json'},
@@ -29,7 +29,7 @@ class LoginPage extends React.Component
     }
 
     try {
-      const response = await fetch("http://192.168.1.166:3000/login", options) //change [localhost] to your local IP address
+      const response = await fetch("http://[localhost]:3000/login", options) //change [localhost] to your local IP address
       if(!response.ok)
       {
         alert(response.statusText);
@@ -58,7 +58,8 @@ class LoginPage extends React.Component
       {
         self.setState({ errorMsg: ''});
         sessionStorage.setItem('isLoggedIn', "true");
-        sessionStorage.setItem('username', received_username)
+        sessionStorage.setItem('username', received_username);
+        sessionStorage.setItem("searchUnresolved", "false");
         for(var element in result.profile)
         {
           sessionStorage.setItem('profile_' + String(element), JSON.stringify(result.profile[element]));

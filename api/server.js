@@ -127,8 +127,10 @@ function checkNotAuthenticated(req,res,next)
     next();
 }
 
+//this is to track the users that are present in the messaging room
 const messageUsers = [];
 
+//helper functions
 const addUser = ({id, name, room}) => {
     const m_user = {id, name, room};
     messageUsers.push(m_user);
@@ -143,6 +145,8 @@ const removeUser = (id) => {
 
 const getUser = (id) => messageUsers.find((m_user) => m_user.id === id);
 
+//use of node library socket.io
+//this is connecting a specific user to the socket
 io.on('connect', (socket) => {
     socket.on('join', ({name, room}, callback) => {
 	addUser({id: socket.id, name, room});
@@ -150,6 +154,8 @@ io.on('connect', (socket) => {
 	callback();
     });
 
+    //when a user sends a message, the socket emits to the front end so that
+    //the message is displayed
     socket.on('sendMessage', (message, callback) => {
 	const user = getUser(socket.id);
 	io.to("clink").emit('message', {user: user.name, text: message});

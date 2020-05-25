@@ -33,6 +33,7 @@ class GeneralForm extends React.Component {
                 {}
             ),
             
+            hasChanges: false,
             numEntries: props.trueEntries.length
         }
         this.handleChange = this.handleChange.bind(this);
@@ -40,12 +41,15 @@ class GeneralForm extends React.Component {
         this.makeOneCheckbox = this.makeOneCheckbox.bind(this);
         this.makeTwoCheckboxes = this.makeTwoCheckboxes.bind(this);
         this.makeCheckboxes = this.makeCheckboxes.bind(this);
+        this.displayChanges = this.displayChanges.bind(this);
     }
 
     handleChange = event =>
     {
         const {value} = event.target;
         const isChecked = this.state.entries[value];
+
+        this.setState({ hasChanges: true });
 
         if(this.state.numEntries !== this.maxEntries || isChecked)
         {
@@ -64,6 +68,7 @@ class GeneralForm extends React.Component {
 
     submitForm(event)
     {
+        this.setState({ hasChanges: false });
         var trueEntries = [];
         event.preventDefault();
         Object.keys(this.state.entries)
@@ -145,6 +150,14 @@ class GeneralForm extends React.Component {
         );
     }
 
+    displayChanges()
+    {
+        if(this.state.hasChanges)
+            return(<p>Don't forget to save your changes!</p>);
+        else
+            return(<p>Your profile is up-to-date.</p>);
+    }
+
     render()
     {
         return (
@@ -160,6 +173,7 @@ class GeneralForm extends React.Component {
             </div>
             <form onSubmit={this.submitForm} className="form-body">
                 {this.makeCheckboxes()}
+                {this.displayChanges()}
                 <div>
                     <button type="submit" className='link-button2'>
                         Submit Changes

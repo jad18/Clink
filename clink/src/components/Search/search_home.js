@@ -108,7 +108,7 @@ class SearchHomePage extends React.Component {
             </table>
 
             
-            <p><Link to='/'>
+            <p><Link to='/feed'>
                 <button className="link-button2"><strong>Search</strong></button>
             </Link></p>
         </div>

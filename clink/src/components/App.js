@@ -268,7 +268,7 @@ function getRouter(loggedIn)
               title={"Favorite Outdoor Activities"}
               entries={outdoorList}
               profileType={"outdoor"}
-              trueEntries={[]}
+              trueEntries={JSON.parse(sessionStorage.getItem("profile_outdoor"))}
               maxEntries={3}
               nextPageLink={"/change_profile/indoor_activities"}
             />
@@ -281,7 +281,7 @@ function getRouter(loggedIn)
               title={"Favorite Indoor Activities"}
               entries={indoorList}
               profileType={"indoor"}
-              trueEntries={[]}
+              trueEntries={JSON.parse(sessionStorage.getItem("profile_indoor"))}
               maxEntries={3}
               nextPageLink={"/change_profile/cuisines"}
             />
@@ -294,7 +294,7 @@ function getRouter(loggedIn)
               title={"Favorite Types of Food"}
               entries={cuisineList}
               profileType={"cuisines"}
-              trueEntries={[]}
+              trueEntries={JSON.parse(sessionStorage.getItem("profile_cuisines"))}
               maxEntries={4}
               nextPageLink={"/change_profile/arts_and_media"}
             />
@@ -307,7 +307,7 @@ function getRouter(loggedIn)
               title={"Arts, Theater, and Media Activities"}
               entries={artsList}
               profileType={"arts"}
-              trueEntries={[]}
+              trueEntries={JSON.parse(sessionStorage.getItem("profile_arts"))}
               maxEntries={3}
               nextPageLink={"/change_profile"}
             />

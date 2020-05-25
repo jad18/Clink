@@ -8,7 +8,7 @@ class SearchHomePage extends React.Component {
         super();
         sessionStorage.setItem("lastValidPage", "/search");
 
-        this.state = {searchUnresolved: true};//JSON.parse(sessionStorage.getItem("searchUnresolved"))};
+        this.state = {searchUnresolved: JSON.parse(sessionStorage.getItem("searchUnresolved"))};
 
         this.getUnresolved = this.getUnresolved.bind(this);
         this.clearSearch = this.clearSearch.bind(this);
@@ -43,7 +43,7 @@ class SearchHomePage extends React.Component {
     return (
         <div className="App">
             <h2>Select which traits or preferences you'd like to see in a friend:</h2>
-            <h4>(Everything is in the same place so it's easier to find!)</h4>
+            <h4>(All entries are in the same place as the Change Profile section so they're easier to find!)</h4>
 
             {this.getUnresolved()}
 
@@ -107,9 +107,10 @@ class SearchHomePage extends React.Component {
                 </tbody>
             </table>
 
-            <Link to='/'>
+            
+            <p><Link to='/'>
                 <button className="link-button2"><strong>Search</strong></button>
-            </Link>
+            </Link></p>
         </div>
     );
     }

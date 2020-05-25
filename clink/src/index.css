@@ -134,6 +134,7 @@ code {
 .table-row, .table-column {
   border: 1px solid white;
   height: 100px;
+  width: 50%;
 }
 
 .inputBox {

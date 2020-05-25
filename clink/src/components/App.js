@@ -24,6 +24,7 @@ import ArtsForm from './Change_Profile/arts_form.js';
 import LoginPage from './login_page.js';
 import SignupPage from './signup_page.js';
 import MessagesPage from './messages.js';
+import FeedPage from './feed.js';
 
 // ///////////////
 //Form selection arrays
@@ -101,6 +102,10 @@ function getLinkButtons(loggedIn)
           <button className="link-button1">Search</button>
         </Link>
 
+        <Link to='/feed'>
+          <button className="link-button1">Feed</button>
+        </Link>
+
         <Link to='/change_profile/sports'>
           <button className="link-button1">Profile</button>
         </Link>
@@ -149,6 +154,7 @@ function getRouter(loggedIn)
         <Route exact path="/" component={AboutPage}/>
         <Route exact path="/about" component={AboutPage}/>
         <Route exact path="/search" component={SearchHomePage} />
+        <Route exact path ="/feed" component={FeedPage} />
         <Route exact path="/change_profile" component={ChangeProfilePage}/>
 	      <Route exact path="/messages" component={MessagesPage}/>
 

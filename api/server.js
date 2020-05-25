@@ -9,6 +9,11 @@ const passport = require('passport');
 const flash = require('express-flash');
 const session = require('express-session');
 const methodOverride = require('method-override');
+const http = require('http');
+const socketio = require('socket.io');
+const cors = require('cors');
+const server = http.createServer(app);
+const io = socketio(server);
 
 const initializePassport = require('./passport-config');
 initializePassport(passport,
@@ -30,6 +35,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(methodOverride('_method'));
+app.use(cors());
 
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
@@ -121,4 +127,39 @@ function checkNotAuthenticated(req,res,next)
     next();
 }
 
+const messageUsers = [];
+
+const addUser = ({id, name, room}) => {
+    const m_user = {id, name, room};
+    messageUsers.push(m_user);
+    return {m_user};
+}
+
+const removeUser = (id) => {
+    const index = messageUsers.findIndex((m_user) => m_user.id === id);
+    if(index !== -1)
+	return users.splice(index, 1)[0];
+}
+
+const getUser = (id) => messageUsers.find((m_user) => m_user.id === id);
+
+io.on('connect', (socket) => {
+    socket.on('join', ({name, room}, callback) => {
+	addUser({id: socket.id, name, room});
+	socket.join("clink");
+	callback();
+    });
+
+    socket.on('sendMessage', (message, callback) => {
+	const user = getUser(socket.id);
+	io.to("clink").emit('message', {user: user.name, text: message});
+	callback()
+    });
+
+    socket.on('disconnect', () => {
+	removeUser(socket.id);
+    });
+});
+
 app.listen(3000, () => console.log("Listening on port 3000"));
+server.listen(process.env.PORT || 5000, () => console.log("Server has started."));

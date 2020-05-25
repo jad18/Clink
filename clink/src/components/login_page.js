@@ -20,8 +20,8 @@ class LoginPage extends React.Component
   {
     var loginData = {username: event.target.elements['login-username'].value,
                       password: event.target.elements['login-password'].value};
-    console.log(loginData);
-
+      console.log(loginData);  
+    sessionStorage.setItem('username', event.target.elements['login-username'].value);  
     const options = {
       method: 'POST',
       headers: {'content-type' : 'application/json'},

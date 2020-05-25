@@ -1,5 +1,14 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+NOTE: IF YOU PULL FROM THE REMOTE REPOSITORY, YOU MUST CHANGE THE [LOCALHOST]
+IN login_page.js AND signup_page.js TO YOUR LOCAL IP ADDRESS FOR IT TO WORK.
+
+Also, you will need to run the command:
+  
+npm install --save react-router-dom socket.io-client react-scroll-to-bottom query-string
+
+to install the necessary dependencies for this patch (messaging)
+
 ## Available Scripts
 
 In the project directory, you can run:

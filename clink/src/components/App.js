@@ -9,6 +9,7 @@ import SportsForm from './sports_form.js';
 import MoviesForm from './movies_form.js';
 import LoginPage from './login_page.js';
 import SignupPage from './signup_page.js';
+import MessagesPage from './messages.js';
 
 // ///////////////
 //Form selection arrays
@@ -74,7 +75,9 @@ function logOut()
 function getLinkButtons(loggedIn)
 {
   if(loggedIn)
-  {
+    {
+	const name = sessionStorage.getItem("username");
+	const room = "clink";
     return (
       <div className="button-group">
 
@@ -89,9 +92,11 @@ function getLinkButtons(loggedIn)
         <Link to='/change_profile/sports'>
           <button className="link-button1">Profile</button>
         </Link>
-
+	   
+	    <Link to={`/messages?name=${name}&room=${room}`}>
         <button className="link-button1">Messages</button>
-
+	</Link>
+	
         <Link to='/change_profile'>
           <button id="change-profile-button">Change Profile</button>
         </Link>
@@ -132,6 +137,7 @@ function getRouter(loggedIn)
         <Route exact path="/" component={AboutPage}/>
         <Route exact path="/about" component={AboutPage}/>
         <Route exact path="/change_profile" component={ChangeProfilePage}/>
+	<Route exact path="/messages" component={MessagesPage}/>
         <Route exact path="/change_profile/sports" 
           render={(props) =>
             <SportsForm {...props}

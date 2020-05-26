@@ -67,6 +67,8 @@ class SearchGeneralForm extends React.Component {
 
     submitForm(event)
     {
+        event.preventDefault();
+
         this.setState({ hasChanges: false });
         var trueEntries = [];
         event.preventDefault();

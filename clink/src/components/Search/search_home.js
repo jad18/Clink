@@ -21,12 +21,15 @@ class SearchHomePage extends React.Component {
         sessionStorage.setItem("lastValidPage", "/search");
 
         this.state = {
-            requests: JSON.parse(sessionStorage.getItem("searchList"))
+            requests: JSON.parse(sessionStorage.getItem("searchList")),
+            errorMsg: ""
         };
 
         this.getRequests = this.getRequests.bind(this);
         this.clearSearch = this.clearSearch.bind(this);
+        this.checkSearch = this.checkSearch.bind(this);
         this.search = this.search.bind(this);
+        this.getErrorMsg = this.getErrorMsg.bind(this);
     }
 
     getRequests()
@@ -68,6 +71,18 @@ class SearchHomePage extends React.Component {
         this.setState({ requests: [] });
     }
 
+    checkSearch(reqList)
+    {
+        if(reqList.length === 0)
+        {
+            this.setState({errorMsg: "Don't forget to add to your request before you search!"})
+        }
+        else
+        {
+            this.search(reqList);
+        }
+    }
+
     search(reqList)
     {
         let request = {};
@@ -78,6 +93,11 @@ class SearchHomePage extends React.Component {
         }
         alert(request);
         this.clearSearch();
+    }
+
+    getErrorMsg()
+    {
+        return(<p>{this.state.errorMsg}</p>);
     }
 
     render()
@@ -110,12 +130,12 @@ class SearchHomePage extends React.Component {
                 </tr>
                 <tr className='table-row'>
                     <td className='table-column'>
-                        <Link to='/search/outdoor'>
+                        <Link to='/search/outdoor_activities'>
                             <button className='link-button3'>Outdoor Activities</button>
                         </Link>
                     </td>
                     <td className='table-column'>
-                        <Link to='/search/indoor'>
+                        <Link to='/search/indoor_activities'>
                             <button className='link-button3'>Indoor Activities</button>
                         </Link>
                     </td>
@@ -128,7 +148,7 @@ class SearchHomePage extends React.Component {
                     </td>
                     <td className='table-column'>
                         <Link to='/search/arts_and_media'>
-                            <button className='link-button3'>Arts and Media</button>
+                            <button className='link-button3'>Arts, Theater, and Media</button>
                         </Link>
                     </td>
                 </tr>
@@ -147,14 +167,12 @@ class SearchHomePage extends React.Component {
                 </tbody>
             </table>
 
-            <p>
-                {this.getRequests()}
-            </p>
+            <p> {this.getRequests()}</p>
+            <p>{this.getErrorMsg()}</p>
 
-            
-            <p><Link to='/feed'>
-                <button className="link-button2" onClick={() => this.search(this.state.requests)}><strong>Search</strong></button>
-            </Link></p>
+            <button className="link-button2" onClick={() => this.checkSearch(this.state.requests)}>
+                <strong>Search</strong>
+            </button>
         </div>
     );
     }

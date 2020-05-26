@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import {Link, useHistory} from 'react-router-dom';
 import FormButton from '../form_button.js';
 
 
@@ -12,6 +12,7 @@ function hasTrueValue(trueValues, value)
     return false;
 }
 
+
 class GeneralForm extends React.Component {
     constructor(props)
     {
@@ -22,6 +23,7 @@ class GeneralForm extends React.Component {
         this.title = props.title;
         this.profileType = props.profileType;
         this.nextPageLink = props.nextPageLink;
+        this.originalTrueEntries = props.trueEntries;
 
         this.state = {
             entries: props.entries.reduce(
@@ -42,6 +44,8 @@ class GeneralForm extends React.Component {
         this.makeTwoCheckboxes = this.makeTwoCheckboxes.bind(this);
         this.makeCheckboxes = this.makeCheckboxes.bind(this);
         this.displayChanges = this.displayChanges.bind(this);
+        this.resetChanges = this.resetChanges.bind(this);
+        //this.navigateTo = this.navigateTo.bind(this);
     }
 
     handleChange = event =>
@@ -49,10 +53,9 @@ class GeneralForm extends React.Component {
         const {value} = event.target;
         const isChecked = this.state.entries[value];
 
-        this.setState({ hasChanges: true });
-
         if(this.state.numEntries !== this.maxEntries || isChecked)
         {
+            this.setState({ hasChanges: true });
             let changeAmt = 1;
             if(isChecked) changeAmt = -1;
 
@@ -68,17 +71,40 @@ class GeneralForm extends React.Component {
 
     submitForm(event)
     {
-        this.setState({ hasChanges: false });
-        var trueEntries = [];
         event.preventDefault();
-        Object.keys(this.state.entries)
-            .filter(checkbox => this.state.entries[checkbox])
-            .forEach(checkbox => {
-            trueEntries.push(checkbox);
-      });
 
-      alert(trueEntries);
-      sessionStorage.setItem("profile_" + this.profileType, JSON.stringify(trueEntries));
+        if(this.state.hasChanges)
+        {
+            this.setState({ hasChanges: false });
+            var trueEntries = [];
+            Object.keys(this.state.entries)
+                .filter(checkbox => this.state.entries[checkbox])
+                .forEach(checkbox => {
+                trueEntries.push(checkbox);
+            });
+
+            alert(trueEntries);
+            alert("This is submitting a form");
+            sessionStorage.setItem("profile_" + this.profileType, JSON.stringify(trueEntries));
+        }
+    }
+
+    //If user leaves without saving changes, autosave these changes
+    componentWillUnmount()
+    {
+        if(this.state.hasChanges)
+        {
+            var trueEntries = [];
+            Object.keys(this.state.entries)
+                .filter(checkbox => this.state.entries[checkbox])
+                .forEach(checkbox => {
+                trueEntries.push(checkbox);
+            });
+
+            alert(trueEntries);
+            alert("This is unmounting");
+            sessionStorage.setItem("profile_" + this.profileType, JSON.stringify(trueEntries));
+        }
     }
 
 
@@ -153,10 +179,32 @@ class GeneralForm extends React.Component {
     displayChanges()
     {
         if(this.state.hasChanges)
-            return(<p>Don't forget to save your changes!</p>);
+            return(<p>You've made changes that will be automatically saved, but you can reset them here:</p>);
         else
             return(<p>Your profile is up-to-date.</p>);
     }
+
+    resetChanges()
+    {
+        let newEntries={};
+        Object.keys(this.state.entries).forEach(key =>
+            newEntries[key] = hasTrueValue(this.originalTrueEntries, key));
+
+        if(this.state.hasChanges)
+        {
+            this.setState({
+                entries: newEntries,
+                hasChanges: false,
+                numEntries: this.originalTrueEntries.length
+            });
+
+        }
+    }
+
+    /*navigateTo(location)
+    {
+        this.history.push(location);
+    }*/
 
     render()
     {
@@ -167,29 +215,27 @@ class GeneralForm extends React.Component {
                 <h4>
                     Choose your preferences out of the following (up to {this.maxEntries} selections):
                 </h4>
-                <p>
-                    (Note: You must hit the 'Submit Changes' button to confirm any changes)
-                </p>
+                
             </div>
             <form onSubmit={this.submitForm} className="form-body">
                 {this.makeCheckboxes()}
                 {this.displayChanges()}
-                <div>
-                    <button type="submit" className='link-button2'>
-                        Submit Changes
+                
+                <button type="button" onClick={this.resetChanges} className='link-button2'>Reset Changes</button>
+                
+
+                <p>
+                
+                    <Link to="/change_profile"><button type="submit" className="link-button2">
+                        Back to Profile Change
+                    </button></Link>
+
+                    <button type="submit" onClick={() => window.location = this.nextPageLink} className="link-button2">
+                        Next Profile Section
                     </button>
-                </div>
+                </p>
       
             </form>
-    
-            <p>
-                <Link to='/change_profile'>
-                    <button className="link-button2">Back to Profile Change</button>
-                </Link>
-                <Link to={this.nextPageLink}>
-                    <button className="link-button2">Next Profile Section</button>
-                </Link>
-            </p>
             </div>
         );
     }

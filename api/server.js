@@ -16,8 +16,6 @@ initializePassport(passport,
 		   id => users.find(user => user.id === id)
 		  );
 
-const users = []  //should connect to a database for storage in final product
-
 app.set('view-engine', 'ejs');
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
@@ -30,6 +28,59 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(methodOverride('_method'));
+
+// DATABASE SETUP 
+
+const MongoClient = require('mongodb').MongoClient
+const connectionString = 'mongodb+srv://rohanbattula:rohan12345@clinkdb-9xql0.mongodb.net/test?retryWrites=true&w=majority'
+MongoClient.connect(connectionString, { useUnifiedTopology: true })
+  .then(client => {
+    // ...
+    console.log('Connected to Database')
+    const db = client.db('user-list')
+    const users = db.collection('users')
+
+    //Creating a user using the Register page: password gets encrypted
+    app.post('/register', checkNotAuthenticated, (req, res,err) => {
+        try
+        {
+        
+        let hasFoundMatch = false;
+        db.collection('users').find().toArray(function (err, result) {
+            for(var i = 0; i < result.length; i++) {
+                var obj = result[i];
+                if(req.body.email === obj.username){
+                    hasFoundMatch = true;
+                    break;
+                }
+            }
+        })
+
+        if(hasFoundMatch) res.json(false);
+        else
+        {  
+            const hashedPassword = bcrypt.hash(req.body.password, 10);
+            users.insertOne({
+                name:req.body.name,
+                username:req.body.email,
+                password: hashedPassword
+            });
+
+            console.log('true');
+            res.redirect('/');
+        }
+        }
+        catch
+        {
+        console.log(err);
+        res.redirect('/');
+        }	
+    });
+  })
+  .catch(console.error)
+
+
+
 
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
@@ -64,39 +115,7 @@ app.get('/register', checkNotAuthenticated, (req, res) => {
     res.render('tempregister.ejs');
 });
 
-//Creating a user using the Register page: password gets encrypted
-app.post('/register', checkNotAuthenticated, async (req, res) => {
-    try
-    {
-    
-    let hasFoundMatch = false;
-    for(let i=0; i<users.length; i++)
-    {
-        if(req.body.username === users[i].username)
-        {
-            hasFoundMatch = true;
-            break;
-        }
-    }
 
-    if(hasFoundMatch) res.json(false);
-    else
-    {  
-        const hashedPassword = await bcrypt.hash(req.body.password, 10);
-	    users.push({
-	        id: Date.now().toString(),
-	        name: req.body.name,
-	        username: req.body.username,
-	        password: hashedPassword
-        });
-        res.json(true);
-    }
-    }
-    catch
-    {
-	res.json(null);
-    }	
-});
 
 app.delete('/logout', (req,res) => {
     req.logOut();

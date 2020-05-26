@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link, useHistory} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import FormButton from '../form_button.js';
 
 
@@ -45,7 +45,6 @@ class GeneralForm extends React.Component {
         this.makeCheckboxes = this.makeCheckboxes.bind(this);
         this.displayChanges = this.displayChanges.bind(this);
         this.resetChanges = this.resetChanges.bind(this);
-        //this.navigateTo = this.navigateTo.bind(this);
     }
 
     handleChange = event =>
@@ -83,26 +82,6 @@ class GeneralForm extends React.Component {
                 trueEntries.push(checkbox);
             });
 
-            alert(trueEntries);
-            alert("This is submitting a form");
-            sessionStorage.setItem("profile_" + this.profileType, JSON.stringify(trueEntries));
-        }
-    }
-
-    //If user leaves without saving changes, autosave these changes
-    componentWillUnmount()
-    {
-        if(this.state.hasChanges)
-        {
-            var trueEntries = [];
-            Object.keys(this.state.entries)
-                .filter(checkbox => this.state.entries[checkbox])
-                .forEach(checkbox => {
-                trueEntries.push(checkbox);
-            });
-
-            alert(trueEntries);
-            alert("This is unmounting");
             sessionStorage.setItem("profile_" + this.profileType, JSON.stringify(trueEntries));
         }
     }
@@ -179,7 +158,7 @@ class GeneralForm extends React.Component {
     displayChanges()
     {
         if(this.state.hasChanges)
-            return(<p>You've made changes that will be automatically saved, but you can reset them here:</p>);
+            return(<p>Don't forget to save your changes below:</p>);
         else
             return(<p>Your profile is up-to-date.</p>);
     }
@@ -201,11 +180,6 @@ class GeneralForm extends React.Component {
         }
     }
 
-    /*navigateTo(location)
-    {
-        this.history.push(location);
-    }*/
-
     render()
     {
         return (
@@ -217,7 +191,36 @@ class GeneralForm extends React.Component {
                 </h4>
                 
             </div>
+
             <form onSubmit={this.submitForm} className="form-body">
+                {this.makeCheckboxes()}
+                {this.displayChanges()}
+                <div>
+                    <button type="submit" className='link-button2'>
+                        Submit Changes
+                    </button>
+                </div>
+      
+            </form>
+    
+            <p>
+                <Link to='/change_profile'>
+                    <button className="link-button2">Back to Profile Change</button>
+                </Link>
+                <Link to={this.nextPageLink}>
+                    <button className="link-button2">Next Profile Section</button>
+                </Link>
+            </p>
+            </div>
+        );
+    }
+}
+
+export default GeneralForm;
+
+
+/* 
+<form onSubmit={this.submitForm} className="form-body">
                 {this.makeCheckboxes()}
                 {this.displayChanges()}
                 
@@ -236,9 +239,23 @@ class GeneralForm extends React.Component {
                 </p>
       
             </form>
-            </div>
-        );
-    }
-}
 
-export default GeneralForm;
+
+//If user leaves without saving changes, autosave these changes
+    componentWillUnmount()
+    {
+        if(this.state.hasChanges)
+        {
+            var trueEntries = [];
+            Object.keys(this.state.entries)
+                .filter(checkbox => this.state.entries[checkbox])
+                .forEach(checkbox => {
+                trueEntries.push(checkbox);
+            });
+
+            alert(trueEntries);
+            alert("This is unmounting");
+            sessionStorage.setItem("profile_" + this.profileType, JSON.stringify(trueEntries));
+        }
+    }
+*/

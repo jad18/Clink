@@ -1,6 +1,18 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 
+function extractListItems(list)
+{
+    let str = "";
+    for(let i=0; i<list.length; i++)
+    {
+        if(i===list.length-1) str += list[i];
+        else str += list[i] + ', ';
+
+    }
+    return str;
+}
+
 
 class SearchHomePage extends React.Component {
     constructor()
@@ -8,27 +20,36 @@ class SearchHomePage extends React.Component {
         super();
         sessionStorage.setItem("lastValidPage", "/search");
 
-        this.state = {searchUnresolved: JSON.parse(sessionStorage.getItem("searchUnresolved"))};
-
-        this.getUnresolved = this.getUnresolved.bind(this);
+        this.getRequest = this.getRequest.bind(this);
         this.clearSearch = this.clearSearch.bind(this);
     }
 
-    getUnresolved()
+    getRequest()
     {
-        if (this.state.searchUnresolved)
-        {
-            return(
+        alert("calling");
+        return(
+            <div>
+                <h2><u>Request List:</u></h2>
                 <p className="about-page-para">
-                    You have made changes to your search preferences but haven't hit search yet.
-                    To save you some trouble, we kept your preferences around in case you still
-                    wanted them. If you instead wanted to get rid of them, please press the 'Clear
-                    Entries' button below.
+                    <strong>Sports: </strong> {extractListItems(JSON.parse(sessionStorage.getItem("search_sports")))}
                 </p>
-            
-            );
-        }
-        else return(<div></div>);
+                <p className="about-page-para">
+                    <strong>TV and Movies: </strong> {extractListItems(JSON.parse(sessionStorage.getItem("search_movies")))}
+                </p>
+                <p className="about-page-para">
+                    <strong>Outdoor Activities: </strong> {extractListItems(JSON.parse(sessionStorage.getItem("search_outdoor")))}
+                </p>
+                <p className="about-page-para">
+                    <strong>Indoor Activities: </strong> {extractListItems(JSON.parse(sessionStorage.getItem("search_indoor")))}
+                </p>
+                <p className="about-page-para">
+                    <strong>Types of Food: </strong> {extractListItems(JSON.parse(sessionStorage.getItem("search_cuisines")))}
+                </p>
+                <p className="about-page-para">
+                    <strong>Arts, Theater, and Media:</strong>{extractListItems(JSON.parse(sessionStorage.getItem("search_arts")))}
+                </p>
+            </div>
+        );
     }
 
     clearSearch()
@@ -41,8 +62,6 @@ class SearchHomePage extends React.Component {
         sessionStorage.setItem("search_indoor", "[]");
         sessionStorage.setItem("search_cuisines", "[]");
         sessionStorage.setItem("search_arts", "[]");
-        
-        this.setState({searchUnresolved: false});
     }
 
     render()
@@ -51,8 +70,6 @@ class SearchHomePage extends React.Component {
         <div className="App">
             <h2>Select which traits or preferences you'd like to see in a friend:</h2>
             <h4>(All entries are in the same place as the Change Profile section so they're easier to find!)</h4>
-
-            {this.getUnresolved()}
 
             <p>
                 <Link to='/search/sports'>
@@ -113,6 +130,10 @@ class SearchHomePage extends React.Component {
                 </tr>
                 </tbody>
             </table>
+
+            <p>
+                {this.getRequest()}
+            </p>
 
             
             <p><Link to='/feed'>

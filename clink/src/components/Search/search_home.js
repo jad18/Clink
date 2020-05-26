@@ -20,13 +20,17 @@ class SearchHomePage extends React.Component {
         super();
         sessionStorage.setItem("lastValidPage", "/search");
 
-        this.getRequest = this.getRequest.bind(this);
+        this.state = {
+            requests: JSON.parse(sessionStorage.getItem("searchList"))
+        };
+
+        this.getRequests = this.getRequests.bind(this);
         this.clearSearch = this.clearSearch.bind(this);
+        this.search = this.search.bind(this);
     }
 
-    getRequest()
+    getRequests()
     {
-        alert("calling");
         return(
             <div>
                 <h2><u>Request List:</u></h2>
@@ -46,7 +50,7 @@ class SearchHomePage extends React.Component {
                     <strong>Types of Food: </strong> {extractListItems(JSON.parse(sessionStorage.getItem("search_cuisines")))}
                 </p>
                 <p className="about-page-para">
-                    <strong>Arts, Theater, and Media:</strong>{extractListItems(JSON.parse(sessionStorage.getItem("search_arts")))}
+                    <strong>Arts, Theater, and Media: </strong>{extractListItems(JSON.parse(sessionStorage.getItem("search_arts")))}
                 </p>
             </div>
         );
@@ -54,7 +58,6 @@ class SearchHomePage extends React.Component {
 
     clearSearch()
     {
-        sessionStorage.setItem("searchUnresolved", "false");
         sessionStorage.setItem("searchList", "[]");
         sessionStorage.setItem("search_sports", "[]");
         sessionStorage.setItem("search_movies", "[]");
@@ -62,6 +65,19 @@ class SearchHomePage extends React.Component {
         sessionStorage.setItem("search_indoor", "[]");
         sessionStorage.setItem("search_cuisines", "[]");
         sessionStorage.setItem("search_arts", "[]");
+        this.setState({ requests: [] });
+    }
+
+    search(reqList)
+    {
+        let request = {};
+        for(let i=0; i<reqList.length; i++)
+        {
+            request.item = JSON.parse(sessionStorage.getItem("search_" + reqList[i]));
+            console.log(reqList[i], request.item);
+        }
+        alert(request);
+        this.clearSearch();
     }
 
     render()
@@ -132,12 +148,12 @@ class SearchHomePage extends React.Component {
             </table>
 
             <p>
-                {this.getRequest()}
+                {this.getRequests()}
             </p>
 
             
             <p><Link to='/feed'>
-                <button className="link-button2"><strong>Search</strong></button>
+                <button className="link-button2" onClick={() => this.search(this.state.requests)}><strong>Search</strong></button>
             </Link></p>
         </div>
     );

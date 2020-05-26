@@ -78,6 +78,10 @@ class SearchGeneralForm extends React.Component {
 
       alert(trueEntries);
       sessionStorage.setItem("search_" + this.searchType, JSON.stringify(trueEntries));
+
+      let searchList = JSON.parse(sessionStorage.getItem("searchList"));
+      searchList.push(this.searchType);
+      sessionStorage.setItem("searchList", JSON.stringify(searchList));
     }
 
 

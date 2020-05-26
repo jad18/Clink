@@ -59,7 +59,7 @@ class LoginPage extends React.Component
         self.setState({ errorMsg: ''});
         sessionStorage.setItem('isLoggedIn', "true");
         sessionStorage.setItem('username', received_username);
-        sessionStorage.setItem("searchUnresolved", "false");
+        
         for(var element in result.profile)
         {
           sessionStorage.setItem('profile_' + String(element), JSON.stringify(result.profile[element]));

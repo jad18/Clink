@@ -67,12 +67,12 @@ app.post('/login', checkNotAuthenticated, function(req, res, next) {
     }) (req, res, next);
 });
 
-app.get('/register', checkNotAuthenticated, (req, res) => {
+app.get('/signup', checkNotAuthenticated, (req, res) => {
     res.render('tempregister.ejs');
 });
 
 //Creating a user using the Register page: password gets encrypted
-app.post('/register', checkNotAuthenticated, async (req, res) => {
+app.post('/signup', checkNotAuthenticated, async (req, res) => {
     try
     {
     

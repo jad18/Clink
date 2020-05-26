@@ -163,23 +163,6 @@ class GeneralForm extends React.Component {
             return(<p>Your profile is up-to-date.</p>);
     }
 
-    resetChanges()
-    {
-        let newEntries={};
-        Object.keys(this.state.entries).forEach(key =>
-            newEntries[key] = hasTrueValue(this.originalTrueEntries, key));
-
-        if(this.state.hasChanges)
-        {
-            this.setState({
-                entries: newEntries,
-                hasChanges: false,
-                numEntries: this.originalTrueEntries.length
-            });
-
-        }
-    }
-
     render()
     {
         return (
@@ -256,6 +239,23 @@ export default GeneralForm;
             alert(trueEntries);
             alert("This is unmounting");
             sessionStorage.setItem("profile_" + this.profileType, JSON.stringify(trueEntries));
+        }
+    }
+
+    resetChanges()
+    {
+        let newEntries={};
+        Object.keys(this.state.entries).forEach(key =>
+            newEntries[key] = hasTrueValue(this.originalTrueEntries, key));
+
+        if(this.state.hasChanges)
+        {
+            this.setState({
+                entries: newEntries,
+                hasChanges: false,
+                numEntries: this.originalTrueEntries.length
+            });
+
         }
     }
 */

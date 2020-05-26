@@ -33,6 +33,7 @@ class SearchGeneralForm extends React.Component {
                 {}
             ),
             
+            hasChanges: false,
             numEntries: props.trueEntries.length
         }
         this.handleChange = this.handleChange.bind(this);
@@ -40,6 +41,7 @@ class SearchGeneralForm extends React.Component {
         this.makeOneCheckbox = this.makeOneCheckbox.bind(this);
         this.makeTwoCheckboxes = this.makeTwoCheckboxes.bind(this);
         this.makeCheckboxes = this.makeCheckboxes.bind(this);
+        this.displayChanges = this.displayChanges.bind(this);
     }
 
     handleChange = event =>
@@ -54,6 +56,7 @@ class SearchGeneralForm extends React.Component {
 
             this.setState(prevState => ({
                 numEntries: this.state.numEntries+changeAmt,
+                hasChanges: true,
                 entries: {
                     ...prevState.entries,
                     [value]: !prevState.entries[value]
@@ -64,6 +67,7 @@ class SearchGeneralForm extends React.Component {
 
     submitForm(event)
     {
+        this.setState({ hasChanges: false });
         var trueEntries = [];
         event.preventDefault();
         Object.keys(this.state.entries)
@@ -145,6 +149,14 @@ class SearchGeneralForm extends React.Component {
         );
     }
 
+    displayChanges()
+    {
+        if(this.state.hasChanges)
+            return(<p>Don't forget to save your changes below:</p>);
+        else
+            return(<p>Your request is up-to-date.</p>);
+    }
+
     render()
     {
         return (
@@ -160,6 +172,7 @@ class SearchGeneralForm extends React.Component {
             </div>
             <form onSubmit={this.submitForm} className="form-body">
                 {this.makeCheckboxes()}
+                {this.displayChanges()}
                 <div>
                     <button type="submit" className='link-button2'>
                         Submit Changes

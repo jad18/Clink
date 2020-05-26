@@ -35,6 +35,13 @@ class SearchHomePage extends React.Component {
     {
         sessionStorage.setItem("searchUnresolved", "false");
         sessionStorage.setItem("searchList", "[]");
+        sessionStorage.setItem("search_sports", "[]");
+        sessionStorage.setItem("search_movies", "[]");
+        sessionStorage.setItem("search_outdoor", "[]");
+        sessionStorage.setItem("search_indoor", "[]");
+        sessionStorage.setItem("search_cuisines", "[]");
+        sessionStorage.setItem("search_arts", "[]");
+        
         this.setState({searchUnresolved: false});
     }
 

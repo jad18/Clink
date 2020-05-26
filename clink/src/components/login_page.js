@@ -63,6 +63,7 @@ class LoginPage extends React.Component
         for(var element in result.profile)
         {
           sessionStorage.setItem('profile_' + String(element), JSON.stringify(result.profile[element]));
+          sessionStorage.setItem('search_' + String(element), "[]");
         }
         alert(sessionStorage.getItem('profile_sports'));
         //sessionStorage.setItem('profile_sports', JSON.stringify(result.profile.sports))

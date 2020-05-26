@@ -164,7 +164,7 @@ function getRouter(loggedIn)
               title={"Sports Preferences"}
               entries={sportsList}
               searchType={"sports"}
-              trueEntries={[]}
+              trueEntries={JSON.parse(sessionStorage.getItem("search_sports"))}
               maxEntries={5}
               nextPageLink={"/search/movies"}
             />
@@ -177,7 +177,7 @@ function getRouter(loggedIn)
               title={"TV/Movie Preferences"}
               entries={movieList}
               searchType={"movies"}
-              trueEntries={[]}
+              trueEntries={JSON.parse(sessionStorage.getItem("search_movies"))}
               maxEntries={4}
               nextPageLink={"/search/outdoor_activities"}
             />
@@ -190,7 +190,7 @@ function getRouter(loggedIn)
               title={"Favorite Outdoor Activities"}
               entries={outdoorList}
               searchType={"outdoor"}
-              trueEntries={[]}
+              trueEntries={JSON.parse(sessionStorage.getItem("search_outdoor"))}
               maxEntries={3}
               nextPageLink={"/search/indoor_activities"}
             />
@@ -203,7 +203,7 @@ function getRouter(loggedIn)
               title={"Favorite Indoor Activities"}
               entries={indoorList}
               searchType={"indoor"}
-              trueEntries={[]}
+              trueEntries={JSON.parse(sessionStorage.getItem("search_indoor"))}
               maxEntries={3}
               nextPageLink={"/search/cuisines"}
             />
@@ -216,7 +216,7 @@ function getRouter(loggedIn)
               title={"Favorite Types of Food"}
               entries={cuisineList}
               searchType={"cuisines"}
-              trueEntries={[]}
+              trueEntries={JSON.parse(sessionStorage.getItem("search_cuisines"))}
               maxEntries={4}
               nextPageLink={"/search/arts_and_media"}
             />
@@ -229,7 +229,7 @@ function getRouter(loggedIn)
               title={"Arts, Theater, and Media Activities"}
               entries={artsList}
               searchType={"arts"}
-              trueEntries={[]}
+              trueEntries={JSON.parse(sessionStorage.getItem("search_arts"))}
               maxEntries={3}
               nextPageLink={"/search"}
             />

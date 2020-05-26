@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-
-import "./styles.css";
+//import "./index.css";
+//import "./profile.css";
+//import "../App.css";
 export default class Profile extends Component {
   render() {
     return (
@@ -24,6 +25,7 @@ export default class Profile extends Component {
           <h6>Likes</h6>
           <ul class="sub">
             <li>Horror</li>
+            JSON.parse(sessionStorage.getIt)
             <li>Football</li>
             <li>Skiing</li>
             <li>Pottery</li>

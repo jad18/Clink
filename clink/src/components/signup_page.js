@@ -28,10 +28,7 @@ class SignupPage extends React.Component {
     };
 
     try {
-      const response = await fetch(
-        "http://192.168.56.1:3000/register",
-        options
-      ); //change [localhost] to your local IP address
+      const response = await fetch("http://192.168.1.9:3000/signup", options); //change [localhost] to your local IP address
       if (!response.ok) {
         alert(response.statusText);
         return null;

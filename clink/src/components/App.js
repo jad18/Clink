@@ -1,7 +1,7 @@
 import React from "react";
 import "../App.css";
 import { Route, Switch, Link, Redirect } from "react-router-dom";
-
+//import "bootstrap/dist/css/bootstrap.min.css";
 //Page imports
 import AboutPage from "./about_page.js";
 import ChangeProfilePage from "./profile_change_home.js";

@@ -1,88 +1,81 @@
 import React from "react";
-import {withRouter, Link} from 'react-router-dom';
+import { withRouter, Link } from "react-router-dom";
 
-
-class LoginPage extends React.Component
-{
-  constructor() 
-  {
+class LoginPage extends React.Component {
+  constructor() {
     super();
 
     this.state = {
-      errorMsg: ''
-    }
+      errorMsg: "",
+    };
 
     this.makeLoginRequest = this.makeLoginRequest.bind(this);
     this.submitLoginForm = this.submitLoginForm.bind(this);
   }
 
-  async makeLoginRequest(event, received_username)
-  {
-    var loginData = {username: received_username,
-                      password: event.target.elements['login-password'].value};
-      console.log(loginData);  
-      
+  async makeLoginRequest(event, received_username) {
+    var loginData = {
+      username: received_username,
+      password: event.target.elements["login-password"].value,
+    };
+    console.log(loginData);
+
     const options = {
-      method: 'POST',
-      headers: {'content-type' : 'application/json'},
-      body: JSON.stringify(loginData)
-    }
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify(loginData),
+    };
 
     try {
-      const response = await fetch("http://[localhost]:3000/login", options) //change [localhost] to your local IP address
-      if(!response.ok)
-      {
+      const response = await fetch("http://[localhost]:3000/login", options); //change [localhost] to your local IP address
+      if (!response.ok) {
         alert(response.statusText);
         return null;
       }
       const jsonData = await response.json();
       return jsonData;
-    } catch(error) {
-        console.log(error);
-        return null;
+    } catch (error) {
+      console.log(error);
+      return null;
     }
   }
 
-
-  submitLoginForm(event)
-  { 
+  submitLoginForm(event) {
     event.preventDefault();
 
-    const received_username = event.target.elements['login-username'].value;
+    const received_username = event.target.elements["login-username"].value;
 
     var loginResult = this.makeLoginRequest(event, received_username); //returns a promise
     const self = this;
-    let {history} = this.props;
+    let { history } = this.props;
 
-    loginResult.then(function(result) {
-      if(result.status===true)
-      {
-        self.setState({ errorMsg: ''});
-        sessionStorage.setItem('isLoggedIn', "true");
-        sessionStorage.setItem('username', received_username);
-        
-        for(var element in result.profile)
-        {
-          sessionStorage.setItem('profile_' + String(element), JSON.stringify(result.profile[element]));
-          sessionStorage.setItem('search_' + String(element), "[]");
+    loginResult.then(function (result) {
+      if (result.status === true) {
+        self.setState({ errorMsg: "" });
+        sessionStorage.setItem("isLoggedIn", "true");
+        sessionStorage.setItem("username", received_username);
+
+        for (var element in result.profile) {
+          sessionStorage.setItem(
+            "profile_" + String(element),
+            JSON.stringify(result.profile[element])
+          );
+          sessionStorage.setItem("search_" + String(element), "[]");
         }
-        alert(sessionStorage.getItem('profile_sports'));
-        sessionStorage.setItem('searchList', "[]")
-        window.location = '/';
+        alert(sessionStorage.getItem("profile_sports"));
+        sessionStorage.setItem("searchList", "[]");
+        window.location = "/";
+      } else if (result.status === false) {
+        self.setState({ errorMsg: "Incorrect username or password" });
+      } else {
+        self.setState({
+          errorMsg: "An error occurred when requesting from the server",
+        });
       }
-      else if(result.status===false)
-      {
-        self.setState({ errorMsg: "Incorrect username or password"});
-      }
-      else
-      {
-        self.setState({ errorMsg: "An error occurred when requesting from the server"});
-      }
-    })
+    });
   }
 
-  render()
-  {
+  render() {
     return (
       <form onSubmit={this.submitLoginForm} className="login-form">
         <h3>Sign In</h3>
@@ -102,7 +95,7 @@ class LoginPage extends React.Component
           <label>Password</label>
           <input
             type="password"
-            id='login-password'
+            id="login-password"
             className="login-input"
             placeholder="Enter password"
             required
@@ -115,11 +108,10 @@ class LoginPage extends React.Component
           Submit
         </button>
         <p className="forgotPassword">
-          Not registered? <Link to='/signup'>Sign up</Link>
+          Not registered? <Link to="/signup">Sign up</Link>
         </p>
       </form>
     );
-    
   }
 }
 

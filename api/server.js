@@ -83,21 +83,16 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true })
     .catch(console.error)
 
 //  prelim match-making functionality
-//  IMPORTANT ASSUMPTIONS:
-//      - assuming that there exists a MongoClient instance called 'client' that's connected
-//  Without the above this wouldn't work
-//  Returns array containing the usernames (or some functionally equivalent unique identifier)
+//  IMPORTANT ASSUMPTION:
+//      - assuming that there exists a global MongoClient instance called 'client' that's connected
+//  Set the 'candidates' property in the user document in MDB to an array containing the usernames
 //  of candidates matches. (Elements closer to the front of the array indicates closer match)
 const matchAlg = (userJSON) => {
     // will contain all the users in the database
     const userCollection = client.db('user-list').collection('users').find({}).toArray();
     // fetch searcher's document
-    let user = client.db('user-list').collection('users').find({ username: userJSON.username }).toArray();
-    if (user.length() > 0) {
-        user = user[0];
-    } else {
-        user = null;
-    }
+    let user = fetchUserDocument(userJSON);
+    
     // probably have to do some handling if user is null
 
     // assigning a rating to each username
@@ -117,11 +112,11 @@ const matchAlg = (userJSON) => {
     let candidates = [];
     ratings.foreach(element => {
         // you can't be matched with yourself or someone you've been matched with before
-        if (element['username'] !== user.username && user['matched'].includes(element['username']) /* see if the user had been matched before */) {
+        if (element['username'] !== user.username && user['matchHistory'].includes(element['username']) /* see if the user had been matched before */) {
             candidates.push(element['username']);
         }
     });
-    //update the candidate field 
+    //update the candidate property in the database
     client.db('user-list').collection('users').updateOne(
         { username: user.username },
         {
@@ -130,22 +125,33 @@ const matchAlg = (userJSON) => {
     );
 };
 
+const fetchUserDocument = (userJSON) => {
+    let user = client.db('user-list').collection('users').find({ username: userJSON.username }).toArray();
+    if (user.length() === 1) { // there should only be one match
+        return user[0];
+    } else {
+        console.log(user); // debug use
+        return null;
+    }
+};
+
 /*
     Given users userOne and userTwo, return the fraction of similar
     properties between the two. If divided by zero, return -1.
     If the property is a string, 'similar' equals strings equality.
     If the property is a number, 'similar' is still undefined
  */
+// TODO: fill in irrelevantProp, handle the case if a property is an array
 const calculateUserSimilarity = (userOne, userTwo) => {
     let similarity = 0;
     for (var key in userOne) {
         // insert list of irrelevant properties (like username and password)
-        var irrelevantProp = ['username', 'password', 'previous_matches'];
+        var irrelevantProp = ['username', 'password', 'previous_matches', 'candidates'];
         if (irrelevantProp.contains(key)) {
             continue;
         }
         // both users have to have the property and they have to be the same type
-        if (Object.prototype.hasOwnProperty(userTwo, key) && typeof (userTwo[key]) === typeof (userOne[key])) {
+        if (userTwo.hasOwnProperty(key) && typeof (userTwo[key]) === typeof (userOne[key])) {
             if (typeof (userOne[key]) === 'string') {
                 if (userOne[key].trim().toLowerCase() === userTwo[key].trim().toLowerCase()) {
                     similarity += 1;
@@ -208,12 +214,90 @@ app.post('/signup', checkNotAuthenticated, async (req, res) => {
                 break;
             }
         }
-        app.post('/search', (req, res) => {
-            console.log("Finding a match");
-            console.log(req.body);
-            //your search algorithm
-            res.json(true);
-        })
+    }
+
+    if(hasFoundMatch) res.json(false);
+    else
+    {  
+        const hashedPassword = await bcrypt.hash(req.body.password, 10);
+	    users.push({
+	        id: Date.now().toString(),
+	        name: req.body.name,
+	        username: req.body.username,
+	        password: hashedPassword
+        });
+        res.json(true);
+    }
+    }
+    catch
+    {
+	res.json(null);
+    }	
+});
+
+// TODO: check comment
+app.post('/search', (req, res) => {
+    console.log("Finding a match");
+    console.log(req.body);
+    //matchAlg(userJSON)
+    // where userJSON is a Javascript object containing the searcher's username
+    res.json(true);
+})
+
+/*
+    Send a JSON containing the relevant info of the matched user
+    If there isn't an eligible user, the JSON contains null.
+ */
+// TODO: 
+//  - make sure userJSON contains the Javascript object containing the searcher's username
+//  - make sure userOfInterest only contains the properties safe to be sent to the frontend
+app.get('/feed', (req, res) => {
+    const userJSON = null;
+    let user = fetchUserDocument(userJSON);
+    if (user.hasOwnProperty('candidates') && user['candidates'].isArray()){ // if candidates isn't an array, something is wrong.
+        let candidates = user['candidates'];
+        if (candidates.length() > 0){
+            let userOfInterestUsername = candidates.shift(); // get the first candidate
+            let matchHistory;
+            if (user.hasOwnProperty('matchHistory')){
+                matchHistory = user['matchHistory'];
+            }else{
+                matchHistory = [];
+            }
+            // include this match in the match history
+            matchHistory.push(userOfInterestUsername);
+            // update the candidates and match history properties in the database
+            client.db('user-list').collection('users').updateOne(
+                { username: user.username },
+                {
+                    $set: { 'candidates': candidates, 'matchHistory': matchHistory}
+                }
+            );
+            let responseJSON = fetchUserDocument(userOfInterestUsername);
+            delete responseJSON['password']; // or delete some other sensitive info
+            res.json(responseJSON);
+        }
+    }
+    res.json(null);
+});
+
+app.get('/messages', (req, res) => {
+    let body = req.body;
+    console.log(body);
+    res.json(['user1', 'user2', 'user3', 'user4']);
+})
+
+app.delete('/logout', (req,res) => {
+    req.logOut();
+    res.redirect('login');
+})
+
+function checkAuthentication(req, res, next) {
+    if (req.isAuthenticated()) {
+        return next();
+    }
+    res.redirect('/login');
+}
 
         //app.get('/feed', )
 

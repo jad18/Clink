@@ -1,79 +1,73 @@
 import React from "react";
-import {Link} from 'react-router-dom';
+import { Link } from "react-router-dom";
 
-class SignupPage extends React.Component
-{
-  constructor() 
-  {
+class SignupPage extends React.Component {
+  constructor() {
     super();
 
     this.state = {
-      errorMsg: ''
-    }
+      errorMsg: "",
+    };
 
     this.makeRegistrationRequest = this.makeRegistrationRequest.bind(this);
     this.submitRegistrationForm = this.submitRegistrationForm.bind(this);
   }
 
-  async makeRegistrationRequest(event)
-  {
+  async makeRegistrationRequest(event) {
     var regisData = {
-                      name: event.target.elements['regis-name'].value,
-                      username: event.target.elements['regis-username'].value,
-                      password: event.target.elements['regis-password'].value};
+      name: event.target.elements["regis-name"].value,
+      username: event.target.elements["regis-username"].value,
+      password: event.target.elements["regis-password"].value,
+    };
     console.log(regisData);
 
     const options = {
-      method: 'POST',
-      headers: {'content-type' : 'application/json'},
-      body: JSON.stringify(regisData)
-    }
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify(regisData),
+    };
 
     try {
-      const response = await fetch("http://[localhost]:3000/signup", options) //change [localhost] to your local IP address
-      if(!response.ok)
-      {
+      const response = await fetch("http://[localhost]:3000/signup", options); //change [localhost] to your local IP address
+      if (!response.ok) {
         alert(response.statusText);
         return null;
       }
       const jsonData = await response.json();
       return jsonData;
-    } catch(error) {
-        console.log(error);
-        return null;
+    } catch (error) {
+      console.log(error);
+      return null;
     }
   }
 
-  submitRegistrationForm(event)
-  {
+  submitRegistrationForm(event) {
     event.preventDefault();
 
     var regisResult = this.makeRegistrationRequest(event); //returns a promise
     const tempThis = this;
-    let {history} = this.props;
+    let { history } = this.props;
 
-    regisResult.then(function(result) {
-      if(result===true)
-      {
-        tempThis.setState({ errorMsg: ''});
-        alert("You've created an account. Now log in to get started!")
-        history.push('/login');
+    regisResult.then(function (result) {
+      if (result === true) {
+        tempThis.setState({ errorMsg: "" });
+        alert("You've created an account. Now log in to get started!");
+        history.push("/login");
+      } else if (result === false) {
+        tempThis.setState({
+          errorMsg: "A user with this username already exists",
+        });
+      } else {
+        tempThis.setState({
+          errorMsg: "An error occurred when requesting from the server",
+        });
       }
-      else if(result===false)
-      {
-        tempThis.setState({ errorMsg: "A user with this username already exists"});
-      }
-      else
-      {
-        tempThis.setState({ errorMsg: "An error occurred when requesting from the server"});
-      }
-    })
+    });
   }
 
-  render()
-  {
+  render() {
     return (
-      <form onSubmit={this.submitRegistrationForm} className='login-form'>
+      <form onSubmit={this.submitRegistrationForm} className="login-form">
         <h3>Sign Up</h3>
 
         <div>
@@ -84,7 +78,7 @@ class SignupPage extends React.Component
             className="login-input"
             placeholder="First name"
             required
-            />
+          />
         </div>
 
         <div>
@@ -115,7 +109,7 @@ class SignupPage extends React.Component
           Sign Up
         </button>
         <p className="forgotPassword">
-          Already registered? <Link to='/login'>Sign in</Link>
+          Already registered? <Link to="/login">Sign in</Link>
         </p>
       </form>
     );

@@ -1,0 +1,27 @@
+#nav_section {
+  margin: auto;
+  padding: 0;
+  width: 750px;
+}
+#nav_section li {
+  list-style: none;
+  float: left;
+}
+#nav_section a {
+  display: block;
+  margin: 5px;
+  width: 98px;
+  height: 1px;
+  background: rgb(219, 196, 103);
+  border-radius: 10px;
+  color: white;
+}
+#nav_section ul {
+  margin: 0;
+  padding: 0;
+  width: 120px;
+}
+#nav_section ul li {
+  clear: center;
+  margin: center;
+}

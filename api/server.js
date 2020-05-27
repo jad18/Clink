@@ -20,6 +20,15 @@ initializePassport(passport,
     id => users.find(user => user.id === id)
 );
 
+
+///////////////////
+// Delete later**********************
+//////////////////
+const users = [];
+//////////////////
+//End
+/////////////////
+
 app.set('view-engine', 'ejs');
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -36,6 +45,7 @@ app.use(cors());
 
 // DATABASE SETUP 
 
+/*
 const MongoClient = require('mongodb').MongoClient
 const connectionString = 'mongodb+srv://rohanbattula:rohan12345@clinkdb-9xql0.mongodb.net/test?retryWrites=true&w=majority'
 MongoClient.connect(connectionString, { useUnifiedTopology: true })
@@ -80,7 +90,7 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true })
             }
         });
     })
-    .catch(console.error)
+    .catch(console.error) */
 
 //  prelim match-making functionality
 //  IMPORTANT ASSUMPTIONS:
@@ -89,7 +99,7 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true })
 //  Without the above this wouldn't work
 //  Returns array containing the usernames (or some functionally equivalent unique identifier)
 //  of candidates matches. (Elements closer to the front of the array indicates closer match)
-const matchAlg = (user) => {
+/*const matchAlg = (user) => {
     const userCollection = client.db('user-list').collection('users').find({}).toArray();
     // assigning a rating to each username
     for (var j = 0; j < userCollection.length; j++) {
@@ -113,14 +123,14 @@ const matchAlg = (user) => {
     ratings.foreach(element => {
         // you can't be matched with yourself or someone you've been matched with before
         // negative rating means something went wrong. Check calculate User Similarity
-        if (element['username'] !== user.username /* or again some unique identifier */
-            && true /* see if the user had been matched before */
+        if (element['username'] !== user.username *//* or again some unique identifier *//*
+            && true /* see if the user had been matched before *//*
             && element['rating'] >= 0){
                 candidates.push(element['username']); // some unique identifier
             }
     });
     return candidates;
-};
+};*/
 
 /*
     Given users userOne and userTwo, return the fraction of similar

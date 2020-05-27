@@ -96,6 +96,8 @@ class SearchHomePage extends React.Component {
             {}
         );
 
+        request["username"] = sessionStorage.getItem("username");
+
         console.log(request);
         var searchResult = this.makeSearchRequest(request); //returns a promise
         const self = this;

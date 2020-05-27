@@ -109,8 +109,11 @@ app.post('/signup', checkNotAuthenticated, async (req, res) => {
 app.post('/search', (req, res) => {
     console.log("Finding a match");
     console.log(req.body);
+    //your search algorithm
     res.json(true);
 })
+
+//app.get('/feed', )
 
 app.get('/messages', (req, res) => {
     let body = req.body;

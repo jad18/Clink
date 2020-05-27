@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 import './messages_home.css';
 
 function isNew(username, newMessageUsers)
@@ -9,6 +10,12 @@ function isNew(username, newMessageUsers)
     }
     return false;
 }
+
+function getRoomName(msgUsername)
+{
+    return sessionStorage.getItem("username") + '+' + msgUsername;
+}
+
 
 class MessagesHome extends React.Component
 {
@@ -47,7 +54,9 @@ class MessagesHome extends React.Component
         console.log("new: " + username);
         return(
             <tr>
-                <td className="new-table-column">{username}</td>
+                <Link to={`/messages?name=${sessionStorage.getItem("username")}&room=${getRoomName(username)}`}>
+                    <td className="new-table-column">{username}</td>
+                </Link>
             </tr>
         );
     }

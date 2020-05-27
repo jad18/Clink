@@ -65,7 +65,7 @@ let socket;
 	    <Input message={message} setMessage={setMessage} sendMessage={sendMessage} />
 	    </div>
 	    </div>
-	    <Link to="/">
+	    <Link to="/messages_home">
 	    <button className="link-button2">Back to All Messages</button>
 	    </Link>
 	    </div>

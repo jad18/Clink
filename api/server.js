@@ -202,6 +202,26 @@ app.post('/signup', checkNotAuthenticated, async (req, res) => {
             break;
         }
     }
+
+    if(hasFoundMatch) res.json(false);
+    else
+    {  
+        const hashedPassword = await bcrypt.hash(req.body.password, 10);
+	    users.push({
+	        id: Date.now().toString(),
+	        name: req.body.name,
+	        username: req.body.username,
+	        password: hashedPassword
+        });
+        res.json(true);
+    }
+    }
+    catch
+    {
+	res.json(null);
+    }	
+});
+
 app.post('/search', (req, res) => {
     console.log("Finding a match");
     console.log(req.body);

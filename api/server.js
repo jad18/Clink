@@ -85,20 +85,26 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true })
 //  prelim match-making functionality
 //  IMPORTANT ASSUMPTIONS:
 //      - assuming that there exists a MongoClient instance called 'client' that's connected
-//      - assuming that the user parameter contains the current user's mongoDB document
 //  Without the above this wouldn't work
 //  Returns array containing the usernames (or some functionally equivalent unique identifier)
 //  of candidates matches. (Elements closer to the front of the array indicates closer match)
-const matchAlg = (user) => {
+const matchAlg = (userJSON) => {
+    // will contain all the users in the database
     const userCollection = client.db('user-list').collection('users').find({}).toArray();
+    // fetch searcher's document
+    let user = client.db('user-list').collection('users').find({ username: userJSON.username }).toArray();
+    if (user.length() > 0) {
+        user = user[0];
+    } else {
+        user = null;
+    }
+    // probably have to do some handling if user is null
+
     // assigning a rating to each username
-    for (var j = 0; j < userCollection.length; j++) {
+    for (var j = 0; j < userCollection.length(); j++) {
         ratings.push(
             {
-                'rating': calculateUserSimilarity(userCollection[i], userCollection[j]),
-                // TODO:
-                // assuming the user has a username property
-                // if not, use some unique identifier
+                'rating': calculateUserSimilarity(user, userCollection[j]),
                 'username': userCollection[j].username
             }
         );
@@ -108,18 +114,20 @@ const matchAlg = (user) => {
         return b['rating'] - a['rating'];
     });
 
-    // TODO: need some fill in the blank action. Read comments.
     let candidates = [];
     ratings.foreach(element => {
         // you can't be matched with yourself or someone you've been matched with before
-        // negative rating means something went wrong. Check calculate User Similarity
-        if (element['username'] !== user.username /* or again some unique identifier */
-            && true /* see if the user had been matched before */
-            && element['rating'] >= 0){
-                candidates.push(element['username']); // some unique identifier
-            }
+        if (element['username'] !== user.username && user['matched'].includes(element['username']) /* see if the user had been matched before */) {
+            candidates.push(element['username']);
+        }
     });
-    return candidates;
+    //update the candidate field 
+    client.db('user-list').collection('users').updateOne(
+        { username: user.username },
+        {
+            $set: { 'candidates': candidates }
+        }
+    );
 };
 
 /*
@@ -129,10 +137,10 @@ const matchAlg = (user) => {
     If the property is a number, 'similar' is still undefined
  */
 const calculateUserSimilarity = (userOne, userTwo) => {
-    let similarity = 0, totalProperties = 0;
+    let similarity = 0;
     for (var key in userOne) {
         // insert list of irrelevant properties (like username and password)
-        var irrelevantProp = [];
+        var irrelevantProp = ['username', 'password', 'previous_matches'];
         if (irrelevantProp.contains(key)) {
             continue;
         }
@@ -145,14 +153,9 @@ const calculateUserSimilarity = (userOne, userTwo) => {
             } else if (typeof (userOne[key]) === 'number') {
                 // similar number properties definition to be placed here
             }
-            totalProperties += 1;
         }
     }
-    if (totalProperties === 0) {
-        return -1;
-    } else {
-        return similarity / totalProperties;
-    }
+    return similarity;
 };
 
 app.use(function (req, res, next) {
@@ -177,11 +180,17 @@ app.post('/login', checkNotAuthenticated, function (req, res, next) {
     passport.authenticate('local', function (err, user, info) {
         console.log('got here');
         console.log(user, err);
-        if(err) { res.json(err); }
-        else if(!user) { console.log("Not valid user"); res.json({ status: false, profile: null }); }
-        else { console.log(user); res.json({status: true, profile: {sports: ['Soccer', 'Volleyball'], movies:[], outdoor:[],
-                                                                    indoor:[], cuisines:[], arts:[]}}); }
-    }) (req, res, next);
+        if (err) { res.json(err); }
+        else if (!user) { console.log("Not valid user"); res.json({ status: false, profile: null }); }
+        else {
+            console.log(user); res.json({
+                status: true, profile: {
+                    sports: ['Soccer', 'Volleyball'], movies: [], outdoor: [],
+                    indoor: [], cuisines: [], arts: []
+                }
+            });
+        }
+    })(req, res, next);
 });
 
 app.get('/signup', checkNotAuthenticated, (req, res) => {
@@ -190,91 +199,88 @@ app.get('/signup', checkNotAuthenticated, (req, res) => {
 
 //Creating a user using the Register page: password gets encrypted
 app.post('/signup', checkNotAuthenticated, async (req, res) => {
-    try
-    {
-    
-    let hasFoundMatch = false;
-    for(let i=0; i<users.length; i++)
-    {
-        if(req.body.username === users[i].username)
-        {
-            hasFoundMatch = true;
-            break;
+    try {
+
+        let hasFoundMatch = false;
+        for (let i = 0; i < users.length; i++) {
+            if (req.body.username === users[i].username) {
+                hasFoundMatch = true;
+                break;
+            }
         }
-    }
-app.post('/search', (req, res) => {
-    console.log("Finding a match");
-    console.log(req.body);
-    //your search algorithm
-    res.json(true);
-})
+        app.post('/search', (req, res) => {
+            console.log("Finding a match");
+            console.log(req.body);
+            //your search algorithm
+            res.json(true);
+        })
 
-//app.get('/feed', )
+        //app.get('/feed', )
 
-app.get('/messages', (req, res) => {
-    let body = req.body;
-    console.log(body);
-    res.json(['user1', 'user2', 'user3', 'user4']);
-})
+        app.get('/messages', (req, res) => {
+            let body = req.body;
+            console.log(body);
+            res.json(['user1', 'user2', 'user3', 'user4']);
+        })
 
-app.delete('/logout', (req,res) => {
-    req.logOut();
-    res.redirect('login');
-})
+        app.delete('/logout', (req, res) => {
+            req.logOut();
+            res.redirect('login');
+        })
 
-function checkAuthentication(req, res, next) {
-    if (req.isAuthenticated()) {
-        return next();
-    }
-    res.redirect('/login');
-}
+        function checkAuthentication(req, res, next) {
+            if (req.isAuthenticated()) {
+                return next();
+            }
+            res.redirect('/login');
+        }
 
-function checkNotAuthenticated(req, res, next) {
-    if (req.isAuthenticated()) {
-        return res.redirect('/');
-    }
-    next();
-}
+        function checkNotAuthenticated(req, res, next) {
+            if (req.isAuthenticated()) {
+                return res.redirect('/');
+            }
+            next();
+        }
 
-//this is to track the users that are present in the messaging room
-const messageUsers = [];
+        //this is to track the users that are present in the messaging room
+        const messageUsers = [];
 
-//helper functions
-const addUser = ({id, name, room}) => {
-    const m_user = {id, name, room};
-    messageUsers.push(m_user);
-    return {m_user};
-}
+        //helper functions
+        const addUser = ({ id, name, room }) => {
+            const m_user = { id, name, room };
+            messageUsers.push(m_user);
+            return { m_user };
+        }
 
-const removeUser = (id) => {
-    const index = messageUsers.findIndex((m_user) => m_user.id === id);
-    if(index !== -1)
-	return users.splice(index, 1)[0];
-}
+        const removeUser = (id) => {
+            const index = messageUsers.findIndex((m_user) => m_user.id === id);
+            if (index !== -1)
+                return users.splice(index, 1)[0];
+        }
 
-const getUser = (id) => messageUsers.find((m_user) => m_user.id === id);
+        const getUser = (id) => messageUsers.find((m_user) => m_user.id === id);
 
-//use of node library socket.io
-//this is connecting a specific user to the socket
-io.on('connect', (socket) => {
-    socket.on('join', ({name, room}, callback) => {
-	addUser({id: socket.id, name, room});
-	socket.join("clink");
-	callback();
-    });
+        //use of node library socket.io
+        //this is connecting a specific user to the socket
+        io.on('connect', (socket) => {
+            socket.on('join', ({ name, room }, callback) => {
+                addUser({ id: socket.id, name, room });
+                socket.join("clink");
+                callback();
+            });
 
-    //when a user sends a message, the socket emits to the front end so that
-    //the message is displayed
-    socket.on('sendMessage', (message, callback) => {
-	const user = getUser(socket.id);
-	io.to("clink").emit('message', {user: user.name, text: message});
-	callback()
-    });
+            //when a user sends a message, the socket emits to the front end so that
+            //the message is displayed
+            socket.on('sendMessage', (message, callback) => {
+                const user = getUser(socket.id);
+                io.to("clink").emit('message', { user: user.name, text: message });
+                callback()
+            });
 
-    socket.on('disconnect', () => {
-	removeUser(socket.id);
-    });
-});
+            socket.on('disconnect', () => {
+                removeUser(socket.id);
+            });
+        });
 
-app.listen(3000, () => console.log("Listening on port 3000"));
-server.listen(process.env.PORT || 5000, () => console.log("Server has started."));
+        app.listen(3000, () => console.log("Listening on port 3000"));
+        server.listen(process.env.PORT || 5000, () => console.log("Server has started."));

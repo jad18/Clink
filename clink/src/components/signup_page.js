@@ -30,7 +30,7 @@ class SignupPage extends React.Component
     }
 
     try {
-      const response = await fetch("http://[localhost]:3000/register", options) //change [localhost] to your local IP address
+      const response = await fetch("http://[localhost]:3000/signup", options) //change [localhost] to your local IP address
       if(!response.ok)
       {
         alert(response.statusText);
@@ -50,13 +50,14 @@ class SignupPage extends React.Component
 
     var regisResult = this.makeRegistrationRequest(event); //returns a promise
     const tempThis = this;
+    let {history} = this.props;
 
     regisResult.then(function(result) {
       if(result===true)
       {
         tempThis.setState({ errorMsg: ''});
         alert("You've created an account. Now log in to get started!")
-        window.location = "/login";
+        history.push('/login');
       }
       else if(result===false)
       {

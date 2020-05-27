@@ -16,12 +16,12 @@ class LoginPage extends React.Component
     this.submitLoginForm = this.submitLoginForm.bind(this);
   }
 
-  async makeLoginRequest(event)
+  async makeLoginRequest(event, received_username)
   {
-    var loginData = {username: event.target.elements['login-username'].value,
+    var loginData = {username: received_username,
                       password: event.target.elements['login-password'].value};
-    console.log(loginData);
-
+      console.log(loginData);  
+      
     const options = {
       method: 'POST',
       headers: {'content-type' : 'application/json'},
@@ -48,23 +48,35 @@ class LoginPage extends React.Component
   { 
     event.preventDefault();
 
-    var loginResult = this.makeLoginRequest(event); //returns a promise
-    const tempThis = this;
+    const received_username = event.target.elements['login-username'].value;
+
+    var loginResult = this.makeLoginRequest(event, received_username); //returns a promise
+    const self = this;
+    let {history} = this.props;
 
     loginResult.then(function(result) {
-      if(result===true)
+      if(result.status===true)
       {
-        tempThis.setState({ errorMsg: ''});
+        self.setState({ errorMsg: ''});
         sessionStorage.setItem('isLoggedIn', "true");
-        window.location = "/about";
+        sessionStorage.setItem('username', received_username);
+        
+        for(var element in result.profile)
+        {
+          sessionStorage.setItem('profile_' + String(element), JSON.stringify(result.profile[element]));
+          sessionStorage.setItem('search_' + String(element), "[]");
+        }
+        alert(sessionStorage.getItem('profile_sports'));
+        sessionStorage.setItem('searchList', "[]")
+        window.location = '/';
       }
-      else if(result===false)
+      else if(result.status===false)
       {
-        tempThis.setState({ errorMsg: "Incorrect username or password"});
+        self.setState({ errorMsg: "Incorrect username or password"});
       }
       else
       {
-        tempThis.setState({ errorMsg: "An error occurred when requesting from the server"});
+        self.setState({ errorMsg: "An error occurred when requesting from the server"});
       }
     })
   }

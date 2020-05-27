@@ -1,0 +1,25 @@
+#main-messages-table {
+    border: 1px solid white;
+    width: 40%;
+    margin-left: 30%;
+    margin-right: 30%;
+    margin-top: 20px;
+    height: auto;
+  }
+
+  .new-table-column {
+    background-color: 1px solid white;
+    border: 1px solid white;
+    color: solid blue;
+    font-size: 20px;
+    height: 100px;
+    width: 1%;
+  }
+
+  .old-table-column {
+    background-color: 1px rgb(70, 82, 255);
+    color: solid white;
+    border: 1px solid blue;
+    height: 100px;
+    width: 50%;
+  }

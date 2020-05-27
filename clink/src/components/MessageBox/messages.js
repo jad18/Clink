@@ -5,8 +5,8 @@ import io from "socket.io-client";
 import '../messages.css';
 
 //other React components made for the messaging feature
-import Text from './text';
-import Input from './input';
+import Text from '../text';
+import Input from '../input';
 let socket;
 
 //Using the React useState hook, we can declare a set of variable +
@@ -66,7 +66,7 @@ let socket;
 	    </div>
 	    </div>
 	    <Link to="/">
-	    <button className="link-button2">Back to Home </button>
+	    <button className="link-button2">Back to All Messages</button>
 	    </Link>
 	    </div>
     );

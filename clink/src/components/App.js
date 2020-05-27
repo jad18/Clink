@@ -13,6 +13,7 @@ import IndoorForm from "./indoor_form.js";
 import CuisineForm from "./cuisine_form.js";
 import ArtsForm from "./arts_form.js";
 
+import ProfilePage from "./profile_page.js";
 import LoginPage from "./login_page.js";
 import SignupPage from "./signup_page.js";
 import MessagesPage from "./messages.js";
@@ -187,7 +188,7 @@ function getLinkButtons(loggedIn) {
           <button className="link-button1">Search</button>
         </Link>
 
-        <Link to="/change_profile/sports">
+        <Link to="/profile">
           <button className="link-button1">Profile</button>
         </Link>
 
@@ -231,6 +232,7 @@ function getRouter(loggedIn) {
         <Route exact path="/about" component={AboutPage} />
         <Route exact path="/change_profile" component={ChangeProfilePage} />
         <Route exact path="/messages" component={MessagesPage} />
+        <Route exact path="/profile" component={ProfilePage} />
 
         <Route
           exact

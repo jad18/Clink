@@ -1,37 +1,85 @@
 import React, { Component } from "react";
-//import "./index.css";
-//import "./profile.css";
-//import "../App.css";
+import "./profile.css";
+import "../App.css";
 export default class Profile extends Component {
   render() {
     return (
       <div1>
-        <div>
-          <h2>Clink</h2>
-        </div>
-        <h3>Name</h3>
+        <h3>{sessionStorage.getItem("username") + "'s Profile"}</h3>
         <div class="card">
-          <lines>
-            <h4>Categories</h4>
-            <ul class="stripes">Sports</ul>
-            <ul class="stripes">Movies</ul>
-            <ul class="stripes">Indoor Activities</ul>
-            <ul class="stripes">Outdoor Activities</ul>
-            <ul class="stripes">Art</ul>
-            <ul class="stripes">Cusine</ul>
-          </lines>
-        </div>
-        <div class="hobies">
-          <h6>Likes</h6>
-          <ul class="sub">
-            <li>Horror</li>
-            JSON.parse(sessionStorage.getIt)
-            <li>Football</li>
-            <li>Skiing</li>
-            <li>Pottery</li>
-            <li>Jogging</li>
-            <li>Swimming</li>
-            <li>The wWekknd</li>
+          <ul id="nav_section">
+            <li>
+              <b href="#">Art</b>
+              <ul>
+                <li>
+                  <a href="#">
+                    {JSON.parse(sessionStorage.getItem("profile_arts")).join(
+                      " "
+                    )}
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <b href="#">Cusine</b>
+              <ul>
+                <li>
+                  <a href="#">
+                    {JSON.parse(sessionStorage.getItem("profile_arts")).join(
+                      " "
+                    )}
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <b href="#">Movies</b>
+              <ul>
+                <li>
+                  <a href="#">
+                    {JSON.parse(sessionStorage.getItem("profile_movies")).join(
+                      " "
+                    )}
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <b href="#">Indoor Act</b>
+              <ul>
+                <li>
+                  <a href="#">
+                    {JSON.parse(sessionStorage.getItem("profile_arts")).join(
+                      " "
+                    )}
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <b href="#">Outdoor Act</b>
+              <ul>
+                <li>
+                  <a href="#">
+                    {JSON.parse(sessionStorage.getItem("profile_arts")).join(
+                      " "
+                    )}
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <b href="#">Sports</b>
+              <ul>
+                <li>
+                  <a href="#">
+                    {JSON.parse(sessionStorage.getItem("profile_sports")).join(
+                      " "
+                    )}
+                  </a>
+                </li>
+              </ul>
+            </li>
           </ul>
         </div>
       </div1>

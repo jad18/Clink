@@ -52,6 +52,7 @@ class LoginPage extends React.Component
 
     var loginResult = this.makeLoginRequest(event, received_username); //returns a promise
     const self = this;
+    let {history} = this.props;
 
     loginResult.then(function(result) {
       if(result.status===true)
@@ -66,8 +67,8 @@ class LoginPage extends React.Component
           sessionStorage.setItem('search_' + String(element), "[]");
         }
         alert(sessionStorage.getItem('profile_sports'));
-        //sessionStorage.setItem('profile_sports', JSON.stringify(result.profile.sports))
-        window.location = "/about";
+        sessionStorage.setItem('searchList', "[]")
+        window.location = '/';
       }
       else if(result.status===false)
       {

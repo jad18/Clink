@@ -50,13 +50,14 @@ class SignupPage extends React.Component
 
     var regisResult = this.makeRegistrationRequest(event); //returns a promise
     const tempThis = this;
+    let {history} = this.props;
 
     regisResult.then(function(result) {
       if(result===true)
       {
         tempThis.setState({ errorMsg: ''});
         alert("You've created an account. Now log in to get started!")
-        window.location = "/login";
+        history.push('/login');
       }
       else if(result===false)
       {

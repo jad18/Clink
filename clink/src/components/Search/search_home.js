@@ -85,14 +85,58 @@ class SearchHomePage extends React.Component {
 
     search(reqList)
     {
-        let request = {};
-        for(let i=0; i<reqList.length; i++)
+        this.setState({ errorMsg: "Finding your matches..."});
+
+        let request = reqList.reduce(
+            (prevEntries, curEntry) =>
+            ({
+                ...prevEntries,
+                [curEntry]: JSON.parse(sessionStorage.getItem("search_" + curEntry))
+            }),
+            {}
+        );
+
+        console.log(request);
+        var searchResult = this.makeSearchRequest(request); //returns a promise
+        const self = this;
+        let {history} = this.props;
+
+        searchResult.then(function(result) {
+        if(result===true)
         {
-            request.item = JSON.parse(sessionStorage.getItem("search_" + reqList[i]));
-            console.log(reqList[i], request.item);
+            self.setState({ errorMsg: ''});
+            self.clearSearch();
+            history.push('/feed');
         }
-        alert(request);
-        this.clearSearch();
+        else
+        {
+            self.setState({ errorMsg: "An error occurred when requesting from the server"});
+        }
+        })
+    }
+
+    async makeSearchRequest(request)
+    {
+        console.log(request);
+        const options = {
+        method: 'POST',
+        headers: {'content-type' : 'application/json'},
+        body: JSON.stringify(request)
+        }
+
+        try {
+        const response = await fetch("http://[localhost]:3000/search", options) //change [localhost] to your local IP address
+        if(!response.ok)
+        {
+            alert(response.statusText);
+            return null;
+        }
+        const jsonData = await response.json();
+        return jsonData;
+        } catch(error) {
+            console.log(error);
+            return null;
+        }
     }
 
     getErrorMsg()
@@ -167,7 +211,7 @@ class SearchHomePage extends React.Component {
                 </tbody>
             </table>
 
-            <p> {this.getRequests()}</p>
+            {this.getRequests()}
             <p>{this.getErrorMsg()}</p>
 
             <button className="link-button2" onClick={() => this.checkSearch(this.state.requests)}>

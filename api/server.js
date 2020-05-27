@@ -52,6 +52,7 @@ app.get('/', checkAuthentication, (req, res) =>
 	});
 
 app.get('/login', checkNotAuthenticated, (req, res) => {
+    console.log('login');
     res.render('templogin.ejs');
 });
 
@@ -104,6 +105,12 @@ app.post('/signup', checkNotAuthenticated, async (req, res) => {
 	res.json(null);
     }	
 });
+
+app.post('/search', (req, res) => {
+    console.log("Finding a match");
+    console.log(req.body);
+    res.json(true);
+})
 
 app.delete('/logout', (req,res) => {
     req.logOut();

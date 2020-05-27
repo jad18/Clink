@@ -112,6 +112,12 @@ app.post('/search', (req, res) => {
     res.json(true);
 })
 
+app.get('/messages', (req, res) => {
+    let body = req.body;
+    console.log(body);
+    res.json(['user1', 'user2', 'user3', 'user4']);
+})
+
 app.delete('/logout', (req,res) => {
     req.logOut();
     res.redirect('login');

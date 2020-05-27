@@ -23,7 +23,8 @@ import ArtsForm from './Change_Profile/arts_form.js';
 
 import LoginPage from './login_page.js';
 import SignupPage from './signup_page.js';
-import MessagesPage from './messages.js';
+import MessagesPage from './MessageBox/messages.js';
+import MessagesHome from './MessageHome/messages_home_page.js';
 import FeedPage from './feed.js';
 
 // ///////////////
@@ -109,10 +110,14 @@ function getLinkButtons(loggedIn)
         <Link to='/change_profile/sports'>
           <button className="link-button1">Profile</button>
         </Link>
+
+        <Link to='/messages_home'>
+          <button className="link-button1">Messages</button>
+        </Link>
 	   
-	    <Link to={`/messages?name=${name}&room=${room}`}>
-        <button className="link-button1">Messages</button>
-	</Link>
+	      <Link to={`/messages?name=${name}&room=${room}`}>
+          <button className="link-button1">Messages2</button>
+	      </Link>
 	
         <Link to='/change_profile'>
           <button id="change-profile-button">Change Profile</button>
@@ -157,6 +162,7 @@ function getRouter(loggedIn)
         <Route exact path ="/feed" component={FeedPage} />
         <Route exact path="/change_profile" component={ChangeProfilePage}/>
 	      <Route exact path="/messages" component={MessagesPage}/>
+        <Route exact path="/messages_home" component={MessagesHome} />
 
         <Route exact path="/search/sports" 
           render={(props) =>

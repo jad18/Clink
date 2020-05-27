@@ -228,17 +228,6 @@ function logOut() {
   window.location = "/login";
 }
 
-//If first time rendering, set login status to false
-if (JSON.parse(sessionStorage.getItem("isLoggedIn")) === null) {
-  sessionStorage.setItem("isLoggedIn", "false");
-}
-
-function logOut() {
-  sessionStorage.clear();
-  sessionStorage.setItem("isLoggedIn", "false");
-  window.location = "/login";
-}
-
 function getLinkButtons(loggedIn) {
   if (loggedIn) {
     const name = sessionStorage.getItem("username");

@@ -32,6 +32,37 @@ function extractPersonalityItems(list)
     return str;
 }
 
+function extractPersonalInfoItems(list)
+{
+    let str="";
+    if(list.length > 2)
+    {
+        var schoolYear = list[0];
+        var religion = list[1];
+        var gender = list[2];
+
+        if(gender === "N/S") gender = "Gender not specified";
+
+        if(schoolYear !== "NoneYear")
+        {
+            str = schoolYear + " Year";
+            if(religion !== "NoneReligion") str += ", " + religion;
+            if(gender !== "NoneGender") str += ", " + gender;
+        }
+        else if(religion !== "NoneReligion")
+        {
+            str = religion;
+            if(gender !== "NoneGender") str += ", " + gender;
+        }
+        else if (gender !== "NoneGender")
+        {
+            str = gender;
+        }
+    }
+
+    return str;
+}
+
 
 class SearchHomePage extends React.Component {
     constructor()
@@ -57,25 +88,36 @@ class SearchHomePage extends React.Component {
             <div>
                 <h2><u>Request List:</u></h2>
                 <p className="about-page-para">
-                    <strong>Sports: </strong> {extractListItems(JSON.parse(sessionStorage.getItem("search_sports")))}
+                    <strong>Sports: </strong>
+                    {extractListItems(JSON.parse(sessionStorage.getItem("search_sports")))}
                 </p>
                 <p className="about-page-para">
-                    <strong>TV and Movies: </strong> {extractListItems(JSON.parse(sessionStorage.getItem("search_movies")))}
+                    <strong>TV and Movies: </strong>
+                    {extractListItems(JSON.parse(sessionStorage.getItem("search_movies")))}
                 </p>
                 <p className="about-page-para">
-                    <strong>Outdoor Activities: </strong> {extractListItems(JSON.parse(sessionStorage.getItem("search_outdoor")))}
+                    <strong>Outdoor Activities: </strong>
+                    {extractListItems(JSON.parse(sessionStorage.getItem("search_outdoor")))}
                 </p>
                 <p className="about-page-para">
-                    <strong>Indoor Activities: </strong> {extractListItems(JSON.parse(sessionStorage.getItem("search_indoor")))}
+                    <strong>Indoor Activities: </strong>
+                    {extractListItems(JSON.parse(sessionStorage.getItem("search_indoor")))}
                 </p>
                 <p className="about-page-para">
-                    <strong>Types of Food: </strong> {extractListItems(JSON.parse(sessionStorage.getItem("search_cuisines")))}
+                    <strong>Types of Food: </strong>
+                    {extractListItems(JSON.parse(sessionStorage.getItem("search_cuisines")))}
                 </p>
                 <p className="about-page-para">
-                    <strong>Arts, Theater, and Media: </strong>{extractListItems(JSON.parse(sessionStorage.getItem("search_arts")))}
+                    <strong>Arts, Theater, and Media: </strong>
+                    {extractListItems(JSON.parse(sessionStorage.getItem("search_arts")))}
                 </p>
                 <p className="about-page-para">
-                    <strong>Personality: </strong>{extractPersonalityItems(JSON.parse(sessionStorage.getItem("search_personality")))}
+                    <strong>Personality: </strong>
+                    {extractPersonalityItems(JSON.parse(sessionStorage.getItem("search_personality")))}
+                </p>
+                <p className="about-page-para">
+                    <strong>Personal Information: </strong>
+                    {extractPersonalInfoItems(JSON.parse(sessionStorage.getItem("search_personalInfo")))}
                 </p>
             </div>
         );
@@ -91,6 +133,7 @@ class SearchHomePage extends React.Component {
         sessionStorage.setItem("search_cuisines", "[]");
         sessionStorage.setItem("search_arts", "[]");
         sessionStorage.setItem("search_personality", "[]");
+        sessionStorage.setItem("search_personalInfo", "[]");
         this.setState({ requests: [] });
     }
 
@@ -120,6 +163,17 @@ class SearchHomePage extends React.Component {
         );
 
         request["username"] = sessionStorage.getItem("username");
+
+        let personalityReq = request["personality"];
+        if(personalityReq[1] === "NoneEn") personalityReq.pop();
+        if(personalityReq[0] === "NoneMB") personalityReq.shift();
+        request["personality"] = personalityReq;
+
+        let personalInfoReq = request["personalInfo"];
+        if(personalInfoReq[2] === "NoneGender") personalityReq.pop();
+        if(personalInfoReq[1] === "NoneReligion") personalityReq.splice(1,1);
+        if(personalInfoReq[0] === "NoneYear") personalityReq.shift();
+        request["personalInfo"] = personalInfoReq;
 
         console.log(request);
         var searchResult = this.makeSearchRequest(request); //returns a promise
@@ -228,7 +282,7 @@ class SearchHomePage extends React.Component {
                         </Link>
                     </td>
                     <td className='table-column'>
-                        <Link to='/search/arts_and_media'>
+                        <Link to='/search/personal_info'>
                             <button className='link-button3'>Personal Information</button>
                         </Link>
                     </td>

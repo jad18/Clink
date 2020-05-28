@@ -1,7 +1,8 @@
 import React from "react";
 import "../App.css";
 import { Route, Switch, Link, Redirect } from "react-router-dom";
-//import "bootstrap/dist/css/bootstrap.min.css";
+
+
 //Page imports
 import AboutPage from "./about_page.js";
 
@@ -13,6 +14,7 @@ import SearchIndoorForm from "./Search/search_indoor_form.js";
 import SearchCuisineForm from "./Search/search_cuisine_form.js";
 import SearchArtsForm from "./Search/search_arts_form.js";
 import SearchPersonalityForm from './Search/search_personality_form.js';
+import SearchPersonalInfoForm from './Search/search_personal_info_form.js';
 
 import ChangeProfilePage from "./Change_Profile/profile_change_home.js";
 import SportsForm from "./Change_Profile/sports_form.js";
@@ -402,6 +404,7 @@ function getRouter(loggedIn) {
         />
 
         <Route exact path = "/search/personality" component={SearchPersonalityForm} />
+        <Route exact path = "/search/personal_info" component={SearchPersonalInfoForm} />
 
         <Route
           exact

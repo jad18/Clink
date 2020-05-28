@@ -8,13 +8,11 @@ class PersonalInfoForm extends React.Component
         super();
 
         sessionStorage.setItem("lastValidPage", "/change_profile/personal_info");
-        var tempBio = sessionStorage.getItem("bio");
-        if(tempBio === null) tempBio = "";
 
         this.state = {
             hasChanges: false,
             trueValues: JSON.parse(sessionStorage.getItem("profile_personalInfo")),
-            bio: ""
+            bio: sessionStorage.getItem("bio")
         };
 
         this.submitForm = this.submitForm.bind(this);
@@ -39,13 +37,13 @@ class PersonalInfoForm extends React.Component
                             document.getElementById('gender').value];
           
             console.log(trueEntries);
-            console.log(this.state.bio);
+            console.log(document.getElementById('bio').value);
     
             sessionStorage.setItem(
                 "profile_personalInfo",
                 JSON.stringify(trueEntries)
           );
-          sessionStorage.setItem("bio", this.state.bio);
+          sessionStorage.setItem("bio", document.getElementById('bio').value);
         }
     }
 
@@ -145,8 +143,8 @@ class PersonalInfoForm extends React.Component
               </h4>
               <textarea name='bio' id='bio' rows='7' cols='80' maxLength="300"
                 placeholder="Write about yourself!"
-                onKeyPress={() => this.setState({hasChanges: true})}>
-                    {this.state.bio}
+                onKeyDown={() => this.setState({hasChanges: true})}
+                defaultValue={this.state.bio}>
                 </textarea>
 
 

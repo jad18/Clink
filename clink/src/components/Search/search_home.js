@@ -164,16 +164,22 @@ class SearchHomePage extends React.Component {
 
         request["username"] = sessionStorage.getItem("username");
 
-        let personalityReq = request["personality"];
-        if(personalityReq[1] === "NoneEn") personalityReq.pop();
-        if(personalityReq[0] === "NoneMB") personalityReq.shift();
-        request["personality"] = personalityReq;
+        if(request["personality"])
+        {
+            let personalityReq = request["personality"];
+            if(personalityReq[1] === "NoneEn") personalityReq.pop();
+            if(personalityReq[0] === "NoneMB") personalityReq.shift();
+            request["personality"] = personalityReq;
+        }
 
-        let personalInfoReq = request["personalInfo"];
-        if(personalInfoReq[2] === "NoneGender") personalityReq.pop();
-        if(personalInfoReq[1] === "NoneReligion") personalityReq.splice(1,1);
-        if(personalInfoReq[0] === "NoneYear") personalityReq.shift();
-        request["personalInfo"] = personalInfoReq;
+        if(request["personalInfo"])
+        {
+            let personalInfoReq = request["personalInfo"];
+            if(personalInfoReq[2] === "NoneGender") personalInfoReq.pop();
+            if(personalInfoReq[1] === "NoneReligion") personalInfoReq.splice(1,1);
+            if(personalInfoReq[0] === "NoneYear") personalInfoReq.shift();
+            request["personalInfo"] = personalInfoReq;
+        }
 
         console.log(request);
         var searchResult = this.makeSearchRequest(request); //returns a promise

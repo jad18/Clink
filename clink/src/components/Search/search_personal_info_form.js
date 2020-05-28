@@ -11,7 +11,7 @@ class SearchPersonalInfoForm extends React.Component
 
         this.state = {
             hasChanges: false,
-            trueValues: JSON.parse(sessionStorage.getItem("profile_personalInfo")),
+            trueValues: JSON.parse(sessionStorage.getItem("search_personalInfo")),
         };
 
         this.submitForm = this.submitForm.bind(this);

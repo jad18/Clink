@@ -7,7 +7,6 @@ class FeedPage extends React.Component
     {
         super();
         sessionStorage.setItem("lastValidPage", "/feed");
-        alert(sessionStorage.getItem("lastValidPage"));
     }
 
     render()

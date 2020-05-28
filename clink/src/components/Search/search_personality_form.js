@@ -59,10 +59,10 @@ class SearchPersonalityForm extends React.Component
         return (
           <div>
             <div className="App">
-              <h1>Your Personality</h1>
+              <h1>Personality</h1>
               <h4 className='about-page-para'>
                 These personality metrics are a great way to match up with like-minded
-                people. If you don't know what type you are, don't worry: these are optional.
+                people.
               </h4>
             </div>
     

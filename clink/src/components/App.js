@@ -398,7 +398,7 @@ function getRouter(loggedIn) {
               searchType={"arts"}
               trueEntries={JSON.parse(sessionStorage.getItem("search_arts"))}
               maxEntries={3}
-              nextPageLink={"/search"}
+              nextPageLink={"/search/personality"}
             />
           )}
         />
@@ -501,7 +501,7 @@ function getRouter(loggedIn) {
               profileType={"arts"}
               trueEntries={JSON.parse(sessionStorage.getItem("profile_arts"))}
               maxEntries={3}
-              nextPageLink={"/change_profile"}
+              nextPageLink={"/change_profile/personality"}
             />
           )}
         />

@@ -27,7 +27,7 @@ class LoginPage extends React.Component {
     };
 
     try {
-      const response = await fetch("http://[localhost]:3000/login", options); //change [localhost] to your local IP address
+      const response = await fetch("http://192.168.1.9:3000/login", options); //change [localhost] to your local IP address
       if (!response.ok) {
         alert(response.statusText);
         return null;

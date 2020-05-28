@@ -1,7 +1,6 @@
 import React from "react";
 import "../App.css";
 import { Route, Switch, Link, Redirect } from "react-router-dom";
-//import "bootstrap/dist/css/bootstrap.min.css";
 //Page imports
 import AboutPage from "./about_page.js";
 
@@ -26,6 +25,7 @@ import SignupPage from "./signup_page.js";
 import MessagesPage from "./MessageBox/messages.js";
 import MessagesHome from "./MessageHome/messages_home_page.js";
 import FeedPage from "./feed.js";
+import ProfilePage from "./profile_page.js";
 
 // ///////////////
 //Form selection arrays
@@ -246,7 +246,7 @@ function getLinkButtons(loggedIn) {
           <button className="link-button1">Feed</button>
         </Link>
 
-        <Link to="/change_profile/sports">
+        <Link to="/profile_page">
           <button className="link-button1">Profile</button>
         </Link>
 
@@ -297,7 +297,7 @@ function getRouter(loggedIn) {
         <Route exact path="/change_profile" component={ChangeProfilePage} />
         <Route exact path="/messages" component={MessagesPage} />
         <Route exact path="/messages_home" component={MessagesHome} />
-
+        <Route exact path="/profile_page" component={ProfilePage} />
         <Route
           exact
           path="/search/sports"

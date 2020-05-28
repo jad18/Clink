@@ -4,85 +4,42 @@ import "../App.css";
 export default class Profile extends Component {
   render() {
     return (
-      <div1>
-        <h3>{sessionStorage.getItem("username") + "'s Profile"}</h3>
-        <div class="card">
-          <ul id="nav_section">
-            <li>
-              <b href="#">Art</b>
+      <div className="App">
+        <div id="stripes" />
+        <div id="card">
+          <h2>{sessionStorage.getItem("username")}</h2>
+          <div id="bio">About me:</div>
+          <div id="hobbies">
+            Interested in :
+            <ul>
+              Movies:
+              {JSON.parse(sessionStorage.getItem("profile_arts")).join(" ")}
+            </ul>
+            <span class="middle">
               <ul>
-                <li>
-                  <a href="#">
-                    {JSON.parse(sessionStorage.getItem("profile_arts")).join(
-                      " "
-                    )}
-                  </a>
-                </li>
+                Sports:
+                {JSON.parse(sessionStorage.getItem("profile_arts")).join(" ")}
               </ul>
-            </li>
-            <li>
-              <b href="#">Cusine</b>
               <ul>
-                <li>
-                  <a href="#">
-                    {JSON.parse(sessionStorage.getItem("profile_arts")).join(
-                      " "
-                    )}
-                  </a>
-                </li>
+                Arts:
+                {JSON.parse(sessionStorage.getItem("profile_arts")).join(" ")}
               </ul>
-            </li>
-            <li>
-              <b href="#">Movies</b>
               <ul>
-                <li>
-                  <a href="#">
-                    {JSON.parse(sessionStorage.getItem("profile_movies")).join(
-                      " "
-                    )}
-                  </a>
-                </li>
+                Indoor Activities:
+                {JSON.parse(sessionStorage.getItem("profile_arts")).join(" ")}
               </ul>
-            </li>
-            <li>
-              <b href="#">Indoor Act</b>
               <ul>
-                <li>
-                  <a href="#">
-                    {JSON.parse(sessionStorage.getItem("profile_arts")).join(
-                      " "
-                    )}
-                  </a>
-                </li>
+                Outdoor Activities:
+                {JSON.parse(sessionStorage.getItem("profile_arts")).join(" ")}
               </ul>
-            </li>
-            <li>
-              <b href="#">Outdoor Act</b>
               <ul>
-                <li>
-                  <a href="#">
-                    {JSON.parse(sessionStorage.getItem("profile_arts")).join(
-                      " "
-                    )}
-                  </a>
-                </li>
+                Cusines:
+                {JSON.parse(sessionStorage.getItem("profile_arts")).join(" ")}
               </ul>
-            </li>
-            <li>
-              <b href="#">Sports</b>
-              <ul>
-                <li>
-                  <a href="#">
-                    {JSON.parse(sessionStorage.getItem("profile_sports")).join(
-                      " "
-                    )}
-                  </a>
-                </li>
-              </ul>
-            </li>
-          </ul>
+            </span>
+          </div>
         </div>
-      </div1>
+      </div>
     );
   }
 }

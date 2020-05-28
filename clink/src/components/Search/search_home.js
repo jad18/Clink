@@ -13,6 +13,25 @@ function extractListItems(list)
     return str;
 }
 
+function extractPersonalityItems(list)
+{
+    let str="";
+    if(list.length > 1)
+    {
+        var mb = list[0];
+        var en = list[1];
+
+        if(mb !== "NoneMB")
+        {
+            if(en !== "NoneEn") str = "Myers-Briggs " + mb + ", Enneagram " + en;
+            else str = "Myers-Briggs " + mb;
+        }
+        else if (en !== "NoneEn") str = "Enneagram " + en;
+    }
+
+    return str;
+}
+
 
 class SearchHomePage extends React.Component {
     constructor()
@@ -55,6 +74,9 @@ class SearchHomePage extends React.Component {
                 <p className="about-page-para">
                     <strong>Arts, Theater, and Media: </strong>{extractListItems(JSON.parse(sessionStorage.getItem("search_arts")))}
                 </p>
+                <p className="about-page-para">
+                    <strong>Personality: </strong>{extractPersonalityItems(JSON.parse(sessionStorage.getItem("search_personality")))}
+                </p>
             </div>
         );
     }
@@ -68,6 +90,7 @@ class SearchHomePage extends React.Component {
         sessionStorage.setItem("search_indoor", "[]");
         sessionStorage.setItem("search_cuisines", "[]");
         sessionStorage.setItem("search_arts", "[]");
+        sessionStorage.setItem("search_personality", "[]");
         this.setState({ requests: [] });
     }
 
@@ -200,7 +223,7 @@ class SearchHomePage extends React.Component {
                 </tr>
                 <tr className='table-row'>
                     <td className='table-column'>
-                        <Link to='/search/cuisines'>
+                        <Link to='/search/personality'>
                             <button className='link-button3'>Personality</button>
                         </Link>
                     </td>

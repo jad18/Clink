@@ -54,13 +54,18 @@ class LoginPage extends React.Component {
         self.setState({ errorMsg: "" });
         sessionStorage.setItem("isLoggedIn", "true");
         sessionStorage.setItem("username", received_username);
+        sessionStorage.setItem("name", result.name)
 
         for (var element in result.profile) {
-          sessionStorage.setItem(
+          if(element !== "bio") {
+            sessionStorage.setItem(
             "profile_" + String(element),
             JSON.stringify(result.profile[element])
-          );
-          sessionStorage.setItem("search_" + String(element), "[]");
+            );
+            sessionStorage.setItem("search_" + String(element), "[]");
+          }
+          else sessionStorage.setItem("profile_bio", result["bio"]);
+
         }
         alert(sessionStorage.getItem("profile_sports"));
         sessionStorage.setItem("searchList", "[]");

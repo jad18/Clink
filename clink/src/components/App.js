@@ -21,6 +21,7 @@ import IndoorForm from "./Change_Profile/indoor_form.js";
 import CuisineForm from "./Change_Profile/cuisine_form.js";
 import ArtsForm from "./Change_Profile/arts_form.js";
 import PersonalityForm from './Change_Profile/personality_form.js';
+import PersonalInfoForm from './Change_Profile/personal_info_form.js';
 
 import LoginPage from "./login_page.js";
 import SignupPage from "./signup_page.js";
@@ -500,6 +501,7 @@ function getRouter(loggedIn) {
         />
 
         <Route exact path="/change_profile/personality" component={PersonalityForm} />
+        <Route exact path="/change_profile/personal_info" component={PersonalInfoForm} />
 
         <Redirect to={sessionStorage.getItem("lastValidPage")} />
       </Switch>

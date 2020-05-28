@@ -20,12 +20,14 @@ import OutdoorForm from "./Change_Profile/outdoor_form.js";
 import IndoorForm from "./Change_Profile/indoor_form.js";
 import CuisineForm from "./Change_Profile/cuisine_form.js";
 import ArtsForm from "./Change_Profile/arts_form.js";
+import PersonalityForm from './Change_Profile/personality_form.js';
 
 import LoginPage from "./login_page.js";
 import SignupPage from "./signup_page.js";
 import MessagesPage from "./MessageBox/messages.js";
 import MessagesHome from "./MessageHome/messages_home_page.js";
 import FeedPage from "./feed.js";
+import ProfilePage from './profile_page.js';
 
 // ///////////////
 //Form selection arrays
@@ -246,7 +248,7 @@ function getLinkButtons(loggedIn) {
           <button className="link-button1">Feed</button>
         </Link>
 
-        <Link to="/change_profile/sports">
+        <Link to="/profile">
           <button className="link-button1">Profile</button>
         </Link>
 
@@ -294,6 +296,7 @@ function getRouter(loggedIn) {
         <Route exact path="/about" component={AboutPage} />
         <Route exact path="/search" component={SearchHomePage} />
         <Route exact path="/feed" component={FeedPage} />
+        <Route exact path="/profile" component={ProfilePage} />
         <Route exact path="/change_profile" component={ChangeProfilePage} />
         <Route exact path="/messages" component={MessagesPage} />
         <Route exact path="/messages_home" component={MessagesHome} />
@@ -495,6 +498,8 @@ function getRouter(loggedIn) {
             />
           )}
         />
+
+        <Route exact path="/change_profile/personality" component={PersonalityForm} />
 
         <Redirect to={sessionStorage.getItem("lastValidPage")} />
       </Switch>

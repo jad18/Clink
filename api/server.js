@@ -190,7 +190,8 @@ app.post('/login', checkNotAuthenticated, function (req, res, next) {
         if(err) { res.json(err); }
         else if(!user) { console.log("Not valid user"); res.json({ status: false, profile: null }); }
         else { console.log(user); res.json({status: true, profile: {sports: ['Soccer', 'Volleyball'], movies:[], outdoor:[],
-                                                                    indoor:[], cuisines:[], arts:[]}}); }
+                                                                    indoor:[], cuisines:[], arts:[],
+                                                                    personality:['INTJ', 'None']}}); }
     }) (req, res, next);
 });
 

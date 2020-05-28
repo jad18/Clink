@@ -38,7 +38,6 @@ class GeneralForm extends React.Component {
     this.makeTwoCheckboxes = this.makeTwoCheckboxes.bind(this);
     this.makeCheckboxes = this.makeCheckboxes.bind(this);
     this.displayChanges = this.displayChanges.bind(this);
-    this.resetChanges = this.resetChanges.bind(this);
   }
 
   handleChange = (event) => {

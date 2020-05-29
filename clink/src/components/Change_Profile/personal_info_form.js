@@ -20,6 +20,7 @@ class PersonalInfoForm extends React.Component
         this.contactServer = this.contactServer.bind(this);
         this.displayChanges = this.displayChanges.bind(this);
         this.listingChange = this.listingChange.bind(this);
+        this.checkBioChange = this.checkBioChange.bind(this);
     }
 
     submitForm(event) {
@@ -97,6 +98,11 @@ class PersonalInfoForm extends React.Component
     listingChange()
     {
         this.setState({hasChanges: true});
+    }
+
+    checkBioChange()
+    {
+        if(!this.state.hasChanges) this.setState({ hasChanges: true });
     }
 
 
@@ -184,7 +190,7 @@ class PersonalInfoForm extends React.Component
               </h4>
               <textarea name='bio' id='bio' rows='7' cols='80' maxLength="300"
                 placeholder="Write about yourself!"
-                onKeyDown={() => this.setState({hasChanges: true})}
+                onKeyDown={this.checkBioChange}
                 defaultValue={this.state.bio}>
                 </textarea>
 

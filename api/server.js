@@ -234,6 +234,16 @@ app.post('/signup', checkNotAuthenticated, async (req, res) => {
     }	
 });
 
+
+
+app.post('/change_profile', (req, res) => {
+    console.log("Getting profile change request");
+    console.log(req.body);
+    //store this info
+    res.json(true);
+})
+
+
 app.post('/search', (req, res) => {
     console.log("Finding a match");
     console.log(req.body);

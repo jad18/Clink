@@ -15,7 +15,7 @@ async function makeMessagesRequest() {
     try {
       const response = await fetch("http://[localhost]:3000/messages", options); //change [localhost] to your local IP address
       if (!response.ok) {
-        alert(response.statusText);
+        console.log(response.statusText);
         return null;
       }
       const jsonData = await response.json();
@@ -24,7 +24,7 @@ async function makeMessagesRequest() {
       console.log(error);
       return null;
     }
-  }
+}
 
 function getRoomName(msgUsername)
 {
@@ -40,26 +40,20 @@ class MessagesHome extends React.Component
 
         sessionStorage.setItem("lastValidPage", '/messages_home');
 
-        var messagesResult = makeMessagesRequest(); //returns a promise
-
         this.state = { messages: {}, finishedFetch: false }
-        const self = this;
-
-        messagesResult.then(function (result) {
-            self.setState({ messages: result, finishedFetch: true });   //Note: will return an error if messages is null
-        });
-    
-
-        /*this.state = {
-            numNewUsers: newMessageUsers.length,
-            numTotalUsers: allMessageUsers.length
-        }*/
-
-        console.log(this.state.messages);
 
         this.getMessages = this.getMessages.bind(this);
         this.getTableEntries = this.getTableEntries.bind(this);
         this.makeMessageEntry = this.makeMessageEntry.bind(this);
+    }
+
+    componentDidMount()
+    {
+        var messagesResult = makeMessagesRequest(); //returns a promise
+        const self = this;
+        messagesResult.then(function (result) {
+            self.setState({ messages: result, finishedFetch: true });   //Note: will return an error if messages is null
+        });
     }
 
     makeMessageEntry(username, isNew)

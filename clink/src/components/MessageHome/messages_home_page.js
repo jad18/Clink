@@ -13,7 +13,7 @@ async function makeMessagesRequest() {
     };
 
     try {
-      const response = await fetch("http://192.168.1.166:3000/messages", options); //change [localhost] to your local IP address
+      const response = await fetch("http://[localhost]:3000/messages", options); //change [localhost] to your local IP address
       if (!response.ok) {
         alert(response.statusText);
         return null;
@@ -64,11 +64,16 @@ class MessagesHome extends React.Component
 
     makeMessageEntry(username, isNew)
     {
+        const alignmentTool = (isNew ? <span className="alignment-tool"/> : null);
         console.log(String(isNew) + " " + username);
         return(
-            <tr>
+            <tr className="messages-table-row">
                 <Link to={`/messages?name=${sessionStorage.getItem("username")}&room=${getRoomName(username)}`}>
-                    <td className="new-table-column">{String(isNew)} {username}</td>
+                    <td className={isNew ? "new-table-column" : "old-table-column"}>
+                        <button className="messages-link-button">
+                            {String(isNew)} {username} {alignmentTool}
+                        </button>
+                    </td>
                 </Link>
             </tr>
         );
@@ -130,6 +135,7 @@ class MessagesHome extends React.Component
             <div className="App">
                 <h1>Messages</h1>
                 {this.getMessages()}
+                <br/>
             </div>
         );
     }

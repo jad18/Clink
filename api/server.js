@@ -255,7 +255,7 @@ app.post('/search', (req, res) => {
 app.post('/messages', (req, res) => {
     let usernameObj = req.body; //body only contains the username of the user
     console.log(usernameObj);
-    let messages = {"user1": true, "user2": false, "user3": true, "user4": false, "user5": false};
+    let messages = {"user1": false, "user2": false, "user3": true, "user4": true, "user5": false};
     res.json(messages);
 })
 

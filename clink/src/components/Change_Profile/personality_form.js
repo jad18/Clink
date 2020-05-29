@@ -15,6 +15,8 @@ class PersonalityForm extends React.Component
         };
 
         this.submitForm = this.submitForm.bind(this);
+        this.makeChangeRequest = this.makeChangeRequest.bind(this);
+        this.contactServer = this.contactServer.bind(this);
         this.displayChanges = this.displayChanges.bind(this);
         this.listingChange = this.listingChange.bind(this);
     }
@@ -26,16 +28,56 @@ class PersonalityForm extends React.Component
     
         if (this.state.hasChanges)
         {
-            this.setState({ hasChanges: false });
             var trueEntries = [document.getElementById('myers-briggs').value,
                             document.getElementById('enneagram').value];
           
             console.log(trueEntries);
     
-            sessionStorage.setItem(
-                "profile_personality",
-                JSON.stringify(trueEntries)
-          );
+            this.makeChangeRequest(trueEntries);
+        }
+    }
+
+    makeChangeRequest(trueEntries)
+    {
+        var request = {"username": sessionStorage.getItem("username"),
+                        "personality": trueEntries};
+
+        console.log(request);
+
+        var postResult = this.contactServer(request); //returns a promise
+
+        var self = this;
+        postResult.then(function(result) {
+        if(result)
+        {
+            self.setState({hasChanges: false});
+            sessionStorage.setItem("profile_personality", JSON.stringify(trueEntries));
+        }
+        else
+            alert("Your change could not be received by the server. Please check your connection and resubmit.");
+        })
+    }
+
+    async contactServer(request)
+    {
+        const options = {
+        method: 'POST',
+        headers: {'content-type' : 'application/json'},
+        body: JSON.stringify(request)
+        }
+
+        try {
+        const response = await fetch("http://[localhost]:3000/change_profile", options) //change [localhost] to your local IP address
+        if(!response.ok)
+        {
+            alert(response.statusText);
+            return null;
+        }
+        const jsonData = await response.json();
+        return jsonData;
+        } catch(error) {
+            console.log(error);
+            return null;
         }
     }
 

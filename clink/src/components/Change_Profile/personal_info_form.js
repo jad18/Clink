@@ -16,19 +16,18 @@ class PersonalInfoForm extends React.Component
         };
 
         this.submitForm = this.submitForm.bind(this);
+        this.makeChangeRequest = this.makeChangeRequest.bind(this);
+        this.contactServer = this.contactServer.bind(this);
         this.displayChanges = this.displayChanges.bind(this);
         this.listingChange = this.listingChange.bind(this);
     }
 
-    
-    
     submitForm(event) {
         event.preventDefault();
     
         if (this.state.hasChanges)
         {
             this.setState({
-                hasChanges: false,
                 bio: document.getElementById("bio").value
             });
 
@@ -39,11 +38,53 @@ class PersonalInfoForm extends React.Component
             console.log(trueEntries);
             console.log(document.getElementById('bio').value);
     
-            sessionStorage.setItem(
-                "profile_personalInfo",
-                JSON.stringify(trueEntries)
-          );
-          sessionStorage.setItem("bio", document.getElementById('bio').value);
+            this.makeChangeRequest(trueEntries, document.getElementById('bio').value);
+        }
+    }
+
+    makeChangeRequest(trueEntries, bio)
+    {
+        var request = {"username": sessionStorage.getItem("username"),
+                       "personalInfo": trueEntries,
+                       "bio": bio};
+
+        console.log(request);
+
+        var postResult = this.contactServer(request); //returns a promise
+
+        var self = this;
+        postResult.then(function(result) {
+        if(result)
+        {
+            self.setState({hasChanges: false});
+            sessionStorage.setItem("profile_personalInfo", JSON.stringify(trueEntries));
+            sessionStorage.setItem("bio", bio);
+        }
+        else
+            alert("Your change could not be received by the server. Please check your connection and resubmit.");
+        })
+    }
+
+    async contactServer(request)
+    {
+        const options = {
+        method: 'POST',
+        headers: {'content-type' : 'application/json'},
+        body: JSON.stringify(request)
+        }
+
+        try {
+        const response = await fetch("http://[localhost]:3000/change_profile", options) //change [localhost] to your local IP address
+        if(!response.ok)
+        {
+            alert(response.statusText);
+            return null;
+        }
+        const jsonData = await response.json();
+        return jsonData;
+        } catch(error) {
+            console.log(error);
+            return null;
         }
     }
 

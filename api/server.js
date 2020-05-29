@@ -250,7 +250,13 @@ app.post('/search', (req, res) => {
     res.json(true);
 })
 
-//app.get('/feed', )
+app.post('/feed', (req, res) => {
+    // Note: you must send a user in this form (should get rid of other information, and at least must
+    // have the following entries):
+    const user = { profile: {sports: ['Soccer', 'Volleyball'], movies:[], outdoor:[], indoor:[], cuisines:[],
+                    arts:[], personality:['NoneMB', 'NoneEn'], personalInfo:['NoneYear', 'NoneReligion'], bio:"f"}};
+    res.json(user);
+})
 
 app.post('/messages', (req, res) => {
     let usernameObj = req.body; //body only contains the username of the user

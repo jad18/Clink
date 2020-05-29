@@ -235,7 +235,6 @@ app.post('/signup', checkNotAuthenticated, async (req, res) => {
 });
 
 
-
 app.post('/change_profile', (req, res) => {
     console.log("Getting profile change request");
     console.log(req.body);
@@ -253,10 +252,11 @@ app.post('/search', (req, res) => {
 
 //app.get('/feed', )
 
-app.get('/messages', (req, res) => {
-    let body = req.body;
-    console.log(body);
-    res.json(['user1', 'user2', 'user3', 'user4']);
+app.post('/messages', (req, res) => {
+    let usernameObj = req.body; //body only contains the username of the user
+    console.log(usernameObj);
+    let messages = {"user1": true, "user2": false, "user3": true, "user4": false, "user5": false};
+    res.json(messages);
 })
 
 app.delete('/logout', (req,res) => {

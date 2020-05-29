@@ -55,8 +55,8 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true })
         const db = client.db('user-list')
         const users = db.collection('users')
 
-        //Creating a user using the Register page: password gets encrypted
-        app.post('/register', checkNotAuthenticated, (req, res, err) => {
+        //Creating a user using the Signup page: password gets encrypted
+        app.post('/signup', checkNotAuthenticated, (req, res, err) => { //Note: changed /register to /signup
             try {
 
                 let hasFoundMatch = false;

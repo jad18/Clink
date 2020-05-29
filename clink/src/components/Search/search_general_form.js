@@ -70,7 +70,6 @@ class SearchGeneralForm extends React.Component {
         trueEntries.push(checkbox);
       });
 
-    alert(trueEntries);
     sessionStorage.setItem(
       "search_" + this.searchType,
       JSON.stringify(trueEntries)

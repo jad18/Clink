@@ -31,9 +31,12 @@ class GeneralForm extends React.Component {
 
       hasChanges: false,
       numEntries: props.trueEntries.length,
+      postWasReceived: false
     };
     this.handleChange = this.handleChange.bind(this);
     this.submitForm = this.submitForm.bind(this);
+    this.makeChangeRequest = this.makeChangeRequest.bind(this);
+    this.contactServer = this.contactServer.bind(this);
     this.makeOneCheckbox = this.makeOneCheckbox.bind(this);
     this.makeTwoCheckboxes = this.makeTwoCheckboxes.bind(this);
     this.makeCheckboxes = this.makeCheckboxes.bind(this);
@@ -63,7 +66,6 @@ class GeneralForm extends React.Component {
     event.preventDefault();
 
     if (this.state.hasChanges) {
-      this.setState({ hasChanges: false });
       var trueEntries = [];
       Object.keys(this.state.entries)
         .filter((checkbox) => this.state.entries[checkbox])
@@ -71,11 +73,53 @@ class GeneralForm extends React.Component {
           trueEntries.push(checkbox);
         });
 
-      sessionStorage.setItem(
-        "profile_" + this.profileType,
-        JSON.stringify(trueEntries)
-      );
+      this.makeChangeRequest(trueEntries);
     }
+  }
+
+  makeChangeRequest(trueEntries)
+  {
+    var request = {"username": sessionStorage.getItem("username")};
+    request[this.profileType] = trueEntries;
+
+    console.log(request);
+
+
+    var postResult = this.contactServer(request); //returns a promise
+
+    var self = this;
+    postResult.then(function(result) {
+        if(result)
+        {
+            self.setState({hasChanges: false});
+            sessionStorage.setItem("profile_" + self.profileType, JSON.stringify(trueEntries));
+        }
+        else
+            alert("Your change could not be received by the server. Please check your connection and resubmit.");
+    })
+  }
+
+  async contactServer(request)
+  {
+        const options = {
+        method: 'POST',
+        headers: {'content-type' : 'application/json'},
+        body: JSON.stringify(request)
+        }
+
+        try {
+        const response = await fetch("http://[localhost]:3000/change_profile", options) //change [localhost] to your local IP address
+        if(!response.ok)
+        {
+            alert(response.statusText);
+            return null;
+        }
+        const jsonData = await response.json();
+        return jsonData;
+        } catch(error) {
+            console.log(error);
+            return null;
+        }
   }
 
   makeOneCheckbox(key) {

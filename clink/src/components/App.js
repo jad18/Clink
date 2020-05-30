@@ -304,7 +304,6 @@ function getRouter(loggedIn) {
         <Route exact path="/change_profile" component={ChangeProfilePage} />
         <Route exact path="/messages" component={MessagesPage} />
         <Route exact path="/messages_home" component={MessagesHome} />
-        <Route exact path="/profile_page" component={ProfilePage} />
         <Route
           exact
           path="/search/sports"

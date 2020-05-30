@@ -4,85 +4,83 @@ import "../App.css";
 export default class Profile extends Component {
   render() {
     return (
-      <div1>
-        <h3>{sessionStorage.getItem("username") + "'s Profile"}</h3>
-        <div class="card">
-          <ul id="nav_section">
-            <li>
-              <b href="#">Art</b>
-              <ul>
-                <li>
-                  <a href="#">
+      <div className="App">
+        <div id="stripes" />
+
+        <div id="card">
+          <h2>{sessionStorage.getItem("username")}</h2>
+          <ul id="tags"></ul>
+          <ul id="boxes">
+            <lo id="Pers">
+              <h4>Personality</h4>
+              {sessionStorage.getItem("profile_arts")}
+            </lo>
+            <lo id="Pinfo">
+              {" "}
+              <h4>Personal Information</h4>
+              {sessionStorage.getItem("profile_arts")}
+            </lo>
+            <lo id="bio">
+              <h4>About me</h4>
+              {sessionStorage.getItem("profile_arts")}
+            </lo>
+            <div id="hobbies">
+              <h4>Interested in</h4>
+              {sessionStorage.getItem("profile_arts")}
+              <span class="middle">
+                <ul>
+                  Movies:
+                  <lo>
                     {JSON.parse(sessionStorage.getItem("profile_arts")).join(
-                      " "
+                      ", "
                     )}
-                  </a>
-                </li>
-              </ul>
-            </li>
-            <li>
-              <b href="#">Cusine</b>
-              <ul>
-                <li>
-                  <a href="#">
+                  </lo>
+                </ul>
+                <ul>
+                  Sports:
+                  <lo>
                     {JSON.parse(sessionStorage.getItem("profile_arts")).join(
-                      " "
+                      ", "
                     )}
-                  </a>
-                </li>
-              </ul>
-            </li>
-            <li>
-              <b href="#">Movies</b>
-              <ul>
-                <li>
-                  <a href="#">
-                    {JSON.parse(sessionStorage.getItem("profile_movies")).join(
-                      " "
-                    )}
-                  </a>
-                </li>
-              </ul>
-            </li>
-            <li>
-              <b href="#">Indoor Act</b>
-              <ul>
-                <li>
-                  <a href="#">
+                  </lo>
+                </ul>
+                <ul>
+                  Arts
+                  <lo>
                     {JSON.parse(sessionStorage.getItem("profile_arts")).join(
-                      " "
+                      ", "
                     )}
-                  </a>
-                </li>
-              </ul>
-            </li>
-            <li>
-              <b href="#">Outdoor Act</b>
-              <ul>
-                <li>
-                  <a href="#">
+                  </lo>
+                </ul>
+                <ul>
+                  Indoor Activities:
+                  <lo>
                     {JSON.parse(sessionStorage.getItem("profile_arts")).join(
-                      " "
+                      ", "
                     )}
-                  </a>
-                </li>
-              </ul>
-            </li>
-            <li>
-              <b href="#">Sports</b>
-              <ul>
-                <li>
-                  <a href="#">
-                    {JSON.parse(sessionStorage.getItem("profile_sports")).join(
-                      " "
+                  </lo>
+                </ul>
+                <ul>
+                  Outdoor Activities:
+                  <lo>
+                    {JSON.parse(sessionStorage.getItem("profile_arts")).join(
+                      ", "
                     )}
-                  </a>
-                </li>
-              </ul>
-            </li>
+                  </lo>
+                </ul>
+                <ul>
+                  Cuisines:
+                  <lo>
+                    {JSON.parse(sessionStorage.getItem("profile_arts")).join(
+                      ", "
+                    )}
+                  </lo>
+                </ul>
+              </span>
+            </div>
           </ul>
         </div>
-      </div1>
+      </div>
     );
   }
 }

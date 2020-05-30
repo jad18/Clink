@@ -210,7 +210,7 @@ class SearchHomePage extends React.Component {
         }
 
         try {
-        const response = await fetch("http://[localhost]:3000/search", options) //change [localhost] to your local IP address
+        const response = await fetch("http://" + sessionStorage.getItem('local-ip') + ":3000/search", options)
         if(!response.ok)
         {
             console.log(response.statusText);

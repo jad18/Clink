@@ -13,7 +13,7 @@ async function makeMessagesRequest() {
     };
 
     try {
-      const response = await fetch("http://[localhost]:3000/messages", options); //change [localhost] to your local IP address
+      const response = await fetch("http://" + sessionStorage.getItem('local-ip') + ":3000/messages", options);
       if (!response.ok) {
         console.log(response.statusText);
         return null;

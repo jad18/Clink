@@ -75,7 +75,7 @@ class PersonalInfoForm extends React.Component
         }
 
         try {
-        const response = await fetch("http://[localhost]:3000/change_profile", options) //change [localhost] to your local IP address
+        const response = await fetch("http://" + sessionStorage.getItem('local-ip') + ":3000/change_profile", options)
         if(!response.ok)
         {
             console.log(response.statusText);

@@ -1,11 +1,8 @@
 import React from "react";
 import "../App.css";
 import { Route, Switch, Link, Redirect } from "react-router-dom";
-<<<<<<< HEAD
-=======
 
 
->>>>>>> master
 //Page imports
 import AboutPage from "./about_page.js";
 

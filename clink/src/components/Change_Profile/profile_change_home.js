@@ -52,12 +52,12 @@ function ChangeProfilePage() {
                 </tr>
                 <tr className='table-row'>
                     <td className='table-column'>
-                        <Link to='/change_profile/cuisines'>
+                        <Link to='/change_profile/personality'>
                             <button className='link-button3'>Personality</button>
                         </Link>
                     </td>
                     <td className='table-column'>
-                        <Link to='/change_profile/arts_and_media'>
+                        <Link to='/change_profile/personal_info'>
                             <button className='link-button3'>Personal Information</button>
                         </Link>
                     </td>

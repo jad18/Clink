@@ -1,6 +1,11 @@
 import React from "react";
 import "../App.css";
 import { Route, Switch, Link, Redirect } from "react-router-dom";
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> master
 //Page imports
 import AboutPage from "./about_page.js";
 
@@ -11,6 +16,8 @@ import SearchOutdoorForm from "./Search/search_outdoor_form.js";
 import SearchIndoorForm from "./Search/search_indoor_form.js";
 import SearchCuisineForm from "./Search/search_cuisine_form.js";
 import SearchArtsForm from "./Search/search_arts_form.js";
+import SearchPersonalityForm from './Search/search_personality_form.js';
+import SearchPersonalInfoForm from './Search/search_personal_info_form.js';
 
 import ChangeProfilePage from "./Change_Profile/profile_change_home.js";
 import SportsForm from "./Change_Profile/sports_form.js";
@@ -19,6 +26,8 @@ import OutdoorForm from "./Change_Profile/outdoor_form.js";
 import IndoorForm from "./Change_Profile/indoor_form.js";
 import CuisineForm from "./Change_Profile/cuisine_form.js";
 import ArtsForm from "./Change_Profile/arts_form.js";
+import PersonalityForm from './Change_Profile/personality_form.js';
+import PersonalInfoForm from './Change_Profile/personal_info_form.js';
 
 import LoginPage from "./login_page.js";
 import SignupPage from "./signup_page.js";
@@ -246,7 +255,7 @@ function getLinkButtons(loggedIn) {
           <button className="link-button1">Feed</button>
         </Link>
 
-        <Link to="/profile_page">
+        <Link to="/profile">
           <button className="link-button1">Profile</button>
         </Link>
 
@@ -294,6 +303,7 @@ function getRouter(loggedIn) {
         <Route exact path="/about" component={AboutPage} />
         <Route exact path="/search" component={SearchHomePage} />
         <Route exact path="/feed" component={FeedPage} />
+        <Route exact path="/profile" component={ProfilePage} />
         <Route exact path="/change_profile" component={ChangeProfilePage} />
         <Route exact path="/messages" component={MessagesPage} />
         <Route exact path="/messages_home" component={MessagesHome} />
@@ -391,10 +401,13 @@ function getRouter(loggedIn) {
               searchType={"arts"}
               trueEntries={JSON.parse(sessionStorage.getItem("search_arts"))}
               maxEntries={3}
-              nextPageLink={"/search"}
+              nextPageLink={"/search/personality"}
             />
           )}
         />
+
+        <Route exact path = "/search/personality" component={SearchPersonalityForm} />
+        <Route exact path = "/search/personal_info" component={SearchPersonalInfoForm} />
 
         <Route
           exact
@@ -491,10 +504,13 @@ function getRouter(loggedIn) {
               profileType={"arts"}
               trueEntries={JSON.parse(sessionStorage.getItem("profile_arts"))}
               maxEntries={3}
-              nextPageLink={"/change_profile"}
+              nextPageLink={"/change_profile/personality"}
             />
           )}
         />
+
+        <Route exact path="/change_profile/personality" component={PersonalityForm} />
+        <Route exact path="/change_profile/personal_info" component={PersonalInfoForm} />
 
         <Redirect to={sessionStorage.getItem("lastValidPage")} />
       </Switch>

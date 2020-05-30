@@ -1,5 +1,11 @@
 <h1> Register (TEMPORARY)</h1>
-<form action="/register" method="POST">
+<% if(message.length > 0) { %>
+	<div class="alert alert-danger">
+		<%= message %>
+	</div>
+
+<% } %>
+<form action="/signup" method="POST">
 <div>
 	<label for="name">Name: </label>
 	<input type="text" id="name" name="name"

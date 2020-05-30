@@ -29,7 +29,7 @@ class LoginPage extends React.Component {
     try {
       const response = await fetch("http://[localhost]:3000/login", options); //change [localhost] to your local IP address
       if (!response.ok) {
-        alert(response.statusText);
+        console.log(response.statusText);
         return null;
       }
       const jsonData = await response.json();
@@ -53,7 +53,7 @@ class LoginPage extends React.Component {
         self.setState({ errorMsg: "" });
         sessionStorage.setItem("isLoggedIn", "true");
         sessionStorage.setItem("username", received_username);
-        sessionStorage.setItem("name", result.name)
+        sessionStorage.setItem("name", result.name);
 
         for (var element in result.profile) {
           if(element !== "bio") {

@@ -21,7 +21,7 @@ const io = socketio(server);
 */ 
 
 const PORT = 5000;
-bodyParser = require("body-parser");
+var bodyParser = require("body-parser");
 
 // mongodb connection string, this is differnet for different people so will not work on your computer 
 const url= 'mongodb+srv://rohanbattula:rohan12345@clinkdb-9xql0.mongodb.net/user-list?retryWrites=true&w=majority'
@@ -187,5 +187,5 @@ io.on('connect', (socket) => {
 */
 
 app.listen(3000, () => console.log("Listening on port 3000"));
-server.listen(process.env.PORT || 5000, () => console.log("Server has started."));
+//server.listen(process.env.PORT || 5000, () => console.log("Server has started."));
 

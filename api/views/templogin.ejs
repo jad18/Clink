@@ -1,11 +1,14 @@
 <h1> Login (TEMPORARY) </h1>
-<% if(messages.error) { %>
-<%= messages.error %>
+<% if(message.length > 0) { %>
+	<div class="alert alert-danger">
+		<%= message %>
+	</div>
+
 <% } %>
 <form action="/login" method="POST">
 <div>
 	<label for="username">Username: </label>
-	<input type="text" id="username" name="username"
+	<input type="text" id="email" name="email"
 	required>
 </div>
 <div>
@@ -16,6 +19,6 @@
 <button type="submit">Login</button>
 </form>
 <div>
-<a href="/register">Register</a>
+<a href="/signup">Register</a>
 </div>
 <label> This is a temporary HTML rendering. The real login page should be implemented as a part of the React app. </label>

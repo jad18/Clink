@@ -106,20 +106,3 @@ module.exports = function(app,passport){
             res.redirect('/login');
     }
 }
-
-
-/*
-
-app.post('/login', checkNotAuthenticated, function (req, res, next) {
-    passport.authenticate('local', function (err, user, info) {
-        console.log('got here');
-        console.log(user, err);
-        if(err) { res.json(err); }
-        else if(!user) { console.log("Not valid user"); res.json({ status: false, profile: null }); }
-        else { console.log(user); res.json({status: true, name: "Me", profile: {sports: ['Soccer', 'Volleyball'], movies:[], outdoor:[],
-                                                                    indoor:[], cuisines:[], arts:[],
-                                                                    personality:['NoneMB', 'NoneEn'],
-                                                                    personalInfo:['NoneYear', 'NoneReligion'], bio:""}}); }
-    }) (req, res, next);
-});
-*/ 

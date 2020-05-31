@@ -36,7 +36,7 @@ import ProfilePage from "./profile_page.js";
 //Form data imports
 import sportsList from './list_data/sports_list.js';
 import movieList from './list_data/movies_list.js';
-import outdoorList from './list_data/indoor_list.js';
+import outdoorList from './list_data/outdoor_list.js';
 import indoorList from './list_data/indoor_list.js';
 import cuisineList from './list_data/cuisines_list.js';
 import artsList from './list_data/arts_list.js';

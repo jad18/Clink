@@ -10,6 +10,9 @@ const cookieParser = require('cookie-parser');
 const flash    = require('connect-flash');
 const user = require('./models/User')
 
+const cors = require('cors');
+app.use(cors());
+
 /*
 socket stuff that i dont have installed right now 
 const methodOverride = require('method-override');
@@ -24,7 +27,10 @@ const PORT = 5000;
 var bodyParser = require("body-parser");
 
 // mongodb connection string, this is differnet for different people so will not work on your computer 
-const url= 'mongodb+srv://rohanbattula:rohan12345@clinkdb-9xql0.mongodb.net/user-list?retryWrites=true&w=majority'
+//const url= 'mongodb+srv://rohanbattula:rohan12345@clinkdb-9xql0.mongodb.net/user-list?retryWrites=true&w=majority'
+
+const url = "mongodb+srv://rohanbattula:rohan12345@clinkdb-9xql0.mongodb.net/test?retryWrites=true&w=majority"
+
 
 // mongoose connection 
 mongoose.connect(url, { useNewUrlParser: true })

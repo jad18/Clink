@@ -45,7 +45,7 @@ class PersonalInfoForm extends React.Component
 
     makeChangeRequest(trueEntries, bio)
     {
-        var request = {"username": sessionStorage.getItem("username"),
+        var request = {"email": sessionStorage.getItem("username"),
                        "personalInfo": trueEntries,
                        "bio": bio};
 

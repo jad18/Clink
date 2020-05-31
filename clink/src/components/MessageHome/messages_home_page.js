@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 import './messages_home.css';
 
 async function makeMessagesRequest() {
-    var usernameObj = { username: sessionStorage.getItem("username") };
+    var usernameObj = { email: sessionStorage.getItem("username") };
     console.log(usernameObj);
 
     const options = {
@@ -64,7 +64,7 @@ class MessagesHome extends React.Component
             <tr className="messages-table-row">
                 <Link to={`/messages?name=${sessionStorage.getItem("username")}&room=${getRoomName(username)}`}>
                     <td className={isNew ? "new-table-column" : "old-table-column"}>
-                        <button className="messages-link-button">
+                        <button className={isNew ? "new-messages-link-button" : "old-messages-link-button"}>
                             {String(isNew)} {username} {alignmentTool}
                         </button>
                     </td>

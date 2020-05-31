@@ -2,7 +2,7 @@ import React from 'react';
 import './profile.css';
 
 async function makeMessagesRequest() {
-    var usernameObj = { username: sessionStorage.getItem("username") };
+    var usernameObj = { email: sessionStorage.getItem("username") };
     console.log(usernameObj);
 
     const options = {

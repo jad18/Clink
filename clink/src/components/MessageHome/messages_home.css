@@ -5,7 +5,6 @@
     margin-right: 25%;
     margin-top: 20px;
     height: auto;
-    border: 1px solid rgb(153, 153, 153);
   }
 
   .messages-table-row {
@@ -30,24 +29,35 @@
 
   .old-table-column {
     height: 70px;
-    width: 500px;
+    width: 610px;
     padding: 0px;
     margin-top: 0px;
     margin-bottom: 0px;
   }
 
-  .messages-link-button {
+  .new-messages-link-button {
     transition-duration: 0.4s;
     background-color:solid white;
     color: rgb(15, 15, 15);
     font-size: 30px;
     vertical-align: center;
-    width: 100%;
+    width: 500px;
+    height: 100%;
+    text-align: center;
+  }
+
+  .old-messages-link-button {
+    transition-duration: 0.4s;
+    background-color:solid white;
+    color: rgb(15, 15, 15);
+    font-size: 30px;
+    vertical-align: center;
+    width: 510px;
     height: 100%;
     text-align: center;
   }
   
-  .messages-link-button:hover {
+  .new-messages-link-button:hover, .old-messages-link-button:hover {
     border: 2px solid rgb(153, 153, 153);
     background-color: rgb(225, 225, 225);
   }

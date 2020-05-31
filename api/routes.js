@@ -17,21 +17,55 @@ module.exports = function(app,passport){
         res.render('templogin.ejs',  { message: req.flash('loginMessage') });
       });
 
-    app.post('/signup', 
-        passport.authenticate('signup', {
-          successRedirect : '/login', // redirect to the secure profile section
-          failureRedirect : '/signup', // redirect back to the signup page if there is an error
-          failureFlash : true // allow flash messages
-         }));
-      
-    app.post('/login', 
-        passport.authenticate('login', {
-          successRedirect : '/profile', // redirect to the secure profile section
-          failureRedirect : '/login', // redirect back to the signup page if there is an error
-          failureFlash : true // allow flash messages
-      }));
+    
+    /*app.post('/signup', //function(req, res, next) {
+        passport.authenticate('signup'), function(req, res)
+        {
+          res.json(true);
+        }
+    );*/
 
-      app.post('/change_profile', (req, res) => {
+    app.post('/signup', function (req, res, next) {
+      passport.authenticate('signup', function (err, user, info)
+      {
+          console.log('got here');
+          console.log(user, err);
+          if(err) res.json(null);
+
+          else if(user) res.json(false);
+
+          else
+          {
+            res.json(true);
+          }
+      }) (req, res, next);
+    });
+    
+         
+    app.post('/login', function (req, res, next) {
+      passport.authenticate('login', function (err, user)
+      {
+          console.log('got here');
+          console.log(user, err);
+          if(err) res.json(err);
+
+          else if(!user) res.json({ status: false, profile: null });
+
+          else
+          {
+            console.log(user);
+            let tempUser = JSON.parse(JSON.stringify(user));
+            console.log(tempUser);
+
+            res.json({status: true, name: "Me", profile: {sports: ['Soccer', 'Volleyball'], movies:[], outdoor:[],
+                                                                          indoor:[], cuisines:[], arts:[],
+                                                                          personality:['NoneMB', 'NoneEn'],
+                                                                          personalInfo:['NoneYear', 'NoneReligion'], bio:""}});
+          }
+      }) (req, res, next);
+    });
+
+    app.post('/change_profile', (req, res) => {
         console.log("Getting profile change request");
         console.log(req.body);
         //store this info
@@ -72,20 +106,3 @@ module.exports = function(app,passport){
             res.redirect('/login');
     }
 }
-
-
-/*
-
-app.post('/login', checkNotAuthenticated, function (req, res, next) {
-    passport.authenticate('local', function (err, user, info) {
-        console.log('got here');
-        console.log(user, err);
-        if(err) { res.json(err); }
-        else if(!user) { console.log("Not valid user"); res.json({ status: false, profile: null }); }
-        else { console.log(user); res.json({status: true, name: "Me", profile: {sports: ['Soccer', 'Volleyball'], movies:[], outdoor:[],
-                                                                    indoor:[], cuisines:[], arts:[],
-                                                                    personality:['NoneMB', 'NoneEn'],
-                                                                    personalInfo:['NoneYear', 'NoneReligion'], bio:""}}); }
-    }) (req, res, next);
-});
-*/ 

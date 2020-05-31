@@ -16,7 +16,7 @@ class SignupPage extends React.Component {
   async makeRegistrationRequest(event) {
     var regisData = {
       name: event.target.elements["regis-name"].value,
-      username: event.target.elements["regis-username"].value,
+      email: event.target.elements["regis-username"].value,
       password: event.target.elements["regis-password"].value,
     };
     console.log(regisData);
@@ -30,12 +30,14 @@ class SignupPage extends React.Component {
     try {
       const response = await fetch("http://" + sessionStorage.getItem('local-ip') + ":3000/signup", options);
       if (!response.ok) {
+        console.log("not ok");
         console.log(response.statusText);
-        return null;
+        return false;
       }
       const jsonData = await response.json();
       return jsonData;
     } catch (error) {
+      console.log("Error");
       console.log(error);
       return null;
     }

@@ -15,7 +15,7 @@ class LoginPage extends React.Component {
 
   async makeLoginRequest(event, received_username) {
     var loginData = {
-      username: received_username,
+      email: received_username,
       password: event.target.elements["login-password"].value,
     };
     console.log(loginData);
@@ -49,7 +49,7 @@ class LoginPage extends React.Component {
     const self = this;
 
     loginResult.then(function (result) {
-      if (result.status === true) {
+      if (result && result.status === true) {
         self.setState({ errorMsg: "" });
         sessionStorage.setItem("isLoggedIn", "true");
         sessionStorage.setItem("username", received_username);
@@ -69,7 +69,7 @@ class LoginPage extends React.Component {
         alert(sessionStorage.getItem("profile_sports"));
         sessionStorage.setItem("searchList", "[]");
         window.location = "/";
-      } else if (result.status === false) {
+      } else if (result && result.status === false) {
         self.setState({ errorMsg: "Incorrect username or password" });
       } else {
         self.setState({

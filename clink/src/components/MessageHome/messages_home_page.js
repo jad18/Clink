@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 import './messages_home.css';
 
 async function makeMessagesRequest() {
-    var usernameObj = { username: sessionStorage.getItem("username") };
+    var usernameObj = { email: sessionStorage.getItem("username") };
     console.log(usernameObj);
 
     const options = {

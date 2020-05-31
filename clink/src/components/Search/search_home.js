@@ -162,7 +162,7 @@ class SearchHomePage extends React.Component {
             {}
         );
 
-        request["username"] = sessionStorage.getItem("username");
+        request["email"] = sessionStorage.getItem("username");
 
         if(request["personality"])
         {

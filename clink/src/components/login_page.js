@@ -15,7 +15,7 @@ class LoginPage extends React.Component {
 
   async makeLoginRequest(event, received_username) {
     var loginData = {
-      username: received_username,
+      email: received_username,
       password: event.target.elements["login-password"].value,
     };
     console.log(loginData);

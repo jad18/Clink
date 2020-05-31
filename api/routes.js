@@ -17,13 +17,6 @@ module.exports = function(app,passport){
         res.render('templogin.ejs',  { message: req.flash('loginMessage') });
       });
 
-    
-    /*app.post('/signup', //function(req, res, next) {
-        passport.authenticate('signup'), function(req, res)
-        {
-          res.json(true);
-        }
-    );*/
 
     app.post('/signup', function (req, res, next) {
       passport.authenticate('signup', function (err, user, info)

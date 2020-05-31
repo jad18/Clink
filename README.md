@@ -1,5 +1,6 @@
 Rohan Battula, Steven Chu, Jackson DeWitt, Erdi Haciogullari, Jeremy Tsai
-Clink
+
+--------------------------------Clink------------------------------------
 
 To run the program, you'll likely need to download the following node
 modules (by entering the command 'npm install --save ...' with ...

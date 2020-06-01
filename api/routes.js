@@ -1,4 +1,6 @@
 // all our APIs
+var User            = require('./models/User');
+
 module.exports = function(app,passport){
 
 
@@ -13,6 +15,7 @@ module.exports = function(app,passport){
     app.get('/profile', isLoggedIn, (req, res) => {
         res.render('temphomescreen.ejs', { user: req.user });
       });
+    
     app.get('/login',(req, res) => {
         res.render('templogin.ejs',  { message: req.flash('loginMessage') });
       });
@@ -41,6 +44,27 @@ module.exports = function(app,passport){
         // if they aren't redirect them to the home page
             res.redirect('/login');
     }
+
+    app.post('/change_profile',(req, res) => {
+        const doc = User.findOne({username: req.body.username});
+        doc.sports = req.body.sports; 
+        /*
+        doc.movies = req.body.movies; 
+        doc.outdoor= req.body.outdoor; 
+        doc.indoor = req.body.indoor; 
+        doc.cuisines = req.body.cuisines; 
+        doc.arts = req.body.arts; 
+        doc.personality = req.body.personality; 
+        doc.personalInfo = req.body.personalInfo; 
+        doc.bio = req.body.bio; 
+        */ 
+        doc.save();
+        console.log("Getting profile change request");
+        console.log(req.body);
+        //store this info
+        res.json(req.body);
+    })
+    
 }
 
 
@@ -58,4 +82,33 @@ app.post('/login', checkNotAuthenticated, function (req, res, next) {
                                                                     personalInfo:['NoneYear', 'NoneReligion'], bio:""}}); }
     }) (req, res, next);
 });
+
+app.post('/change_profile', (req, res) => {
+    console.log("Getting profile change request");
+    console.log(req.body);
+    //store this info
+    res.json(true);
+})
+
+
+app.post('/search', (req, res) => {
+    console.log("Finding a match");
+    console.log(req.body);
+    //your search algorithm
+    res.json(true);
+})
+
+//app.get('/feed', )
+
+app.get('/messages', (req, res) => {
+    let body = req.body;
+    console.log(body);
+    res.json(['user1', 'user2', 'user3', 'user4']);
+})
+
+app.delete('/logout', (req,res) => {
+    req.logOut();
+    res.redirect('login');
+})
 */ 
+

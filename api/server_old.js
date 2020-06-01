@@ -200,40 +200,6 @@ app.get('/signup', checkNotAuthenticated, (req, res) => {
     res.render('tempregister.ejs');
 });
 
-//Creating a user using the Register page: password gets encrypted
-app.post('/signup', checkNotAuthenticated, async (req, res) => {
-    try
-    {
-    
-    let hasFoundMatch = false;
-    for(let i=0; i<users.length; i++)
-    {
-        if(req.body.username === users[i].username)
-        {
-            hasFoundMatch = true;
-            break;
-        }
-    }
-
-    if(hasFoundMatch) res.json(false);
-    else
-    {  
-        const hashedPassword = await bcrypt.hash(req.body.password, 10);
-	    users.push({
-	        id: Date.now().toString(),
-	        name: req.body.name,
-	        username: req.body.username,
-	        password: hashedPassword
-        });
-        res.json(true);
-    }
-    }
-    catch
-    {
-	res.json(null);
-    }	
-});
-
 
 
 app.post('/change_profile', (req, res) => {

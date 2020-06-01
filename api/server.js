@@ -10,15 +10,14 @@ const cookieParser = require('cookie-parser');
 const flash    = require('connect-flash');
 const user = require('./models/User')
 
-/*
-socket stuff that i dont have installed right now 
+
 const methodOverride = require('method-override');
 const http = require('http');
 const socketio = require('socket.io');
 const cors = require('cors');
 const server = http.createServer(app);
 const io = socketio(server);
-*/ 
+
 
 const PORT = 5000;
 bodyParser = require("body-parser");

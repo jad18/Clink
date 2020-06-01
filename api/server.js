@@ -13,15 +13,14 @@ const user = require('./models/User')
 const cors = require('cors');
 app.use(cors());
 
-/*
-socket stuff that i dont have installed right now 
+
+//socket stuff that i dont have installed right now 
 const methodOverride = require('method-override');
 const http = require('http');
 const socketio = require('socket.io');
-const cors = require('cors');
 const server = http.createServer(app);
 const io = socketio(server);
-*/ 
+
 
 const PORT = 5000;
 var bodyParser = require("body-parser");
@@ -193,5 +192,5 @@ io.on('connect', (socket) => {
 */
 
 app.listen(3000, () => console.log("Listening on port 3000"));
-//server.listen(process.env.PORT || 5000, () => console.log("Server has started."));
+server.listen(process.env.PORT || 5000, () => console.log("Server has started."));
 

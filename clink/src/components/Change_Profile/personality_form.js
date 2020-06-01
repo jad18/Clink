@@ -40,7 +40,8 @@ class PersonalityForm extends React.Component
     makeChangeRequest(trueEntries)
     {
         var request = {"email": sessionStorage.getItem("username"),
-                        "personality": trueEntries};
+                       "section": "personality",
+                       "list": trueEntries};
 
         console.log(request);
 

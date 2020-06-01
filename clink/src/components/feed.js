@@ -124,7 +124,8 @@ class FeedPage extends React.Component
         sessionStorage.setItem("lastValidPage", "/feed");
         this.state = { valid: false, finishedFetch: false, userSports: [], userMovies: [],
                        userOutdoor: [], userIndoor: [], userCuisines: [], userArts: [],
-                       userPersonality: [], userPersonalInfo: [], userBio:""};
+                       userPersonality: [], userPersonalInfo: [], userBio:"",
+                       userUsername: "" };
 
         this.getUser = this.getUser.bind(this);
         this.getMatchedUser = this.getMatchedUser.bind(this);
@@ -155,7 +156,8 @@ class FeedPage extends React.Component
                                 userArts: receivedUser.profile.arts,
                                 userPersonality: receivedUser.profile.personality,
                                 userPersonalInfo: receivedUser.profile.personalInfo,
-                                userBio: receivedUser.profile.bio
+                                userBio: receivedUser.profile.bio,
+                                userUsername: receivedUser.email
                 });
             }
             else
@@ -234,7 +236,7 @@ class FeedPage extends React.Component
                     </div>
                     
                     <div id="feed-card">
-                        <h2>{sessionStorage.getItem("username")}'s Profile</h2>
+                        <h2>{this.state.userUsername}'s Profile</h2>
                     </div>
                 </div>
                 

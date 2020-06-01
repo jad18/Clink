@@ -2,14 +2,14 @@ import React from 'react';
 import './feed.css';
 import {Link} from 'react-router-dom';
 
-async function makeMessagesRequest() {
-    var usernameObj = { email: sessionStorage.getItem("username") };
-    console.log(usernameObj);
+async function makeMessagesRequest(isNew) {
+    var reqObj = { email: sessionStorage.getItem("username"), getNewUser: isNew };
+    console.log(reqObj);
 
     const options = {
       method: "POST",
       headers: { "content-type": "application/json" },
-      body: JSON.stringify(usernameObj)
+      body: JSON.stringify(reqObj)
     };
 
     try {
@@ -126,30 +126,31 @@ class FeedPage extends React.Component
                        userOutdoor: [], userIndoor: [], userCuisines: [], userArts: [],
                        userPersonality: [], userPersonalInfo: [], userBio:""};
 
-        this.getNewUser = this.getNewUser.bind(this);
+        this.getUser = this.getUser.bind(this);
         this.getMatchedUser = this.getMatchedUser.bind(this);
     }
 
     componentDidMount()
     {
-        this.getNewUser();
+        this.getUser(false);
     }
 
-    getNewUser()
+    getUser(getNewUser)
     {
-        var matchedUser = makeMessagesRequest(); //returns a promise
+        var matchedUser = makeMessagesRequest(getNewUser); //returns a promise
 
         const self = this;
 
         matchedUser.then(function (receivedUser) {
-            console.log(receivedUser);
+            console.log("user:", receivedUser);
             if(receivedUser != null)
             {
+                console.log(receivedUser.profile.sports);
                 self.setState({ valid: true, finishedFetch: true,
                                 userSports: receivedUser.profile.sports,
                                 userMovies: receivedUser.profile.movies,
                                 userOutdoor: receivedUser.profile.outdoor,
-                                userIndoor: receivedUser.profile.Indoor,
+                                userIndoor: receivedUser.profile.indoor,
                                 userCuisines: receivedUser.profile.cuisines,
                                 userArts: receivedUser.profile.arts,
                                 userPersonality: receivedUser.profile.personality,
@@ -185,74 +186,49 @@ class FeedPage extends React.Component
         {
             return(
                 <div>
-                <p>{this.state.userSports}</p>
-                <p>{this.state.userMovies}</p>
-                <p>{this.state.userOutdoor}</p>
-                <p>{this.state.userIndoor}</p>
-                <p>{this.state.userCuisines}</p>
-                <p>{this.state.userArts}</p>
-                <p>{this.state.userPersonality}</p>
-                <p>{this.state.userPersonalInfo}</p>
-                <p>{this.state.userBio}</p>
-                </div>
-            );
-        }
-    }
-
-    render()
-    {
-        return(
-            <div className='App'>
-                <h1>Feed</h1>
-                <h2>Here are the people that most match your preferences.</h2>
-                <h3>Now go find some friends!</h3>
-
-                {this.getMatchedUser()}
-
-                
                 <div id="feed-outer-box">
                     <div id="feed-stripes" />
                     
                     <div id="feed-Pers">
                         <u><h4 className="section-header">Personality</h4></u>
-                        {extractPersonalityItems(JSON.parse(sessionStorage.getItem("profile_personality")))}
+                        {extractPersonalityItems(this.state.userPersonality)}
                     </div>
                 
                     <div id="feed-Pinfo">
                         <u><h4 className="section-header">Personal Information</h4></u>
-                        {extractPersonalInfoItems(JSON.parse(sessionStorage.getItem("profile_personalInfo")))}
+                        {extractPersonalInfoItems(this.state.userPersonalInfo)}
                     </div>
                 
                     <div id="feed-bio">
                         <u><h4 className="section-header">About Me</h4></u>
-                        {sessionStorage.getItem("bio")}
+                        {this.state.userBio}
                     </div>
                     <div id="feed-hobbies">
                         <u><h4 className="section-header">Interests</h4></u>
                         <ul id="feed-interest-list">
                             <li>
                                 <strong>Sports:</strong>
-                                {extractListItems(JSON.parse(sessionStorage.getItem("profile_sports")))}
+                                {extractListItems(this.state.userSports)}
                             </li>
                             <li>
                                 <strong>Movies:</strong>
-                                {extractListItems(JSON.parse(sessionStorage.getItem("profile_movies")))}
+                                {extractListItems(this.state.userMovies)}
                             </li>
                             <li>
                                 <strong>Indoor Activities:</strong>
-                                {extractListItems(JSON.parse(sessionStorage.getItem("profile_indoor")))}
+                                {extractListItems(this.state.userIndoor)}
                             </li>
                             <li>
                                 <strong>Outdoor Activities:</strong>
-                                {extractListItems(JSON.parse(sessionStorage.getItem("profile_outdoor")))}
+                                {extractListItems(this.state.userOutdoor)}
                             </li>
                             <li>
                                 <strong>Types of Food:</strong>
-                                {extractListItems(JSON.parse(sessionStorage.getItem("profile_cuisines")))}
+                                {extractListItems(this.state.userCuisines)}
                             </li>
                             <li>
                                 <strong>Arts, Theater, and Media:</strong>
-                                {extractListItems(JSON.parse(sessionStorage.getItem("profile_arts")))}
+                                {extractListItems(this.state.userArts)}
                             </li>
                         </ul>
                     </div>
@@ -263,8 +239,8 @@ class FeedPage extends React.Component
                 </div>
                 
                
-                <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
-                <br/><br/><br/><br/><br/><br/><br/><br/><br/>
+                <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+                <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
                 <p className="about-page-para">
                     Be sure to take your time and consider them, you never know what they might have to say!
                     If you'd like to get in touch with them, press the 'Message This User' button. If you'd
@@ -273,14 +249,25 @@ class FeedPage extends React.Component
                 <Link to="/messages_home">
                     <button className="link-button2">Message This User</button>
                 </Link>
-                <Link to="/profile">
-                    <button className="link-button2">Get New Match</button>
-                </Link>
+                <button className="link-button2" onClick={() => this.getUser(true)}>Get New Match</button>
 
                 <br/><br/>
-              
-                
+                </div>
+            );
+        }
+    }
 
+
+    render()
+    {
+        return(
+            <div className='App'>
+                <h1>Feed</h1>
+                <h2>Here are the people that most match your preferences.</h2>
+                <h3>Now go find some friends!</h3>
+
+                {this.getMatchedUser()}
+              
             </div>
         );
     }

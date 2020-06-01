@@ -233,6 +233,7 @@ class SearchHomePage extends React.Component {
     {
     return (
         <div className="App">
+            <h1>Search</h1>
             <h2>Select which traits or preferences you'd like to see in a friend:</h2>
             <h4>(All entries are in the same place as the Change Profile section so they're easier to find!)</h4>
 

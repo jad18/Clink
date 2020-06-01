@@ -114,7 +114,7 @@ module.exports = function(app,passport){
 
         let usernameObj = req.body; //body only contains the username of the user
         console.log(usernameObj);
-        let messages = {"user1": false, "user2": false, "user3": true, "user4": true, "user5": false};
+        let messages = {"user1": false, "user2": false, "user3": true, "user4": true, "user5": false, "hi": true, "test1": false};
         res.json(messages);
     })
    

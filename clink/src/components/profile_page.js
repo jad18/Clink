@@ -14,6 +14,7 @@ function extractListItems(list)
     return str;
 }
 
+
 function extractPersonalityItems(list)
 {
     if(list.length > 1)
@@ -21,107 +22,74 @@ function extractPersonalityItems(list)
         var mb = list[0];
         var en = list[1];
 
-        if(mb !== "NoneMB")
-        {
-            if(en !== "NoneEn")
-            {
-              return(
-                <div>
-                  <p>Myers-Briggs: {mb}</p>
-                  <p>Enneagram: {en}</p>
-                </div>
-              );
-            }
-            else return(<p>Myers-Briggs: {mb}</p>);
-        }
-        else if (en !== "NoneEn") return(<p>Enneagram: {en}</p>)
+        return(
+          <div>
+            <p>
+              <strong>Myers-Briggs:</strong>
+              {(mb !== "NoneMB") ? " " + mb : ""}
+            </p>
+            <p>
+              <strong>Enneagram:</strong>
+              {(en !== "NoneEn") ? " " + en : ""}
+            </p>
+          </div>
+        );
     }
 
-    return null;
+    return(
+      <div>
+            <p>
+              <strong>Myers-Briggs:</strong>
+            </p>
+            <p>
+              <strong>Enneagram:</strong>
+            </p>
+          </div>
+    );
 }
+
 
 function extractPersonalInfoItems(list)
 {
-    if(list.length > 2)
+  if(list.length > 2)
     {
         var schoolYear = list[0];
         var religion = list[1];
         var gender = list[2];
 
-        if(gender === "N/S") gender = "Not included in list";
+        if(gender === "N/S") gender = "Not specified in list";
 
-        if(schoolYear !== "NoneYear")
-        {
-            if(religion !== "NoneReligion")
-            {
-              if(gender !== "NoneGender")
-              {
-                return(
-                <div>
-                  <p>{schoolYear} Year</p>
-                  <p>Religion: {religion}</p>
-                  <p>Gender: {gender}</p>
-                </div>
-                );
-              }
-              else
-              {
-                return(
-                  <div>
-                    <p>{schoolYear} Year</p>
-                    <p>Religion: {religion}</p>
-                  </div>
-                  );
-              }
-            }
-            else
-            {
-              if(gender !== "NoneGender")
-              {
-                return(
-                <div>
-                  <p>{schoolYear} Year</p>
-                  <p>Gender: {gender}</p>
-                </div>
-                );
-              }
-              else
-              {
-                return(
-                  <div>
-                    <p>{schoolYear} Year</p>
-                  </div>
-                  );
-              }
-            }
-        }
-        else if(religion !== "NoneReligion")
-        {
-            if(gender !== "NoneGender")
-            {
-              return(
-                <div>
-                  <p>Religion: {religion}</p>
-                  <p>Gender: {gender}</p>
-                </div>
-                );
-            }
-            else
-            {
-              return(
-                <div>
-                  <p>Religion: {religion}</p>
-                </div>
-                );
-            }
-        }
-        else if (gender !== "NoneGender")
-        {
-            return <p>Gender: {gender}</p>;
-        }
+        return(
+          <div>
+            <p>
+              <strong>School Year:</strong>
+              {(schoolYear !== "NoneYear") ? " " + schoolYear : ""}
+            </p>
+            <p>
+              <strong>Religion:</strong>
+              {(religion !== "NoneReligion") ? " " + religion : ""}
+            </p>
+            <p>
+              <strong>Gender:</strong>
+              {(gender !== "NoneGender") ? " " + gender : ""}
+            </p>
+          </div>
+        );
     }
-
-    return null;
+  
+    return(
+      <div>
+            <p>
+              <strong>School Year:</strong>
+            </p>
+            <p>
+              <strong>Religion:</strong>
+            </p>
+            <p>
+              <strong>Gender:</strong>
+            </p>
+          </div>
+    );
 }
 
 
@@ -132,6 +100,7 @@ export default class Profile extends React.Component {
     super();
     sessionStorage.setItem("lastValidPage", "/profile");
   }
+
   render() {
     return (
       <div className="App">

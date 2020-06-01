@@ -40,7 +40,13 @@ const UserSchema = new mongoose.Schema(
         }],
         bio: {
             type: String,
-        }
+        }, 
+        candidates: [{ 
+            type:String,
+        }], 
+        matchHistory: [{
+            type:String,
+        }],
 
     },
     { strict: false }

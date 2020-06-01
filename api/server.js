@@ -13,15 +13,14 @@ const user = require('./models/User')
 const cors = require('cors');
 app.use(cors());
 
-/*
-socket stuff that i dont have installed right now 
+
+//socket stuff that i dont have installed right now 
 const methodOverride = require('method-override');
 const http = require('http');
 const socketio = require('socket.io');
-const cors = require('cors');
 const server = http.createServer(app);
 const io = socketio(server);
-*/ 
+
 
 const PORT = 5000;
 var bodyParser = require("body-parser");
@@ -150,7 +149,7 @@ const calculateUserSimilarity = (userOne, userTwo) => {
       return similarity / totalProperties;
   }
 };
-/*
+
 //this is to track the users that are present in the messaging room
 const messageUsers = [];
 
@@ -158,13 +157,13 @@ const messageUsers = [];
 const addUser = ({id, name, room}) => {
     const m_user = {id, name, room};
     messageUsers.push(m_user);
-    return {m_user};
+    return m_user;
 }
 
 const removeUser = (id) => {
     const index = messageUsers.findIndex((m_user) => m_user.id === id);
     if(index !== -1)
-	return users.splice(index, 1)[0];
+	return messageUsers.splice(index, 1)[0];
 }
 
 const getUser = (id) => messageUsers.find((m_user) => m_user.id === id);
@@ -173,8 +172,8 @@ const getUser = (id) => messageUsers.find((m_user) => m_user.id === id);
 //this is connecting a specific user to the socket
 io.on('connect', (socket) => {
     socket.on('join', ({name, room}, callback) => {
-	addUser({id: socket.id, name, room});
-	socket.join("clink");
+	const user = addUser({id: socket.id, name, room});
+	socket.join(user.room);
 	callback();
     });
 
@@ -182,16 +181,16 @@ io.on('connect', (socket) => {
     //the message is displayed
     socket.on('sendMessage', (message, callback) => {
 	const user = getUser(socket.id);
-	io.to("clink").emit('message', {user: user.name, text: message});
-	callback()
+	io.to(user.room).emit('message', {user: user.name, text: message});
+	callback();
     });
 
     socket.on('disconnect', () => {
 	removeUser(socket.id);
     });
 });
-*/
+
 
 app.listen(3000, () => console.log("Listening on port 3000"));
-//server.listen(process.env.PORT || 5000, () => console.log("Server has started."));
+server.listen(process.env.PORT || 5000, () => console.log("Server has started."));
 

@@ -183,6 +183,7 @@ app.get('/login', checkNotAuthenticated, (req, res) => {
     res.render('templogin.ejs');
 });
 
+
 app.post('/login', checkNotAuthenticated, function (req, res, next) {
     passport.authenticate('local', function (err, user, info) {
         console.log('got here');

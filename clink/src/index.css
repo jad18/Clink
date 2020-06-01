@@ -16,8 +16,8 @@ code {
 
 #page-logo {
   margin-top: 10px;
-  width: 170px;
-  height: 190px;
+  width: 200px;
+  height: 200px;
 }
 
 .link-button1 {
@@ -184,44 +184,32 @@ code {
 }
 
 .login-button {
-  border: none;
-  outline: none;
-  display: inline-block;
-  height: 35px;
+  background-color: rgb(125, 146, 145);
+  color: white;
+  border-radius: 12px;
+  transition-duration: 0.4s;
+  font-size: 14px;
   width: 180px;
-  line-height: 30px;
-  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
-  color: rgb(255, 255, 255);
-  border-radius: 5px;
-  font-size: 12px;
-  font-weight: 650;
-  letter-spacing: 0.055em;
-  background-color: #9b9baa;
-  text-decoration: none;
-  -webkit-transition: all 150ms ease;
-  transition: all 150ms ease;
-  margin-top: 20px;
+  height: 35px;
 }
 
 .login-button:hover {
-  color: rgb(145, 174, 253);
-  cursor: pointer;
-  background-color: #bfc3f3;
-  transform: translateY(-1px);
-  box-shadow: 0 7px 14px rgba(216, 216, 216, 0.1),
-    0 3px 6px rgba(168, 162, 162, 0.08);
+  background-color: rgba(224, 224, 224, 0.493);
+  border: 3px solid rgb(175, 175, 175);
+  border-radius: 12px;
 }
+
 
 .inputCheckBox {
   font-weight: 400;
 }
 
-.forgotPassword,
-.forgotPassword a {
-  text-align: right;
+.forgotPassword
+{
+  text-align: center;
   font-size: 11px;
   padding-top: 10px;
-  color: #9b9b9b;
+  color: #585858;
   margin-bottom: 20px;
 }
 
@@ -262,4 +250,11 @@ code {
   margin-right: 20%;
   font-size: 18px;
   line-height: 150%;
+}
+
+#bioInput {
+  background-color: rgba(255, 255, 255, 0.6);
+  border-radius: 10px;
+  font-size: 14px;
+  padding: 4px;
 }

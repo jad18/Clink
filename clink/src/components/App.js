@@ -1,6 +1,8 @@
 import React from "react";
 import "../App.css";
 import { Route, Switch, Link, Redirect } from "react-router-dom";
+
+
 //Page imports
 import AboutPage from "./about_page.js";
 
@@ -11,6 +13,8 @@ import SearchOutdoorForm from "./Search/search_outdoor_form.js";
 import SearchIndoorForm from "./Search/search_indoor_form.js";
 import SearchCuisineForm from "./Search/search_cuisine_form.js";
 import SearchArtsForm from "./Search/search_arts_form.js";
+import SearchPersonalityForm from './Search/search_personality_form.js';
+import SearchPersonalInfoForm from './Search/search_personal_info_form.js';
 
 import ChangeProfilePage from "./Change_Profile/profile_change_home.js";
 import SportsForm from "./Change_Profile/sports_form.js";
@@ -19,6 +23,8 @@ import OutdoorForm from "./Change_Profile/outdoor_form.js";
 import IndoorForm from "./Change_Profile/indoor_form.js";
 import CuisineForm from "./Change_Profile/cuisine_form.js";
 import ArtsForm from "./Change_Profile/arts_form.js";
+import PersonalityForm from './Change_Profile/personality_form.js';
+import PersonalInfoForm from './Change_Profile/personal_info_form.js';
 
 import LoginPage from "./login_page.js";
 import SignupPage from "./signup_page.js";
@@ -27,195 +33,14 @@ import MessagesHome from "./MessageHome/messages_home_page.js";
 import FeedPage from "./feed.js";
 import ProfilePage from "./profile_page.js";
 
-// ///////////////
-//Form selection arrays
-// ///////////////
+//Form data imports
+import sportsList from './list_data/sports_list.js';
+import movieList from './list_data/movies_list.js';
+import outdoorList from './list_data/outdoor_list.js';
+import indoorList from './list_data/indoor_list.js';
+import cuisineList from './list_data/cuisines_list.js';
+import artsList from './list_data/arts_list.js';
 
-var sportsList = [
-  "Archery",
-  "Badminton",
-  "Baseball",
-  "Basketball",
-  "Boxing",
-  "Bowling",
-  "Cricket",
-  "Cross Country",
-  "Cycling",
-  "Competitive Cheerleading",
-  "Darts",
-  "Field Hockey",
-  "Figure Skating",
-  "Fishing",
-  "Football",
-  "Gymnastics",
-  "Horseback Riding",
-  "Ice Hockey",
-  "Lacrosse",
-  "Martial Arts",
-  "Rock Climbing",
-  "Rugby",
-  "Soccer",
-  "Surfing",
-  "Swimming & Diving",
-  "Tennis",
-  "Track & Field",
-  "Triathlon",
-  "Volleyball",
-  "Water Polo",
-  "Weightlifting",
-  "Wrestling",
-];
-
-var movieList = [
-  "Action",
-  "Adventure",
-  "Anime",
-  "Biographical",
-  "Comedy",
-  "Drama",
-  "Documentary",
-  "Dystopian",
-  "Experimental",
-  "Fantasy",
-  "Family",
-  "First Responder",
-  "Historical",
-  "Horror",
-  "Independent",
-  "Mystery",
-  "Musical",
-  "Noir",
-  "Psychological/Suspense",
-  "Reality",
-  "Romance",
-  "Sci-fi",
-  "Thriller",
-  "War",
-  "Western",
-];
-
-var outdoorList = [
-  "Camping",
-  "Canoeing",
-  "Fishing",
-  "Gardening",
-  "Hiking",
-  "Ice Skating",
-  "Kayaking",
-  "Running",
-  "Snowboarding",
-  "Skiing",
-  "Stargazing",
-  "Walking",
-  "Woodwork",
-  "Yardwork",
-];
-
-var movieList = [
-  "Action",
-  "Adventure",
-  "Anime",
-  "Biographical",
-  "Comedy",
-  "Drama",
-  "Documentary",
-  "Dystopian",
-  "Experimental",
-  "Fantasy",
-  "Family",
-  "First Responder",
-  "Historical",
-  "Horror",
-  "Independent",
-  "Mystery",
-  "Musical",
-  "Noir",
-  "Psychological/Suspense",
-  "Reality",
-  "Romance",
-  "Sci-fi",
-  "Thriller",
-  "War",
-  "Western",
-];
-
-var outdoorList = [
-  "Camping",
-  "Canoeing",
-  "Fishing",
-  "Gardening",
-  "Hiking",
-  "Ice Skating",
-  "Kayaking",
-  "Running",
-  "Snowboarding",
-  "Skiing",
-  "Stargazing",
-  "Walking",
-  "Woodwork",
-  "Yardwork",
-];
-
-var indoorList = [
-  "Art Projects",
-  "Board Games",
-  "Card Games",
-  "Cleaning",
-  "Cooking",
-  "DIY Projects",
-  "Napping",
-  "Reading Books",
-  "TV/Movies",
-  "Video Games",
-];
-
-var cuisineList = [
-  "African",
-  "American",
-  "British",
-  "Cajun",
-  "Caribbean",
-  "Chinese",
-  "French",
-  "Greek",
-  "Indian",
-  "Indonesian",
-  "Italian",
-  "Japanese",
-  "Korean",
-  "Lebanese",
-  "Mexican",
-  "Middle Eastern",
-  "Moroccan",
-  "Peruvian",
-  "Polish",
-  "Spanish",
-  "Thai",
-  "Turkish",
-  "Vietnamese",
-];
-
-var artsList = [
-  "Drawing",
-  "Dance",
-  "Fashion",
-  "Graphic Design",
-  "Instrument",
-  "Opera",
-  "Painting",
-  "Photography",
-  "Photoshop",
-  "Pottery",
-  "Singing",
-  "Scenic Design",
-  "Sculpting",
-  "Theater Performance",
-  "Video Editing",
-];
-
-// ///////////////
-// End
-// ///////////////
 
 //If first time rendering, set login status to false
 if (JSON.parse(sessionStorage.getItem("isLoggedIn")) === null) {
@@ -246,7 +71,7 @@ function getLinkButtons(loggedIn) {
           <button className="link-button1">Feed</button>
         </Link>
 
-        <Link to="/profile_page">
+        <Link to="/profile">
           <button className="link-button1">Profile</button>
         </Link>
 
@@ -294,10 +119,10 @@ function getRouter(loggedIn) {
         <Route exact path="/about" component={AboutPage} />
         <Route exact path="/search" component={SearchHomePage} />
         <Route exact path="/feed" component={FeedPage} />
+        <Route exact path="/profile" component={ProfilePage} />
         <Route exact path="/change_profile" component={ChangeProfilePage} />
         <Route exact path="/messages" component={MessagesPage} />
         <Route exact path="/messages_home" component={MessagesHome} />
-        <Route exact path="/profile_page" component={ProfilePage} />
         <Route
           exact
           path="/search/sports"
@@ -391,10 +216,13 @@ function getRouter(loggedIn) {
               searchType={"arts"}
               trueEntries={JSON.parse(sessionStorage.getItem("search_arts"))}
               maxEntries={3}
-              nextPageLink={"/search"}
+              nextPageLink={"/search/personality"}
             />
           )}
         />
+
+        <Route exact path = "/search/personality" component={SearchPersonalityForm} />
+        <Route exact path = "/search/personal_info" component={SearchPersonalInfoForm} />
 
         <Route
           exact
@@ -491,10 +319,13 @@ function getRouter(loggedIn) {
               profileType={"arts"}
               trueEntries={JSON.parse(sessionStorage.getItem("profile_arts"))}
               maxEntries={3}
-              nextPageLink={"/change_profile"}
+              nextPageLink={"/change_profile/personality"}
             />
           )}
         />
+
+        <Route exact path="/change_profile/personality" component={PersonalityForm} />
+        <Route exact path="/change_profile/personal_info" component={PersonalInfoForm} />
 
         <Redirect to={sessionStorage.getItem("lastValidPage")} />
       </Switch>

@@ -56,7 +56,9 @@
 }
 
 #card h2 {
-  font-family: courier;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+  "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+  sans-serif;
   color: #333;
   margin: 0 auto;
   padding: 10px;
@@ -64,18 +66,33 @@
 }
 
 #card p {
-  font-family: sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
   color: rgb(39, 38, 38);
-  font-size: 12px;
+  font-size: 16px;
 }
 
+.section-header
+{
+  margin: 0px;
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+
 #card span {
-  font-family: courier;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  line-height: 140%;
+  font-size: 14px;
 }
 #bio {
   background-color: rgb(226, 223, 215);
   height: 340px;
   position: absolute;
+  padding: 8px;
   margin-top: -10px;
   border-radius: 10px;
   width: 200px;
@@ -84,11 +101,15 @@
     20px 0 45px -25px rgb(128, 118, 118);
   color: rgb(0, 0, 0);
   text-align: left;
+  overflow: scroll;
 }
+
+
 #Pers {
   background-color: rgb(226, 223, 215);
   height: 150px;
   position: absolute;
+  padding: 8px;
   margin-top: -10px;
   border-radius: 10px;
   width: 200px;
@@ -102,6 +123,7 @@
   background-color: rgb(226, 223, 215);
   height: 150px;
   position: absolute;
+  padding: 8px;
   margin-top: 180px;
   border-radius: 10px;
   width: 200px;
@@ -115,6 +137,7 @@
   background-color: rgb(226, 223, 215);
   height: 340px;
   position: absolute;
+  padding: 8px;
   margin-top: -10px;
   border-radius: 20px;
   width: 300px;

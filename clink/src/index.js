@@ -6,6 +6,8 @@ import ScrollToTop from "./components/scroll_to_top_handler.js";
 import * as serviceWorker from "./serviceWorker";
 import { BrowserRouter } from "react-router-dom";
 
+sessionStorage.setItem('local-ip', 'your IP address here'); //Put in your local IP address here
+
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>

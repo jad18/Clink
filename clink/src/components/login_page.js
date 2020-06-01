@@ -29,7 +29,7 @@ class LoginPage extends React.Component {
     try {
       const response = await fetch("http://192.168.1.9:3000/login", options); //change [localhost] to your local IP address
       if (!response.ok) {
-        alert(response.statusText);
+        console.log(response.statusText);
         return null;
       }
       const jsonData = await response.json();
@@ -47,20 +47,24 @@ class LoginPage extends React.Component {
 
     var loginResult = this.makeLoginRequest(event, received_username); //returns a promise
     const self = this;
-    let { history } = this.props;
 
     loginResult.then(function (result) {
       if (result.status === true) {
         self.setState({ errorMsg: "" });
         sessionStorage.setItem("isLoggedIn", "true");
         sessionStorage.setItem("username", received_username);
+        sessionStorage.setItem("name", result.name);
 
         for (var element in result.profile) {
-          sessionStorage.setItem(
+          if(element !== "bio") {
+            sessionStorage.setItem(
             "profile_" + String(element),
             JSON.stringify(result.profile[element])
-          );
-          sessionStorage.setItem("search_" + String(element), "[]");
+            );
+            sessionStorage.setItem("search_" + element, "[]");
+          }
+          else sessionStorage.setItem("profile_bio", result["bio"]);
+
         }
         alert(sessionStorage.getItem("profile_sports"));
         sessionStorage.setItem("searchList", "[]");

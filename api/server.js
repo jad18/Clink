@@ -14,10 +14,11 @@ const user = require('./models/User')
 const methodOverride = require('method-override');
 const http = require('http');
 const socketio = require('socket.io');
-const cors = require('cors');
 const server = http.createServer(app);
 const io = socketio(server);
 
+const cors = require('cors');
+app.use(cors());
 
 const PORT = 5000;
 bodyParser = require("body-parser");

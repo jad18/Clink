@@ -29,7 +29,7 @@ class PersonalInfoForm extends React.Component
         if (this.state.hasChanges)
         {
             this.setState({
-                bio: document.getElementById("bio").value
+                bio: document.getElementById("bioInput").value
             });
 
             var trueEntries = [document.getElementById('schoolYear').value,
@@ -37,16 +37,17 @@ class PersonalInfoForm extends React.Component
                             document.getElementById('gender').value];
           
             console.log(trueEntries);
-            console.log(document.getElementById('bio').value);
+            console.log(document.getElementById('bioInput').value);
     
-            this.makeChangeRequest(trueEntries, document.getElementById('bio').value);
+            this.makeChangeRequest(trueEntries, document.getElementById('bioInput').value);
         }
     }
 
     makeChangeRequest(trueEntries, bio)
     {
-        var request = {"username": sessionStorage.getItem("username"),
-                       "personalInfo": trueEntries,
+        var request = {"email": sessionStorage.getItem("username"),
+                       "section": "personalInfo",
+                       "list": trueEntries,
                        "bio": bio};
 
         console.log(request);
@@ -75,10 +76,10 @@ class PersonalInfoForm extends React.Component
         }
 
         try {
-        const response = await fetch("http://[localhost]:3000/change_profile", options) //change [localhost] to your local IP address
+        const response = await fetch("http://" + sessionStorage.getItem('local-ip') + ":3000/change_profile", options)
         if(!response.ok)
         {
-            alert(response.statusText);
+            console.log(response.statusText);
             return null;
         }
         const jsonData = await response.json();
@@ -188,7 +189,7 @@ class PersonalInfoForm extends React.Component
                   Got anything else that you'd like to share? Add a short bio about
                   yourself so that people can really know who you are!
               </h4>
-              <textarea name='bio' id='bio' rows='7' cols='80' maxLength="300"
+              <textarea name='bioInput' id='bioInput' rows='7' cols='80' maxLength="350"
                 placeholder="Write about yourself!"
                 onKeyDown={this.checkBioChange}
                 defaultValue={this.state.bio}>

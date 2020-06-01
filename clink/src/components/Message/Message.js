@@ -20,6 +20,7 @@ const Message = ({ message: { text, user }, name }) => {
     </div>
   ) : (
     <div className="messageContainer justifyStart">
+      <div id="stripes" />
       <div className="messageBox backgroundLight">
         <p className="messageText colorDark">{text}</p>
       </div>

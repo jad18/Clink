@@ -33,6 +33,7 @@ class GeneralForm extends React.Component {
       numEntries: props.trueEntries.length,
       postWasReceived: false
     };
+
     this.handleChange = this.handleChange.bind(this);
     this.submitForm = this.submitForm.bind(this);
     this.makeChangeRequest = this.makeChangeRequest.bind(this);
@@ -79,8 +80,9 @@ class GeneralForm extends React.Component {
 
   makeChangeRequest(trueEntries)
   {
-    var request = {"username": sessionStorage.getItem("username")};
-    request[this.profileType] = trueEntries;
+    var request = {"email": sessionStorage.getItem("username"),
+                   "section": this.profileType,
+                   "list": trueEntries};
 
     console.log(request);
 
@@ -108,10 +110,10 @@ class GeneralForm extends React.Component {
         }
 
         try {
-        const response = await fetch("http://[localhost]:3000/change_profile", options) //change [localhost] to your local IP address
+        const response = await fetch("http://" + sessionStorage.getItem('local-ip') + ":3000/change_profile", options)
         if(!response.ok)
         {
-            alert(response.statusText);
+            console.log(response.statusText);
             return null;
         }
         const jsonData = await response.json();
@@ -229,61 +231,3 @@ class GeneralForm extends React.Component {
 }
 
 export default GeneralForm;
-
-/* 
-<form onSubmit={this.submitForm} className="form-body">
-                {this.makeCheckboxes()}
-                {this.displayChanges()}
-                
-                <button type="button" onClick={this.resetChanges} className='link-button2'>Reset Changes</button>
-                
-
-                <p>
-                
-                    <Link to="/change_profile"><button type="submit" className="link-button2">
-                        Back to Profile Change
-                    </button></Link>
-
-                    <button type="submit" onClick={() => window.location = this.nextPageLink} className="link-button2">
-                        Next Profile Section
-                    </button>
-                </p>
-      
-            </form>
-
-
-//If user leaves without saving changes, autosave these changes
-    componentWillUnmount()
-    {
-        if(this.state.hasChanges)
-        {
-            var trueEntries = [];
-            Object.keys(this.state.entries)
-                .filter(checkbox => this.state.entries[checkbox])
-                .forEach(checkbox => {
-                trueEntries.push(checkbox);
-            });
-
-            alert(trueEntries);
-            alert("This is unmounting");
-            sessionStorage.setItem("profile_" + this.profileType, JSON.stringify(trueEntries));
-        }
-    }
-
-    resetChanges()
-    {
-        let newEntries={};
-        Object.keys(this.state.entries).forEach(key =>
-            newEntries[key] = hasTrueValue(this.originalTrueEntries, key));
-
-        if(this.state.hasChanges)
-        {
-            this.setState({
-                entries: newEntries,
-                hasChanges: false,
-                numEntries: this.originalTrueEntries.length
-            });
-
-        }
-    }
-*/

@@ -41,7 +41,7 @@ function extractPersonalInfoItems(list)
         var religion = list[1];
         var gender = list[2];
 
-        if(gender === "N/S") gender = "Gender not specified";
+        if(gender === "N/S") gender = "Gender not specified in list";
 
         if(schoolYear !== "NoneYear")
         {
@@ -162,7 +162,7 @@ class SearchHomePage extends React.Component {
             {}
         );
 
-        request["username"] = sessionStorage.getItem("username");
+        request["email"] = sessionStorage.getItem("username");
 
         if(request["personality"])
         {
@@ -210,10 +210,10 @@ class SearchHomePage extends React.Component {
         }
 
         try {
-        const response = await fetch("http://[localhost]:3000/search", options) //change [localhost] to your local IP address
+        const response = await fetch("http://" + sessionStorage.getItem('local-ip') + ":3000/search", options)
         if(!response.ok)
         {
-            alert(response.statusText);
+            console.log(response.statusText);
             return null;
         }
         const jsonData = await response.json();
@@ -233,6 +233,7 @@ class SearchHomePage extends React.Component {
     {
     return (
         <div className="App">
+            <h1>Search</h1>
             <h2>Select which traits or preferences you'd like to see in a friend:</h2>
             <h4>(All entries are in the same place as the Change Profile section so they're easier to find!)</h4>
 
@@ -302,6 +303,8 @@ class SearchHomePage extends React.Component {
             <button className="link-button2" onClick={() => this.checkSearch(this.state.requests)}>
                 <strong>Search</strong>
             </button>
+            <br/>
+            <br/>
         </div>
     );
     }

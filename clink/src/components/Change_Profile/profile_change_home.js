@@ -46,7 +46,7 @@ function ChangeProfilePage() {
                     </td>
                     <td className='table-column'>
                         <Link to='/change_profile/arts_and_media'>
-                            <button className='link-button3'>Arts and Media</button>
+                            <button className='link-button3'>Arts, Theater, and Media</button>
                         </Link>
                     </td>
                 </tr>

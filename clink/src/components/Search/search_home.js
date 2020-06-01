@@ -41,7 +41,7 @@ function extractPersonalInfoItems(list)
         var religion = list[1];
         var gender = list[2];
 
-        if(gender === "N/S") gender = "Gender not specified";
+        if(gender === "N/S") gender = "Gender not specified in list";
 
         if(schoolYear !== "NoneYear")
         {
@@ -302,6 +302,8 @@ class SearchHomePage extends React.Component {
             <button className="link-button2" onClick={() => this.checkSearch(this.state.requests)}>
                 <strong>Search</strong>
             </button>
+            <br/>
+            <br/>
         </div>
     );
     }

@@ -14,6 +14,7 @@ function extractListItems(list)
     return str;
 }
 
+
 function extractPersonalityItems(list)
 {
     if(list.length > 1)
@@ -21,107 +22,74 @@ function extractPersonalityItems(list)
         var mb = list[0];
         var en = list[1];
 
-        if(mb !== "NoneMB")
-        {
-            if(en !== "NoneEn")
-            {
-              return(
-                <div>
-                  <p>Myers-Briggs: {mb}</p>
-                  <p>Enneagram: {en}</p>
-                </div>
-              );
-            }
-            else return(<p>Myers-Briggs: {mb}</p>);
-        }
-        else if (en !== "NoneEn") return(<p>Enneagram: {en}</p>)
+        return(
+          <div>
+            <p>
+              <strong>Myers-Briggs:</strong>
+              {(mb !== "NoneMB") ? " " + mb : ""}
+            </p>
+            <p>
+              <strong>Enneagram:</strong>
+              {(en !== "NoneEn") ? " " + en : ""}
+            </p>
+          </div>
+        );
     }
 
-    return null;
+    return(
+      <div>
+            <p>
+              <strong>Myers-Briggs:</strong>
+            </p>
+            <p>
+              <strong>Enneagram:</strong>
+            </p>
+          </div>
+    );
 }
+
 
 function extractPersonalInfoItems(list)
 {
-    if(list.length > 2)
+  if(list.length > 2)
     {
         var schoolYear = list[0];
         var religion = list[1];
         var gender = list[2];
 
-        if(gender === "N/S") gender = "Not included in list";
+        if(gender === "N/S") gender = "Not specified in list";
 
-        if(schoolYear !== "NoneYear")
-        {
-            if(religion !== "NoneReligion")
-            {
-              if(gender !== "NoneGender")
-              {
-                return(
-                <div>
-                  <p>{schoolYear} Year</p>
-                  <p>Religion: {religion}</p>
-                  <p>Gender: {gender}</p>
-                </div>
-                );
-              }
-              else
-              {
-                return(
-                  <div>
-                    <p>{schoolYear} Year</p>
-                    <p>Religion: {religion}</p>
-                  </div>
-                  );
-              }
-            }
-            else
-            {
-              if(gender !== "NoneGender")
-              {
-                return(
-                <div>
-                  <p>{schoolYear} Year</p>
-                  <p>Gender: {gender}</p>
-                </div>
-                );
-              }
-              else
-              {
-                return(
-                  <div>
-                    <p>{schoolYear} Year</p>
-                  </div>
-                  );
-              }
-            }
-        }
-        else if(religion !== "NoneReligion")
-        {
-            if(gender !== "NoneGender")
-            {
-              return(
-                <div>
-                  <p>Religion: {religion}</p>
-                  <p>Gender: {gender}</p>
-                </div>
-                );
-            }
-            else
-            {
-              return(
-                <div>
-                  <p>Religion: {religion}</p>
-                </div>
-                );
-            }
-        }
-        else if (gender !== "NoneGender")
-        {
-            return <p>Gender: {gender}</p>;
-        }
+        return(
+          <div>
+            <p>
+              <strong>School Year:</strong>
+              {(schoolYear !== "NoneYear") ? " " + schoolYear : ""}
+            </p>
+            <p>
+              <strong>Religion:</strong>
+              {(religion !== "NoneReligion") ? " " + religion : ""}
+            </p>
+            <p>
+              <strong>Gender:</strong>
+              {(gender !== "NoneGender") ? " " + gender : ""}
+            </p>
+          </div>
+        );
     }
-
-    return null;
+  
+    return(
+      <div>
+            <p>
+              <strong>School Year:</strong>
+            </p>
+            <p>
+              <strong>Religion:</strong>
+            </p>
+            <p>
+              <strong>Gender:</strong>
+            </p>
+          </div>
+    );
 }
 
 
@@ -132,61 +100,63 @@ export default class Profile extends React.Component {
     super();
     sessionStorage.setItem("lastValidPage", "/profile");
   }
+
   render() {
     return (
       <div className="App">
-        <div id="stripes" />
 
-        <div id="card">
-          <h2>{sessionStorage.getItem("username")}'s Profile</h2>
-          <ul id="tags"></ul>
-          <ul id="boxes">
-            <lo id="Pers">
+        <h1>Your Profile</h1>
+
+        <div id="outer-box">
+          <div id="stripes" />
+                    
+          <div id="Pers">
               <u><h4 className="section-header">Personality</h4></u>
               {extractPersonalityItems(JSON.parse(sessionStorage.getItem("profile_personality")))}
-            </lo>
-            <div>
-            <lo id="Pinfo">
-              <u><h4 className="section-header">Personal Information</h4></u>
-              {extractPersonalInfoItems(JSON.parse(sessionStorage.getItem("profile_personalInfo")))}
-            </lo>
-            </div>
-            <lo id="bio">
-              <u><h4 className="section-header">About Me</h4></u>
-              {sessionStorage.getItem("bio")}
-            </lo>
-            <div id="hobbies">
-              <u><h4 className="section-header">Interests</h4></u>
-              <span className="middle">
-                <ul id="interest-list">
-                <li>
-                  <strong>Sports:</strong>
-                  {extractListItems(JSON.parse(sessionStorage.getItem("profile_sports")))}
-                </li>
-                <li>
-                  <strong>Movies:</strong>
-                  {extractListItems(JSON.parse(sessionStorage.getItem("profile_movies")))}
-                </li>
-                <li>
-                  <strong>Indoor Activities:</strong>
-                  {extractListItems(JSON.parse(sessionStorage.getItem("profile_indoor")))}
-                </li>
-                <li>
-                  <strong>Outdoor Activities:</strong>
-                  {extractListItems(JSON.parse(sessionStorage.getItem("profile_outdoor")))}
-                </li>
-                <li>
-                  <strong>Types of Food:</strong>
-                  {extractListItems(JSON.parse(sessionStorage.getItem("profile_cuisines")))}
-                </li>
-                <li>
-                  <strong>Arts, Theater, and Media:</strong>
-                  {extractListItems(JSON.parse(sessionStorage.getItem("profile_arts")))}
-                </li>
-                </ul>
-              </span>
-            </div>
-          </ul>
+          </div>
+                
+          <div id="Pinfo">
+            <u><h4 className="section-header">Personal Information</h4></u>
+            {extractPersonalInfoItems(JSON.parse(sessionStorage.getItem("profile_personalInfo")))}
+          </div>
+                
+          <div id="bio">
+            <u><h4 className="section-header">About Me</h4></u>
+            {sessionStorage.getItem("bio")}
+          </div>
+          <div id="hobbies">
+            <u><h4 className="section-header">Interests</h4></u>
+            <ul id="interest-list">
+              <li>
+                <strong>Sports:</strong>
+                {extractListItems(JSON.parse(sessionStorage.getItem("profile_sports")))}
+              </li>
+              <li>
+                <strong>Movies:</strong>
+                {extractListItems(JSON.parse(sessionStorage.getItem("profile_movies")))}
+              </li>
+              <li>
+                <strong>Indoor Activities:</strong>
+                {extractListItems(JSON.parse(sessionStorage.getItem("profile_indoor")))}
+               </li>
+              <li>
+                <strong>Outdoor Activities:</strong>
+                {extractListItems(JSON.parse(sessionStorage.getItem("profile_outdoor")))}
+              </li>
+              <li>
+                <strong>Types of Food:</strong>
+                {extractListItems(JSON.parse(sessionStorage.getItem("profile_cuisines")))}
+              </li>
+              <li>
+                <strong>Arts, Theater, and Media:</strong>
+                {extractListItems(JSON.parse(sessionStorage.getItem("profile_arts")))}
+              </li>
+            </ul>
+          </div>
+                    
+          <div id="card">
+            <h2>{sessionStorage.getItem("username")}</h2>
+          </div>
         </div>
       </div>
     );

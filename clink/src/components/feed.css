@@ -116,6 +116,7 @@
       20px 0 45px -25px rgb(128, 118, 118);
     color: rgb(0, 0, 0);
     text-align: left;
+    overflow: scroll;
     z-index: 5;
   }
   #feed-Pinfo {
@@ -131,6 +132,7 @@
       20px 0 45px -25px rgb(128, 118, 118);
     color: rgb(0, 0, 0);
     text-align: left;
+    overflow: scroll;
     z-index: 5;
   }
   #feed-hobbies {

@@ -41,7 +41,7 @@ function extractPersonalInfoItems(list)
         var religion = list[1];
         var gender = list[2];
 
-        if(gender === "N/S") gender = "Gender not specified";
+        if(gender === "N/S") gender = "Gender not specified in list";
 
         if(schoolYear !== "NoneYear")
         {

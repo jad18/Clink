@@ -149,7 +149,7 @@ const calculateUserSimilarity = (userOne, userTwo) => {
       return similarity / totalProperties;
   }
 };
-/*
+
 //this is to track the users that are present in the messaging room
 const messageUsers = [];
 
@@ -189,7 +189,7 @@ io.on('connect', (socket) => {
 	removeUser(socket.id);
     });
 });
-*/
+
 
 app.listen(3000, () => console.log("Listening on port 3000"));
 server.listen(process.env.PORT || 5000, () => console.log("Server has started."));

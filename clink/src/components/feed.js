@@ -1,5 +1,6 @@
 import React from 'react';
 import './feed.css';
+import {Link} from 'react-router-dom';
 
 async function makeMessagesRequest() {
     var usernameObj = { email: sessionStorage.getItem("username") };
@@ -263,8 +264,20 @@ class FeedPage extends React.Component
                 
                
                 <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
-                <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
-                <p>Hello</p>
+                <br/><br/><br/><br/><br/><br/><br/><br/><br/>
+                <p className="about-page-para">
+                    Be sure to take your time and consider them, you never know what they might have to say!
+                    If you'd like to get in touch with them, press the 'Message This User' button. If you'd
+                    rather keep looking, press the 'Get New Match' button.</p>
+
+                <Link to="/messages_home">
+                    <button className="link-button2">Message This User</button>
+                </Link>
+                <Link to="/profile">
+                    <button className="link-button2">Get New Match</button>
+                </Link>
+
+                <br/><br/>
               
                 
 

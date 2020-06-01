@@ -302,6 +302,8 @@ class SearchHomePage extends React.Component {
             <button className="link-button2" onClick={() => this.checkSearch(this.state.requests)}>
                 <strong>Search</strong>
             </button>
+            <br/>
+            <br/>
         </div>
     );
     }

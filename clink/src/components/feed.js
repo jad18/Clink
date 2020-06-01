@@ -208,69 +208,64 @@ class FeedPage extends React.Component
 
                 {this.getMatchedUser()}
 
-
-
-
                 
+                <div id="feed-outer-box">
                     <div id="feed-stripes" />
-
-                    <div id="feed-card">
-                        <h2>{sessionStorage.getItem("username")}'s Profile</h2>
-                    </div>
                     
-                <ul id="feed-boxes">
                     <div id="feed-Pers">
                         <u><h4 className="section-header">Personality</h4></u>
                         {extractPersonalityItems(JSON.parse(sessionStorage.getItem("profile_personality")))}
                     </div>
-                <div>
-                <div id="feed-Pinfo">
-                    <u><h4 className="section-header">Personal Information</h4></u>
-                    {extractPersonalInfoItems(JSON.parse(sessionStorage.getItem("profile_personalInfo")))}
+                
+                    <div id="feed-Pinfo">
+                        <u><h4 className="section-header">Personal Information</h4></u>
+                        {extractPersonalInfoItems(JSON.parse(sessionStorage.getItem("profile_personalInfo")))}
+                    </div>
+                
+                    <div id="feed-bio">
+                        <u><h4 className="section-header">About Me</h4></u>
+                        {sessionStorage.getItem("bio")}
+                    </div>
+                    <div id="feed-hobbies">
+                        <u><h4 className="section-header">Interests</h4></u>
+                        <ul id="feed-interest-list">
+                            <li>
+                                <strong>Sports:</strong>
+                                {extractListItems(JSON.parse(sessionStorage.getItem("profile_sports")))}
+                            </li>
+                            <li>
+                                <strong>Movies:</strong>
+                                {extractListItems(JSON.parse(sessionStorage.getItem("profile_movies")))}
+                            </li>
+                            <li>
+                                <strong>Indoor Activities:</strong>
+                                {extractListItems(JSON.parse(sessionStorage.getItem("profile_indoor")))}
+                            </li>
+                            <li>
+                                <strong>Outdoor Activities:</strong>
+                                {extractListItems(JSON.parse(sessionStorage.getItem("profile_outdoor")))}
+                            </li>
+                            <li>
+                                <strong>Types of Food:</strong>
+                                {extractListItems(JSON.parse(sessionStorage.getItem("profile_cuisines")))}
+                            </li>
+                            <li>
+                                <strong>Arts, Theater, and Media:</strong>
+                                {extractListItems(JSON.parse(sessionStorage.getItem("profile_arts")))}
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div id="feed-card">
+                        <h2>{sessionStorage.getItem("username")}'s Profile</h2>
+                    </div>
                 </div>
-                </div>
-                <div id="feed-bio">
-                    <u><h4 className="section-header">About Me</h4></u>
-                    {sessionStorage.getItem("bio")}
-                </div>
-                <div id="hobbies">
-                    <u><h4 className="section-header">Interests</h4></u>
-                    <span className="middle">
-                    <ul id="feed-interest-list">
-                        <li>
-                            <strong>Sports:</strong>
-                            {extractListItems(JSON.parse(sessionStorage.getItem("profile_sports")))}
-                        </li>
-                        <li>
-                            <strong>Movies:</strong>
-                            {extractListItems(JSON.parse(sessionStorage.getItem("profile_movies")))}
-                        </li>
-                        <li>
-                            <strong>Indoor Activities:</strong>
-                            {extractListItems(JSON.parse(sessionStorage.getItem("profile_indoor")))}
-                        </li>
-                        <li>
-                            <strong>Outdoor Activities:</strong>
-                            {extractListItems(JSON.parse(sessionStorage.getItem("profile_outdoor")))}
-                        </li>
-                        <li>
-                            <strong>Types of Food:</strong>
-                            {extractListItems(JSON.parse(sessionStorage.getItem("profile_cuisines")))}
-                        </li>
-                        <li>
-                            <strong>Arts, Theater, and Media:</strong>
-                            {extractListItems(JSON.parse(sessionStorage.getItem("profile_arts")))}
-                        </li>
-                    </ul>
-                    </span>
-                </div>
-                </ul>
                 
                
-
-
-            <p>This text</p>
-            <p>Must show up</p>
+                <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+                <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+                <p>Hello</p>
+              
                 
 
             </div>

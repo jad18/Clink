@@ -62,17 +62,26 @@ module.exports = function(app,passport){
       }) (req, res, next);
     });
 
-    app.post('/change_profile', (req, res) => {
-        //req.body will be in the form: { email: "username_here", section: "section_here", list: "list_here"}
-        //The section is the area/section from the profile that the user wants to change (sports, movies, etc.),
-        //and the list is the full list that the user wants to submit. You can replace the old list with this
-        //new list, no other work required. Return true/false if successful, mostly should be true
+    app.post('/change_profile', async (req, res) => {
+        
+      const doc = await User.findOne({ email: req.body.email});
 
-        console.log("Getting profile change request");
-        console.log(req.body);
-        //store this info
-        res.json(true);
-    })
+      doc.sports = req.body.sports; 
+      doc.movies = req.body.movies; 
+      doc.outdoor= req.body.outdoor; 
+      doc.indoor = req.body.indoor; 
+      doc.cuisines = req.body.cuisines; 
+      doc.arts = req.body.arts; 
+      doc.personality = req.body.personality; 
+      doc.personalInfo = req.body.personalInfo; 
+      doc.bio = req.body.bio; 
+      doc.bio = req.body.candidates; 
+      doc.matchHistory  = req.body.matchHistory; 
+
+      await doc.save();
+
+      res.json("true");
+      })
     
     
     app.post('/search', (req, res) => {
@@ -133,25 +142,7 @@ module.exports = function(app,passport){
             res.redirect('/login');
     }
 
-    app.post('/change_profile', async (req, res) => {
-        
-        const doc = await User.findOne({ email: req.body.email});
-
-        doc.sports = req.body.sports; 
-        doc.movies = req.body.movies; 
-        doc.outdoor= req.body.outdoor; 
-        doc.indoor = req.body.indoor; 
-        doc.cuisines = req.body.cuisines; 
-        doc.arts = req.body.arts; 
-        doc.personality = req.body.personality; 
-        doc.personalInfo = req.body.personalInfo; 
-        doc.bio = req.body.bio; 
-        doc.bio = req.body.candidates; 
-        doc.matchHistory  = req.body.matchHistory; 
-
-        await doc.save();
-
-    })
+    
     
 }
 

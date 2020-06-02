@@ -17,6 +17,40 @@ const UserSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
+        sports: [{
+            type: String,
+        }], 
+        outdoor: [{
+            type: String,
+        }],
+        indoor: [{
+            type: String,
+        }],
+        cuisines: [{
+            type: String,
+        }],
+        movies: [{
+            type: String,
+        }],
+        arts: [{
+            type: String,
+        }],
+        personality: [{
+            type: String,
+        }],
+        personalInfo: [{
+            type: String,
+        }],
+        bio: {
+            type: String,
+        }, 
+        candidates: [{ 
+            type:String,
+        }], 
+        matchHistory: [{
+            type:String,
+        }],
+
     },
     { strict: false }
 );

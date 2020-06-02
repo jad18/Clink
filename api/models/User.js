@@ -20,6 +20,9 @@ const UserSchema = new mongoose.Schema(
         sports: [{
             type: String,
         }], 
+        movies: [{
+            type: String,
+        }], 
         outdoor: [{
             type: String,
         }],

@@ -1,5 +1,6 @@
 // all our APIs
 var User            = require('./models/User');
+const mongoose = require("mongoose");
 
 module.exports = function(app,passport){
 
@@ -45,10 +46,11 @@ module.exports = function(app,passport){
             res.redirect('/login');
     }
 
-    app.post('/change_profile',(req, res) => {
-        const doc = User.findOne({username: req.body.username});
+    app.post('/change_profile', async (req, res) => {
+        
+        const doc = await User.findOne({ email: req.body.email});
+
         doc.sports = req.body.sports; 
-        /*
         doc.movies = req.body.movies; 
         doc.outdoor= req.body.outdoor; 
         doc.indoor = req.body.indoor; 
@@ -57,12 +59,11 @@ module.exports = function(app,passport){
         doc.personality = req.body.personality; 
         doc.personalInfo = req.body.personalInfo; 
         doc.bio = req.body.bio; 
-        */ 
-        doc.save();
-        console.log("Getting profile change request");
-        console.log(req.body);
-        //store this info
-        res.json(req.body);
+        doc.bio = req.body.candidates; 
+        doc.matchHistory  = req.body.matchHistory; 
+
+        await doc.save();
+
     })
     
 }

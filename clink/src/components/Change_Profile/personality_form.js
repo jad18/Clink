@@ -39,8 +39,9 @@ class PersonalityForm extends React.Component
 
     makeChangeRequest(trueEntries)
     {
-        var request = {"username": sessionStorage.getItem("username"),
-                        "personality": trueEntries};
+        var request = {"email": sessionStorage.getItem("username"),
+                       "section": "personality",
+                       "list": trueEntries};
 
         console.log(request);
 
@@ -67,10 +68,10 @@ class PersonalityForm extends React.Component
         }
 
         try {
-        const response = await fetch("http://[localhost]:3000/change_profile", options) //change [localhost] to your local IP address
+        const response = await fetch("http://" + sessionStorage.getItem('local-ip') + ":3000/change_profile", options)
         if(!response.ok)
         {
-            alert(response.statusText);
+            console.log(response.statusText);
             return null;
         }
         const jsonData = await response.json();

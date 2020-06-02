@@ -210,7 +210,7 @@ module.exports = function (app, passport, mongooseModel) {
       }
       let copyMatch = {};
       //get rid of sensitive information in match
-      profile = {};
+      var profile = {};
       for (var key in match) {
         let relevantProperties = ['sports', 'movies', 'outdoor', 'indoor', 'cuisines',
           'arts', 'personality', 'personalInfo', 'bio', 'movies'];

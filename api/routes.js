@@ -48,11 +48,11 @@ module.exports = function (app, passport, mongooseModel) {
         console.log(tempUser);
 
         res.json({
-          status: true, name: "Me", profile: {
-            sports: ['Soccer', 'Volleyball'], movies: [], outdoor: [],
-            indoor: [], cuisines: [], arts: [],
-            personality: ['NoneMB', 'NoneEn'],
-            personalInfo: ['NoneYear', 'NoneReligion'], bio: ""
+          status: true, name: user.name, profile: {
+            sports: user.sports, movies: user.movies, outdoor: user.outdoor,
+            indoor: user.indoor, cuisines: user.cuisines, arts: user.arts,
+            personality: user.personality, personalInfo: user.personalInfo,
+            bio: user.bio
           }
         });
       }
@@ -223,10 +223,13 @@ module.exports = function (app, passport, mongooseModel) {
   })
 
   app.post('/change_profile', async (req, res) => {
-        
+      console.log(req.body);
       const doc = await User.findOne({ email: req.body.email});
 
       doc[req.body.section] = req.body.list;
+
+      if(req.body.section === "personalInfo")
+        doc["bio"] = req.body.bio;
       /*doc.sports = req.body.sports; 
       doc.movies = req.body.movies; 
       doc.outdoor= req.body.outdoor; 

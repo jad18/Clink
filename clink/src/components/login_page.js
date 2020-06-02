@@ -63,7 +63,7 @@ class LoginPage extends React.Component {
             );
             sessionStorage.setItem("search_" + element, "[]");
           }
-          else sessionStorage.setItem("profile_bio", result["bio"]);
+          else sessionStorage.setItem("profile_bio", result.profile["bio"]);
 
         }
         

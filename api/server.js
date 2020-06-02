@@ -83,6 +83,8 @@ function isLoggedIn(req, res, next) {
 //this is to track the users that are present in the messaging room
 const messageUsers = [];
 const users = [];
+const roomsList = {"test1 test3": ["test1", "This is the first text", "test3", "This is the second text"],
+                    "test1 test5" :["test5", "How's everything going for you?"]};
 //helper functions
 const addUser = ({id, name, room}) => {
     const m_user = {id, name, room};
@@ -100,14 +102,38 @@ const getUser = (id) => messageUsers.find((m_user) => m_user.id === id);
 io.on('connect', (socket) => {
     socket.on('join', ({name, room}, callback) => {
 	const user = addUser({id: socket.id, name, room});
-	socket.join(user.room);
+    socket.join(user.room);
+
+    console.log(user.room);
+
+    var chatList = roomsList[user.room];
+    if(chatList)
+    {
+        for(let i=0; (i+1)<chatList.length; i+=2)
+        {
+            socket.emit('message', {user: chatList[i], text: chatList[i+1]});
+        }
+    }
+    else
+    {
+        roomsList[user.room] = [];
+    }
+
 	callback();
     });
     //when a user sends a message, the socket emits to the front end so that
     //the message is displayed
     socket.on('sendMessage', (message, callback) => {
 	const user = getUser(socket.id);
-	io.to(user.room).emit('message', {user: user.name, text: message});
+    io.to(user.room).emit('message', {user: user.name, text: message});
+
+    //Safety measure
+    if(!roomsList[user.room])
+    {
+        roomsList[user.room] = [];
+    }
+    roomsList[user.room].push(user.name);
+    roomsList[user.room].push(message);
 	callback();
     });
     socket.on('disconnect', () => {

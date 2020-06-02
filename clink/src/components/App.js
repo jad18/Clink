@@ -2,7 +2,6 @@ import React from "react";
 import "../App.css";
 import { Route, Switch, Link, Redirect } from "react-router-dom";
 
-
 //Page imports
 import AboutPage from "./about_page.js";
 
@@ -13,8 +12,8 @@ import SearchOutdoorForm from "./Search/search_outdoor_form.js";
 import SearchIndoorForm from "./Search/search_indoor_form.js";
 import SearchCuisineForm from "./Search/search_cuisine_form.js";
 import SearchArtsForm from "./Search/search_arts_form.js";
-import SearchPersonalityForm from './Search/search_personality_form.js';
-import SearchPersonalInfoForm from './Search/search_personal_info_form.js';
+import SearchPersonalityForm from "./Search/search_personality_form.js";
+import SearchPersonalInfoForm from "./Search/search_personal_info_form.js";
 
 import ChangeProfilePage from "./Change_Profile/profile_change_home.js";
 import SportsForm from "./Change_Profile/sports_form.js";
@@ -23,8 +22,8 @@ import OutdoorForm from "./Change_Profile/outdoor_form.js";
 import IndoorForm from "./Change_Profile/indoor_form.js";
 import CuisineForm from "./Change_Profile/cuisine_form.js";
 import ArtsForm from "./Change_Profile/arts_form.js";
-import PersonalityForm from './Change_Profile/personality_form.js';
-import PersonalInfoForm from './Change_Profile/personal_info_form.js';
+import PersonalityForm from "./Change_Profile/personality_form.js";
+import PersonalInfoForm from "./Change_Profile/personal_info_form.js";
 
 import LoginPage from "./login_page.js";
 import SignupPage from "./signup_page.js";
@@ -34,13 +33,12 @@ import FeedPage from "./feed.js";
 import ProfilePage from "./profile_page.js";
 
 //Form data imports
-import sportsList from './list_data/sports_list.js';
-import movieList from './list_data/movies_list.js';
-import outdoorList from './list_data/outdoor_list.js';
-import indoorList from './list_data/indoor_list.js';
-import cuisineList from './list_data/cuisines_list.js';
-import artsList from './list_data/arts_list.js';
-
+import sportsList from "./list_data/sports_list.js";
+import movieList from "./list_data/movies_list.js";
+import outdoorList from "./list_data/outdoor_list.js";
+import indoorList from "./list_data/indoor_list.js";
+import cuisineList from "./list_data/cuisines_list.js";
+import artsList from "./list_data/arts_list.js";
 
 //If first time rendering, set login status to false
 if (JSON.parse(sessionStorage.getItem("isLoggedIn")) === null) {
@@ -221,8 +219,16 @@ function getRouter(loggedIn) {
           )}
         />
 
-        <Route exact path = "/search/personality" component={SearchPersonalityForm} />
-        <Route exact path = "/search/personal_info" component={SearchPersonalInfoForm} />
+        <Route
+          exact
+          path="/search/personality"
+          component={SearchPersonalityForm}
+        />
+        <Route
+          exact
+          path="/search/personal_info"
+          component={SearchPersonalInfoForm}
+        />
 
         <Route
           exact
@@ -324,8 +330,16 @@ function getRouter(loggedIn) {
           )}
         />
 
-        <Route exact path="/change_profile/personality" component={PersonalityForm} />
-        <Route exact path="/change_profile/personal_info" component={PersonalInfoForm} />
+        <Route
+          exact
+          path="/change_profile/personality"
+          component={PersonalityForm}
+        />
+        <Route
+          exact
+          path="/change_profile/personal_info"
+          component={PersonalInfoForm}
+        />
 
         <Redirect to={sessionStorage.getItem("lastValidPage")} />
       </Switch>

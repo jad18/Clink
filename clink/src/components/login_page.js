@@ -27,7 +27,10 @@ class LoginPage extends React.Component {
     };
 
     try {
-      const response = await fetch("http://" + sessionStorage.getItem('local-ip') + ":3000/login", options);
+      const response = await fetch(
+        "http://" + sessionStorage.getItem("local-ip") + ":3000/login",
+        options
+      );
       if (!response.ok) {
         console.log(response.statusText);
         return null;
@@ -56,15 +59,13 @@ class LoginPage extends React.Component {
         sessionStorage.setItem("name", result.name);
 
         for (var element in result.profile) {
-          if(element !== "bio") {
+          if (element !== "bio") {
             sessionStorage.setItem(
-            "profile_" + String(element),
-            JSON.stringify(result.profile[element])
+              "profile_" + String(element),
+              JSON.stringify(result.profile[element])
             );
             sessionStorage.setItem("search_" + element, "[]");
-          }
-          else sessionStorage.setItem("profile_bio", result["bio"]);
-
+          } else sessionStorage.setItem("profile_bio", result["bio"]);
         }
         alert(sessionStorage.getItem("profile_sports"));
         sessionStorage.setItem("searchList", "[]");

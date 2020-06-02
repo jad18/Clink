@@ -28,7 +28,10 @@ class SignupPage extends React.Component {
     };
 
     try {
-      const response = await fetch("http://" + sessionStorage.getItem('local-ip') + ":3000/signup", options);
+      const response = await fetch(
+        "http://" + sessionStorage.getItem("local-ip") + ":3000/signup",
+        options
+      );
       if (!response.ok) {
         console.log("not ok");
         console.log(response.statusText);

@@ -219,7 +219,8 @@ module.exports = function (app, passport, mongooseModel) {
         
       const doc = await User.findOne({ email: req.body.email});
 
-      doc.sports = req.body.sports; 
+      doc[req.body.section] = req.body.list;
+      /*doc.sports = req.body.sports; 
       doc.movies = req.body.movies; 
       doc.outdoor= req.body.outdoor; 
       doc.indoor = req.body.indoor; 
@@ -229,11 +230,11 @@ module.exports = function (app, passport, mongooseModel) {
       doc.personalInfo = req.body.personalInfo; 
       doc.bio = req.body.bio; 
       doc.bio = req.body.candidates; 
-      doc.matchHistory  = req.body.matchHistory; 
+      doc.matchHistory  = req.body.matchHistory; */
 
       await doc.save();
 
-      res.json("true");
+      res.json(true);
     })
 
   app.post('/messages', (req, res) => {
@@ -279,7 +280,7 @@ module.exports = function (app, passport, mongooseModel) {
     //console.log(userOne);
     //console.log(userTwo);
     let similarity = 0;
-    let relevantProperties = ['sports', 'outdoor', 'indoor', 'cuisines', 'arts', 'personality'];
+    let relevantProperties = ['sports', 'movies', 'outdoor', 'indoor', 'cuisines', 'arts', 'personality', 'personalInfo'];
     for (var key in userOne) {
       if (!relevantProperties.includes(key)) {
         continue;

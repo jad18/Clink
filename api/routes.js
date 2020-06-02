@@ -245,7 +245,7 @@ module.exports = function (app, passport, mongooseModel) {
 
     let usernameObj = req.body; //body only contains the username of the user
     console.log(usernameObj);
-    let messages = { "user1": false, "user2": false, "user3": true, "user4": true, "user5": false };
+    let messages = { "test1": false, "test7": false, "test3": true, "user4": true, "test5": false };
     res.json(messages);
   })
 

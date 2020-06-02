@@ -248,7 +248,7 @@ class FeedPage extends React.Component
                     If you'd like to get in touch with them, press the 'Message This User' button. If you'd
                     rather keep looking, press the 'Get New Match' button.</p>
 
-                <Link to="/messages_home">
+                <Link to={`/messages?name=${sessionStorage.getItem("username")}&room=${getRoomName(this.state.userUsername)}`}>
                     <button className="link-button2">Message This User</button>
                 </Link>
                 <button className="link-button2" onClick={() => this.getUser(true)}>Get New Match</button>
@@ -273,6 +273,16 @@ class FeedPage extends React.Component
             </div>
         );
     }
+}
+
+function getRoomName(msgUsername)
+{
+    var myUsername = sessionStorage.getItem("username");
+    if(myUsername < msgUsername)
+    {
+        return sessionStorage.getItem("username") + '+' + msgUsername;
+    }
+    return msgUsername + '+' + sessionStorage.getItem("username");
 }
 
 export default FeedPage;

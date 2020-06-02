@@ -21,18 +21,13 @@
   flex-direction: column;
   justify-content: space-between;
   background: #ffffff;
-  border-radius: 8px;
   position: absolute;
-  border-radius: 10px;
   margin-top: 300px;
-  width: 650px;
-  height: 400px;
-  padding: 25px;
-  padding-top: 0;
-  padding-bottom: 0;
-  left: 50%;
+  width: 40%;
+  height: 450px;
+  left: 30%;
+  border-radius: 10px;
   top: 67.5px;
-  margin-left: -350px;
   box-shadow: -30px 0 35px -25px black, 20px 0 45px -25px black;
   z-index: 1;
 }

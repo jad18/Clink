@@ -69,10 +69,12 @@ module.exports = function (app, passport, mongooseModel) {
     console.log(req.body);
     //your search algorithm
     // will contain all the users in the database
+
+    
     mongooseModel.find({}, function (err, userCollection) {
       // fetch searcher's document
-      let user;
-      for (var i = 0; i < userCollection.length; i++) {
+      var user;
+      for (let i = 0; i < userCollection.length; i++) {
         //console.log(typeof userCollection[i].email);
         //console.log(userCollection[i].email);
         if (userCollection[i].email === req.body.email) {
@@ -81,14 +83,16 @@ module.exports = function (app, passport, mongooseModel) {
           break;
         }
       }
-      let ratings = [];
+
+      var request = req.body;
+      var ratings = [];
       // probably have to do some handling if user is null
 
       // assigning a rating to each username
       for (var j = 0; j < userCollection.length; j++) {
         ratings.push(
           {
-            'rating': calculateUserSimilarity(user, userCollection[j]),
+            'rating': calculateUserSimilarity(request, userCollection[j]),
             'email': userCollection[j].email
           }
         );
@@ -101,10 +105,12 @@ module.exports = function (app, passport, mongooseModel) {
       console.log(ratings);
       console.log('\n');
 
+      console.log('User', user);
+
       let candidates = [];
       ratings.forEach(element => {
         // you can't be matched with yourself or someone you've been matched with before
-        if (element['email'] && element['email'] !== user['email'] && !user['matchHistory'].includes(element['email']) /* see if the user had been matched before */) {
+        if (element['email'] && element['email'] !== user['email'] && !user['matchHistory'].includes(element['email'])) {/* see if the user had been matched before */
           candidates.push(element['email']);
         }
       });
@@ -123,7 +129,8 @@ module.exports = function (app, passport, mongooseModel) {
       //a user from that list. But here nothing more needs to be done
       res.json(true);
     });
-  })
+  });
+
 
   app.post('/feed', (req, res) => {
     //req.body is in the form: { email: "username_here", getNewUser: isNew }, where isNew is a true/false value
@@ -142,7 +149,7 @@ module.exports = function (app, passport, mongooseModel) {
     // retrieve all the users (very bad not scalable)
     collection.find({}, function (err, userCollection) {
       let user;
-      for (var i = 0; i < userCollection.length; i++) {
+      for (let i = 0; i < userCollection.length; i++) {
         //console.log(typeof userCollection[i].email);
         //console.log(userCollection[i].email);
         if (userCollection[i].email === req.body.email) {
@@ -183,7 +190,7 @@ module.exports = function (app, passport, mongooseModel) {
       }
       console.log('match:', match);
       // match now contains the username of the match
-      for (var i = 0; i < userCollection.length; i++) {
+      for (let i = 0; i < userCollection.length; i++) {
         //console.log(typeof userCollection[i].email);
         //console.log(userCollection[i].email);
         if (userCollection[i].email === match) {
@@ -280,11 +287,16 @@ module.exports = function (app, passport, mongooseModel) {
     //console.log(userOne);
     //console.log(userTwo);
     let similarity = 0;
-    let relevantProperties = ['sports', 'movies', 'outdoor', 'indoor', 'cuisines', 'arts', 'personality', 'personalInfo'];
-    for (var key in userOne) {
-      if (!relevantProperties.includes(key)) {
-        continue;
-      }
+    let relevantProperties = Object.keys(userOne);
+    console.log(relevantProperties);
+
+
+
+    for (let keyIndex=0; keyIndex<relevantProperties.length; keyIndex++) {
+      let key = relevantProperties[keyIndex];
+      if(key === "email") continue;
+
+      console.log(key);
       for (let i = 0; i < userOne[key].length; i++) {
         if (userTwo[key].includes(userOne[key][i])) {
           similarity += 1;
@@ -292,7 +304,7 @@ module.exports = function (app, passport, mongooseModel) {
       }
     }
     return similarity;
-  };
+  }
 
 }
 

@@ -16,12 +16,6 @@ module.exports = function (app, passport, mongooseModel) {
     res.render('templogin.ejs', { message: req.flash('loginMessage') });
   });
 
-  app.get('/profile', isLoggedIn, (req, res) => {
-    res.render('temphomescreen.ejs', { user: req.user });
-  });
-  app.get('/login', (req, res) => {
-    res.render('templogin.ejs', { message: req.flash('loginMessage') });
-  });
 
 
   app.post('/signup', function (req, res, next) {
@@ -63,18 +57,6 @@ module.exports = function (app, passport, mongooseModel) {
       }
     })(req, res, next);
   });
-
-  app.post('/change_profile', (req, res) => {
-    //req.body will be in the form: { email: "username_here", section: "section_here", list: "list_here"}
-    //The section is the area/section from the profile that the user wants to change (sports, movies, etc.),
-    //and the list is the full list that the user wants to submit. You can replace the old list with this
-    //new list, no other work required. Return true/false if successful, mostly should be true
-
-    console.log("Getting profile change request");
-    console.log(req.body);
-    //store this info
-    res.json(true);
-  })
 
 
   app.post('/search', (req, res) => {

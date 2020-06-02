@@ -80,8 +80,9 @@ class GeneralForm extends React.Component {
 
   makeChangeRequest(trueEntries)
   {
-    var request = {"email": sessionStorage.getItem("username")};
-    request[this.profileType] = trueEntries;
+    var request = {"email": sessionStorage.getItem("username"),
+                   "section": this.profileType,
+                   "list": trueEntries};
 
     console.log(request);
 

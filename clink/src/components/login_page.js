@@ -66,7 +66,7 @@ class LoginPage extends React.Component {
           else sessionStorage.setItem("profile_bio", result["bio"]);
 
         }
-        alert(sessionStorage.getItem("profile_sports"));
+        
         sessionStorage.setItem("searchList", "[]");
         window.location = "/";
       } else if (result && result.status === false) {

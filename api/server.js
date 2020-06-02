@@ -10,10 +10,6 @@ const cookieParser = require('cookie-parser');
 const flash    = require('connect-flash');
 const user = require('./models/User')
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 1fa4de0472b353347b2935da3945d4c5253fc1d5
 const methodOverride = require('method-override');
 const http = require('http');
 const socketio = require('socket.io');
@@ -22,10 +18,6 @@ const io = socketio(server);
 
 const cors = require('cors');
 app.use(cors());
-<<<<<<< HEAD
-=======
-
->>>>>>> 1fa4de0472b353347b2935da3945d4c5253fc1d5
 
 const PORT = 5000;
 var bodyParser = require("body-parser");

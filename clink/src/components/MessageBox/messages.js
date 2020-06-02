@@ -7,6 +7,7 @@ import './messages.css';
 //other React components made for the messaging feature
 import Text from '../text';
 import Input from '../input';
+import ChatBar from '../chat_bar';
 let socket;
 
 //Using the React useState hook, we can declare a set of variable +
@@ -28,8 +29,8 @@ let socket;
     //sets the socket to read from the server port
     socket = io(ENDPOINT);
 
-    setRoom(room);
-    setName(name)
+	setRoom(room);
+	setName(name);
 	//matching socket emit functions to write to front end, communicates
 	//with the socket actions on the server.js backend
       socket.emit('join', { name, room }, (error) => {
@@ -61,13 +62,19 @@ let socket;
 	    <h1>Messages</h1>
 	    <div className="outerContainer">
 	    <div className="container">
+	    <ChatBar room={room} />
 	    <Text messages={messages} name={name} />
 	    <Input message={message} setMessage={setMessage} sendMessage={sendMessage} />
 	    </div>
 	    </div>
+
+      <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+
 	    <Link to="/messages_home">
 	    <button className="link-button2">Back to All Messages</button>
 	    </Link>
+
+      <br/><br/>
 	    </div>
     );
 }

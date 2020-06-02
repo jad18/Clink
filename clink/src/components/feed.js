@@ -162,7 +162,7 @@ class FeedPage extends React.Component
             }
             else
             {
-                self.setState({ finishedFetch: true });
+                self.setState({ finishedFetch: true, valid: false });
             }
         });
     }

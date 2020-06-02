@@ -28,7 +28,12 @@ async function makeMessagesRequest() {
 
 function getRoomName(msgUsername)
 {
-    return sessionStorage.getItem("username") + '+' + msgUsername;
+    var myUsername = sessionStorage.getItem("username");
+    if(myUsername < msgUsername)
+    {
+        return sessionStorage.getItem("username") + '+' + msgUsername;
+    }
+    return msgUsername + '+' + sessionStorage.getItem("username");
 }
 
 
@@ -65,7 +70,7 @@ class MessagesHome extends React.Component
                 <Link to={`/messages?name=${sessionStorage.getItem("username")}&room=${getRoomName(username)}`}>
                     <td className={isNew ? "new-table-column" : "old-table-column"}>
                         <button className={isNew ? "new-messages-link-button" : "old-messages-link-button"}>
-                            {String(isNew)} {username} {alignmentTool}
+                            {username} {alignmentTool}
                         </button>
                     </td>
                 </Link>

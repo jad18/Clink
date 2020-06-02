@@ -56,7 +56,7 @@ function logOut() {
 function getLinkButtons(loggedIn) {
   if (loggedIn) {
     const name = sessionStorage.getItem("username");
-    const room = "clink";
+    const room = "Community";
     return (
       <div className="button-group">
         <Link to="/about">

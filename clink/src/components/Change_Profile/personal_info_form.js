@@ -12,7 +12,7 @@ class PersonalInfoForm extends React.Component
         this.state = {
             hasChanges: false,
             trueValues: JSON.parse(sessionStorage.getItem("profile_personalInfo")),
-            bio: sessionStorage.getItem("bio")
+            bio: sessionStorage.getItem("profile_bio")
         };
 
         this.submitForm = this.submitForm.bind(this);
@@ -60,7 +60,7 @@ class PersonalInfoForm extends React.Component
         {
             self.setState({hasChanges: false});
             sessionStorage.setItem("profile_personalInfo", JSON.stringify(trueEntries));
-            sessionStorage.setItem("bio", bio);
+            sessionStorage.setItem("profile_bio", bio);
         }
         else
             alert("Your change could not be received by the server. Please check your connection and resubmit.");

@@ -178,23 +178,35 @@ io.on('connect', (socket) => {
 
 async function updateUserMessages(srcUsername, roomName)
 {
+    const srcDoc = await user.findOne({ email: srcUsername });
+
     var twoUsers = roomName.split(' ');
     var destUsername = ((twoUsers[0] === srcUsername) ? twoUsers[1] : twoUsers[0]);
 
-    const doc = await user.findOne({ email: destUsername });
+    const dstDoc = await user.findOne({ email: destUsername });
     var hasEntry;
 
-    if(!doc["messagesList"])
+    if(!srcDoc["messagesList"])
     {
-        doc["messagesList"] = {};
+        srcDoc["messagesList"] = {};
+    }
+    if(!srcDoc["messagesList"].has(srcUsername))
+    {
+        srcDoc["messagesList"].set(destUsername, false);
+        await srcDoc.save((err) => { if(err) console.log(err) });
+    }
+
+    if(!dstDoc["messagesList"])
+    {
+        dstDoc["messagesList"] = {};
         hasEntry = false;
     }
-    else hasEntry = doc["messagesList"].get(srcUsername);
+    else hasEntry = dstDoc["messagesList"].get(srcUsername);
 
     if(!hasEntry)
     {
-        doc.messagesList.set(srcUsername, true);
-        await doc.save((err) => { if(err) console.log(err) });
+        dstDoc.messagesList.set(srcUsername, true);
+        await dstDoc.save((err) => { if(err) console.log(err) });
     }
 }
 

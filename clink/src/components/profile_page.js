@@ -122,11 +122,11 @@ export default class Profile extends React.Component {
                 
           <div id="bio">
             <u><h4 className="section-header">About Me</h4></u>
-            {sessionStorage.getItem("bio")}
+            {sessionStorage.getItem("profile_bio")}
           </div>
           <div id="hobbies">
             <u><h4 className="section-header">Interests</h4></u>
-            <ul id="interest-list">
+            <ul id="interest-list" className='profile-format'>
               <li>
                 <strong>Sports:</strong>
                 {extractListItems(JSON.parse(sessionStorage.getItem("profile_sports")))}

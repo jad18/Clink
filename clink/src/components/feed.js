@@ -188,6 +188,8 @@ class FeedPage extends React.Component
         {
             return(
                 <div>
+                <h2>Here are the people that most match your preferences.</h2>
+                <h3>Now go find some friends!</h3>
                 <div id="feed-outer-box">
                     <div id="feed-stripes" />
                     
@@ -205,7 +207,7 @@ class FeedPage extends React.Component
                         <u><h4 className="section-header">About Me</h4></u>
                         {this.state.userBio}
                     </div>
-                    <div id="feed-hobbies">
+                    <div id="feed-hobbies" className="feed-format">
                         <u><h4 className="section-header">Interests</h4></u>
                         <ul id="feed-interest-list">
                             <li>
@@ -265,8 +267,6 @@ class FeedPage extends React.Component
         return(
             <div className='App'>
                 <h1>Feed</h1>
-                <h2>Here are the people that most match your preferences.</h2>
-                <h3>Now go find some friends!</h3>
 
                 {this.getMatchedUser()}
               

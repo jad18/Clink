@@ -224,39 +224,60 @@ module.exports = function (app, passport, mongooseModel) {
 
   app.post('/change_profile', async (req, res) => {
       console.log(req.body);
-      const doc = await User.findOne({ email: req.body.email});
+      const doc = await User.findOne({ email: req.body.email });
 
       doc[req.body.section] = req.body.list;
 
       if(req.body.section === "personalInfo")
         doc["bio"] = req.body.bio;
-      /*doc.sports = req.body.sports; 
-      doc.movies = req.body.movies; 
-      doc.outdoor= req.body.outdoor; 
-      doc.indoor = req.body.indoor; 
-      doc.cuisines = req.body.cuisines; 
-      doc.arts = req.body.arts; 
-      doc.personality = req.body.personality; 
-      doc.personalInfo = req.body.personalInfo; 
-      doc.bio = req.body.bio; 
-      doc.bio = req.body.candidates; 
-      doc.matchHistory  = req.body.matchHistory; */
 
       await doc.save();
 
       res.json(true);
     })
 
-  app.post('/messages', (req, res) => {
+  app.post('/messages', async (req, res) => {
     //req.body is in the form: { email: "username_here"}
     //Must send back object of users with true/false values for whether or not there is a new message
     //(true means new message, false means not). Order does not matter unless you want it too, in which
     //case put the newest messages first and the older messages later
 
-    let usernameObj = req.body; //body only contains the username of the user
-    console.log(usernameObj);
-    let messages = { "test1": false, "test7": false, "test3": true, "user4": true, "test5": false };
-    res.json(messages);
+    //let usernameObj = req.body; //body only contains the username of the user
+    //console.log(usernameObj);
+
+    const doc = await User.findOne({ email: req.body.email });
+
+    //const doc = docReq.toObject({getters: false});
+
+    
+    var messages = {};
+
+    if(!doc.messagesList)
+    {
+      res.json({});
+    }
+    else
+    {
+      /*let messagesListKeys = Object.keys(doc.messagesList);
+    
+      console.log(doc.messagesList);
+      console.log("Keys:", messagesListKeys);
+
+      for(let i=0; i<messagesListKeys.length; i++)
+      {
+        console.log("one");
+        messages[messagesListKeys[i]] = doc.messagesList[messagesListKeys[i]];
+      }*/
+
+      doc.messagesList.forEach((value, key) =>
+      {
+        messages[key] = value;
+      })
+
+      console.log(messages);
+
+      res.json(messages);
+    }
   })
 
   // route middleware to make sure a user is logged in

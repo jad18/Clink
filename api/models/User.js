@@ -50,7 +50,10 @@ const UserSchema = new mongoose.Schema(
         matchHistory: [{
             type:String,
         }],
-
+        messagesList: {
+            type: Map,
+            of: Boolean
+        }
     },
     { strict: false }
 );
@@ -67,4 +70,5 @@ UserSchema.methods.validPassword = function(password) {
     return bcrypt.compareSync(password, this.password);
 };
 
+var User;
 module.exports = User = mongoose.model("User", UserSchema);

@@ -81,7 +81,6 @@ function isLoggedIn(req, res, next) {
 
 //this is to track the users that are present in the messaging room
 const messageUsers = [];
-const users = [];
 const roomsList = {"test1 test3": ["test1", "This is the first text", "test3", "This is the second text"],
                     "test1 test5" :["test5", "How's everything going for you?"]};
 //helper functions
@@ -120,6 +119,7 @@ io.on('connect', (socket) => {
 
 	callback();
     });
+
     //when a user sends a message, the socket emits to the front end so that
     //the message is displayed
     socket.on('sendMessage', (message, callback) => {
@@ -133,12 +133,62 @@ io.on('connect', (socket) => {
     }
     roomsList[user.room].push(user.name);
     roomsList[user.room].push(message);
+
+    updateUserMessages(user.name, user.room);
+
 	callback();
     });
     socket.on('disconnect', () => {
 	removeUser(socket.id);
     });
 });
+
+async function updateUserMessages(srcUsername, roomName)
+{
+    console.log("Updating", srcUsername, roomName);
+    var twoUsers = roomName.split(' ');
+    var destUsername = ((twoUsers[0] === srcUsername) ? twoUsers[1] : twoUsers[0]);
+    console.log("f" + destUsername + 'g');
+
+    const doc = await user.findOne({ email: destUsername });
+
+    console.log("Before", doc);
+
+    //var tempList = doc.messagesList;
+    //console.log(tempList);
+
+    //doc["messagesList"] = {'test2': false};
+
+    //var tempMessagesList = doc["messagesList"];
+
+    if(!doc["messagesList"])
+    {
+        doc["messagesList"] = {};
+    }
+
+    //console.log(temp);
+
+    var hasEntry = doc["messagesList"].get(srcUsername);
+
+    //console.log("isEntry", isEntry);
+    console.log("messagesList", doc.messagesList);
+
+    if(!hasEntry)
+    {
+        //doc.messagesList[srcUsername] = true;
+        //doc.messagesList.push(true);
+        doc.messagesList.set(srcUsername, true); //set(srcUsername, true);
+
+        //doc.sports = ['Volleyball'];
+
+        await doc.save((err) => { if(err) console.log(err) });
+        console.log(doc);
+    }
+    else
+    {
+        console.log("Not true");
+    }
+}
 
 app.listen(3000, () => console.log("Listening on port 3000"));
 server.listen(process.env.PORT || 5000, () => console.log("Server has started."));

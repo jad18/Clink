@@ -57,6 +57,7 @@ class MessagesHome extends React.Component
         var messagesResult = makeMessagesRequest(); //returns a promise
         const self = this;
         messagesResult.then(function (result) {
+            console.log(result);
             self.setState({ messages: result, finishedFetch: true });   //Note: will return an error if messages is null
         });
     }

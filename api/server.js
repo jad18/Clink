@@ -10,6 +10,10 @@ const cookieParser = require('cookie-parser');
 const flash    = require('connect-flash');
 const user = require('./models/User')
 
+const msgHistory = require('./models/MessageHistory');
+////^^^^^^^^^^^^^^^^^^^^^^^^^^ new change here!
+///////////////////////////////////////////////
+
 const methodOverride = require('method-override');
 const http = require('http');
 const socketio = require('socket.io');
@@ -104,6 +108,34 @@ io.on('connect', (socket) => {
 
     console.log(user.room);
 
+    /*
+    
+    const doc = await msgHistory.findOne({ email: user.name });
+    if(!doc.messageHistory)
+    {
+        doc.messageHistory = {user.room: []};
+        doc.save();
+    }
+    else
+    {
+        var chatList = doc.messageHistory.get(user.room);
+        if(!chatList)
+        {
+            doc.messageHistory.set(user.room, []);
+            doc.save();
+        }
+        else
+        {
+            for(let i=0; (i+1)<chatList.length; i+=2)
+            {
+                socket.emit('message', {user: chatList[i], text: chatList[i+1]});
+            }
+        }
+    }
+
+    callback();
+    */
+
     var chatList = roomsList[user.room];
     if(chatList)
     {
@@ -135,6 +167,7 @@ io.on('connect', (socket) => {
     roomsList[user.room].push(message);
 
     updateUserMessages(user.name, user.room);
+    //updateRoomHistory(user.name, user.room, message);
 
 	callback();
     });
@@ -145,50 +178,56 @@ io.on('connect', (socket) => {
 
 async function updateUserMessages(srcUsername, roomName)
 {
-    console.log("Updating", srcUsername, roomName);
     var twoUsers = roomName.split(' ');
     var destUsername = ((twoUsers[0] === srcUsername) ? twoUsers[1] : twoUsers[0]);
-    console.log("f" + destUsername + 'g');
 
     const doc = await user.findOne({ email: destUsername });
-
-    console.log("Before", doc);
-
-    //var tempList = doc.messagesList;
-    //console.log(tempList);
-
-    //doc["messagesList"] = {'test2': false};
-
-    //var tempMessagesList = doc["messagesList"];
+    var hasEntry;
 
     if(!doc["messagesList"])
     {
         doc["messagesList"] = {};
+        hasEntry = false;
     }
-
-    //console.log(temp);
-
-    var hasEntry = doc["messagesList"].get(srcUsername);
-
-    //console.log("isEntry", isEntry);
-    console.log("messagesList", doc.messagesList);
+    else hasEntry = doc["messagesList"].get(srcUsername);
 
     if(!hasEntry)
     {
-        //doc.messagesList[srcUsername] = true;
-        //doc.messagesList.push(true);
-        doc.messagesList.set(srcUsername, true); //set(srcUsername, true);
-
-        //doc.sports = ['Volleyball'];
-
+        doc.messagesList.set(srcUsername, true);
         await doc.save((err) => { if(err) console.log(err) });
-        console.log(doc);
-    }
-    else
-    {
-        console.log("Not true");
     }
 }
+
+/*
+async function updateRoomHistory(srcUsername, roomName, message)
+{
+    const doc = await msgHistory.findOne({ name: 'main' });
+
+    if(!doc)
+    {
+        var newHistory = new msgHistory();
+        newHistory.name = 'main';
+        newHistory.messageHistory = {};
+    }
+    else if(!doc.messageHistory)
+    {
+        console.log("messageHistory not initialized correctly!");
+        return;
+    }
+
+    var roomHistory = doc.messageHistory.get(roomName);
+
+    if(!roomHistory) doc.messageHistory.set(roomName, [srcUsername, message]);
+    else
+    {
+        roomHistory.push(srcUsername);
+        roomHistory.push(message);
+        doc.messageHistory.set(roomName, roomHistory);
+    }
+
+    await doc.save((err) => { if(err) console.log(err) });
+}*/
+
 
 app.listen(3000, () => console.log("Listening on port 3000"));
 server.listen(process.env.PORT || 5000, () => console.log("Server has started."));

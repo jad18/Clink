@@ -105,26 +105,8 @@ io.on('connect', (socket) => {
     socket.on('join', ({name, room}, callback) => {
 	const user = addUser({id: socket.id, name, room});
     socket.join(user.room);
-
-    console.log(user.room);
-
-    
     
     connectToRoom(socket, user.name, user.room);
-    
-
-    /*var chatList = roomsList[user.room];
-    if(chatList)
-    {
-        for(let i=0; (i+1)<chatList.length; i+=2)
-        {
-            socket.emit('message', {user: chatList[i], text: chatList[i+1]});
-        }
-    }
-    else
-    {
-        roomsList[user.room] = [];
-    }*/
 
 	callback();
     });
@@ -135,20 +117,12 @@ io.on('connect', (socket) => {
 	const user = getUser(socket.id);
     io.to(user.room).emit('message', {user: user.name, text: message});
 
-    //Safety measure
-    /*
-    if(!roomsList[user.room])
-    {
-        roomsList[user.room] = [];
-    }
-    roomsList[user.room].push(user.name);
-    roomsList[user.room].push(message);*/
-
     updateUserMessages(user.name, user.room);
     updateRoomHistory(user.name, user.room, message);
 
 	callback();
     });
+    
     socket.on('disconnect', () => {
 	removeUser(socket.id);
     });
@@ -168,7 +142,6 @@ async function connectToRoom(socket, name, room)
     else
     {
         var chatList = doc.messageHistory;
-        console.log("Chat list", chatList);
         if(!chatList)
         {
             doc.messageHistory = [];
@@ -178,7 +151,6 @@ async function connectToRoom(socket, name, room)
         {
             for(let i=0; (i+1)<chatList.length; i+=2)
             {
-                console.log("emit", chatList[i]);
                 socket.emit('message', {user: chatList[i], text: chatList[i+1]});
             }
         }
@@ -228,24 +200,18 @@ async function updateRoomHistory(srcUsername, roomName, message)
 
     if(!doc)
     {
-        var newHistory = new msgHistory();
-        newHistory.name = roomName;
-        newHistory.messageHistory = [];
-        await newHistory.save((err) => { if(err) throw err });
-        console.log(newHistory);
-        doc = newHistory;
+        doc = new msgHistory();
+        doc.name = roomName;
+        doc.messageHistory = [srcUsername, message];
     }
-
-    if(!doc.messageHistory) doc.messageHistory = [srcUsername, message];
+    else if(!doc.messageHistory) doc.messageHistory = [srcUsername, message];
     else
     {
         doc.messageHistory.push(srcUsername);
         doc.messageHistory.push(message);
     }
 
-    console.log("Doc", doc);
-
-    doc.save((err) => { if(err) throw err });
+    await doc.save((err) => { if(err) throw err });
 }
 
 

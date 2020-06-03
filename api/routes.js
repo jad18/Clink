@@ -21,12 +21,9 @@ module.exports = function (app, passport, mongooseModel) {
 
   app.post('/signup', function (req, res, next) {
     passport.authenticate('signup', function (err, user, info) {
-      console.log('got here');
-      console.log(user, err);
+      
       if (err) res.json(null);
-
       else if (user) res.json(false);
-
       else {
         res.json(true);
       }
@@ -36,17 +33,10 @@ module.exports = function (app, passport, mongooseModel) {
 
   app.post('/login', function (req, res, next) {
     passport.authenticate('login', function (err, user) {
-      console.log('got here');
-      console.log(user, err);
+      
       if (err) res.json(err);
-
       else if (!user) res.json({ status: false, profile: null });
-
       else {
-        console.log(user);
-        let tempUser = JSON.parse(JSON.stringify(user));
-        console.log(tempUser);
-
         res.json({
           status: true, name: user.name, profile: {
             sports: user.sports, movies: user.movies, outdoor: user.outdoor,
@@ -242,14 +232,8 @@ module.exports = function (app, passport, mongooseModel) {
     //(true means new message, false means not). Order does not matter unless you want it too, in which
     //case put the newest messages first and the older messages later
 
-    //let usernameObj = req.body; //body only contains the username of the user
-    //console.log(usernameObj);
-
     const doc = await User.findOne({ email: req.body.email });
 
-    //const doc = docReq.toObject({getters: false});
-
-    
     var messages = {};
 
     if(!doc.messagesList)
@@ -258,30 +242,16 @@ module.exports = function (app, passport, mongooseModel) {
     }
     else
     {
-      /*let messagesListKeys = Object.keys(doc.messagesList);
-    
-      console.log(doc.messagesList);
-      console.log("Keys:", messagesListKeys);
-
-      for(let i=0; i<messagesListKeys.length; i++)
-      {
-        console.log("one");
-        messages[messagesListKeys[i]] = doc.messagesList[messagesListKeys[i]];
-      }*/
-
       doc.messagesList.forEach((value, key) =>
       {
         messages[key] = value;
       })
-
-      console.log(messages);
 
       res.json(messages);
     }
   });
 
   app.post('/read_message', async (req, res) => {
-    console.log("reading message");
     const doc = await User.findOne({ email: req.body.email });
 
     if(!doc.messagesList) res.json(false);

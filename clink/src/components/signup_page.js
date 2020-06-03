@@ -46,6 +46,13 @@ class SignupPage extends React.Component {
   submitRegistrationForm(event) {
     event.preventDefault();
 
+    var username = event.target.elements["regis-username"].value;
+    if(username.includes(' '))
+    {
+      this.setState({ errorMsg: "Username cannot contain any spaces"});
+      return false;
+    }
+
     var regisResult = this.makeRegistrationRequest(event); //returns a promise
     const tempThis = this;
     let { history } = this.props;

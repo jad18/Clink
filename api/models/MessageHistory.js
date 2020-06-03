@@ -7,11 +7,9 @@ const MessageSchema = new mongoose.Schema(
             type: String,
             required: true
         },
-        messageHistory: {
-            type: Map,
-            of: [String],
-            //required: true
-        }
+        messageHistory: [{
+            type: String
+        }]
     },
     {strict: false}
 );

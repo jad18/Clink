@@ -156,23 +156,22 @@ io.on('connect', (socket) => {
 
 async function connectToRoom(socket, name, room)
 {
-    const doc = await msgHistory.findOne({ name: 'main' }, (err) => { if(err) throw err });
+    const doc = await msgHistory.findOne({ name: room }, (err) => { if(err) throw err });
 
     if(!doc) return;
     
     if(!doc.messageHistory)
     {
-        doc.messageHistory = {};
-        doc.messageHistory.set(room, []);
+        doc.messageHistory = [];
         await doc.save((err) => { if(err) throw err });
     }
     else
     {
-        var chatList = doc.messageHistory.get(room);
-        console.log("ChatList", chatList);
+        var chatList = doc.messageHistory;
+        console.log("Chat list", chatList);
         if(!chatList)
         {
-            doc.messageHistory.set(room, []);
+            doc.messageHistory = [];
             await doc.save((err) => { if(err) throw err });
         }
         else
@@ -225,40 +224,28 @@ async function updateUserMessages(srcUsername, roomName)
 
 async function updateRoomHistory(srcUsername, roomName, message)
 {
-    var doc = await msgHistory.findOne({ name: 'main' });
+    var doc = await msgHistory.findOne({ name: roomName });
 
     if(!doc)
     {
         var newHistory = new msgHistory();
-        newHistory.name = 'main';
-        newHistory.messageHistory = {};
+        newHistory.name = roomName;
+        newHistory.messageHistory = [];
         await newHistory.save((err) => { if(err) throw err });
         console.log(newHistory);
-        doc = await msgHistory.findOne({ name: 'main' });
-    }
-    if(!doc["messageHistory"])
-    {
-        console.log("messageHistory not initialized correctly!");
-        return;
+        doc = newHistory;
     }
 
-    console.log(doc["messageHistory"]);
-
-    var roomHistory = doc.messageHistory.get(roomName);
-    console.log("Before", roomHistory);
-
-    if(!roomHistory) doc.messageHistory.set(roomName, [srcUsername, message]);
+    if(!doc.messageHistory) doc.messageHistory = [srcUsername, message];
     else
     {
-        roomHistory.push(srcUsername);
-        roomHistory.push(message);
-        console.log("After", roomHistory);
-        doc.messageHistory.set(roomName, roomHistory);
+        doc.messageHistory.push(srcUsername);
+        doc.messageHistory.push(message);
     }
 
     console.log("Doc", doc);
 
-    await doc.save();
+    doc.save((err) => { if(err) throw err });
 }
 
 

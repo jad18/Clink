@@ -29,7 +29,7 @@ var bodyParser = require("body-parser");
 // mongodb connection string, this is differnet for different people so will not work on your computer 
 //const url= 'mongodb+srv://rohanbattula:rohan12345@clinkdb-9xql0.mongodb.net/user-list?retryWrites=true&w=majority'
 
-const url = "mongodb+srv://rohanbattula:rohan12345@clinkdb-9xql0.mongodb.net/test?retryWrites=true&w=majority"
+const url = "mongodb+srv://rohanbattula:rohan12345@clinkdb-9xql0.mongodb.net/official?retryWrites=true&w=majority"
 
 
 // mongoose connection 
@@ -122,7 +122,7 @@ io.on('connect', (socket) => {
 
 	callback();
     });
-    
+
     socket.on('disconnect', () => {
 	removeUser(socket.id);
     });

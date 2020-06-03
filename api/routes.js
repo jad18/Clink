@@ -278,7 +278,30 @@ module.exports = function (app, passport, mongooseModel) {
 
       res.json(messages);
     }
-  })
+  });
+
+  app.post('/read_message', async (req, res) => {
+    console.log("reading message");
+    const doc = await User.findOne({ email: req.body.email });
+
+    if(!doc.messagesList) res.json(false);
+    else
+    {
+      var isListed = doc.messagesList.get(req.body.readUser);
+      if(isListed === false) res.json(true);
+      else if(!isListed)
+      {
+        console.log("Error: trying to read user message that is not in messagesList");
+        res.json(false);
+      }
+      else
+      {
+        doc.messagesList.set(req.body.readUser, false);
+        await doc.save();
+        res.json(true);
+      }
+    }
+  });
 
   // route middleware to make sure a user is logged in
   function isLoggedIn(req, res, next) {

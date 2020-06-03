@@ -26,6 +26,49 @@ async function makeMessagesRequest() {
     }
 }
 
+async function sendReadRequest(roomName) {
+    var userPair = roomName.split('+');
+    var readUser;
+    var curUsername = sessionStorage.getItem("username");
+
+    if(userPair[0] === curUsername) readUser = userPair[1];
+    else readUser = userPair[0];
+
+    var request = { email: curUsername, readUser: readUser };
+    console.log(request);
+
+    const options = {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify(request)
+    };
+
+    try {
+      const response = await fetch("http://" + sessionStorage.getItem('local-ip') + ":3000/read_message", options);
+      if (!response.ok) {
+        console.log(response.statusText);
+        return null;
+      }
+      const jsonData = await response.json();
+      return jsonData;
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+}
+
+function makeReadRequest(roomName)
+{
+    var readResult = sendReadRequest(roomName); //returns a promise
+        
+    readResult.then(function (result) {
+        if(!result) console.log("An error occurred when setting chat as read!");
+        else sessionStorage.setItem("lastValidPage", "/messages?name=" + sessionStorage.getItem("username") +
+                                    "&room=" + roomName);
+    });
+}
+
+
 function getRoomName(msgUsername)
 {
     var myUsername = sessionStorage.getItem("username");
@@ -65,12 +108,14 @@ class MessagesHome extends React.Component
     makeMessageEntry(username, isNew)
     {
         const alignmentTool = (isNew ? <span className="alignment-tool"/> : null);
+        var roomName = getRoomName(username);
         console.log(String(isNew) + " " + username);
         return(
             <tr className="messages-table-row">
-                <Link to={`/messages?name=${sessionStorage.getItem("username")}&room=${getRoomName(username)}`}>
+                <Link to={`/messages?name=${sessionStorage.getItem("username")}&room=${roomName}`}>
                     <td className={isNew ? "new-table-column" : "old-table-column"}>
-                        <button className={isNew ? "new-messages-link-button" : "old-messages-link-button"}>
+                        <button className={isNew ? "new-messages-link-button" : "old-messages-link-button"}
+                                onClick={() => makeReadRequest(roomName)}>
                             {username} {alignmentTool}
                         </button>
                     </td>
@@ -126,7 +171,12 @@ class MessagesHome extends React.Component
                 );
             }
         }
-        else return null;
+        else
+        {
+            return (
+                <h3>Getting your messages...</h3>
+            );
+        }
     }
 
     render()

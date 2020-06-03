@@ -108,35 +108,12 @@ io.on('connect', (socket) => {
 
     console.log(user.room);
 
-    /*
     
-    const doc = await msgHistory.findOne({ email: user.name });
-    if(!doc.messageHistory)
-    {
-        doc.messageHistory = {user.room: []};
-        doc.save();
-    }
-    else
-    {
-        var chatList = doc.messageHistory.get(user.room);
-        if(!chatList)
-        {
-            doc.messageHistory.set(user.room, []);
-            doc.save();
-        }
-        else
-        {
-            for(let i=0; (i+1)<chatList.length; i+=2)
-            {
-                socket.emit('message', {user: chatList[i], text: chatList[i+1]});
-            }
-        }
-    }
+    
+    connectToRoom(socket, user.name, user.room);
+    
 
-    callback();
-    */
-
-    var chatList = roomsList[user.room];
+    /*var chatList = roomsList[user.room];
     if(chatList)
     {
         for(let i=0; (i+1)<chatList.length; i+=2)
@@ -147,7 +124,7 @@ io.on('connect', (socket) => {
     else
     {
         roomsList[user.room] = [];
-    }
+    }*/
 
 	callback();
     });
@@ -159,15 +136,16 @@ io.on('connect', (socket) => {
     io.to(user.room).emit('message', {user: user.name, text: message});
 
     //Safety measure
+    /*
     if(!roomsList[user.room])
     {
         roomsList[user.room] = [];
     }
     roomsList[user.room].push(user.name);
-    roomsList[user.room].push(message);
+    roomsList[user.room].push(message);*/
 
     updateUserMessages(user.name, user.room);
-    //updateRoomHistory(user.name, user.room, message);
+    updateRoomHistory(user.name, user.room, message);
 
 	callback();
     });
@@ -175,6 +153,32 @@ io.on('connect', (socket) => {
 	removeUser(socket.id);
     });
 });
+
+async function connectToRoom(socket, name, room)
+{
+    const doc = await msgHistory.findOne({ email: name });
+    if(!doc.messageHistory)
+    {
+        doc.messageHistory = {room: []};
+        doc.save();
+    }
+    else
+    {
+        var chatList = doc.messageHistory.get(room);
+        if(!chatList)
+        {
+            doc.messageHistory.set(room, []);
+            doc.save();
+        }
+        else
+        {
+            for(let i=0; (i+1)<chatList.length; i+=2)
+            {
+                socket.emit('message', {user: chatList[i], text: chatList[i+1]});
+            }
+        }
+    }
+}
 
 async function updateUserMessages(srcUsername, roomName)
 {
@@ -193,7 +197,7 @@ async function updateUserMessages(srcUsername, roomName)
     if(!srcDoc["messagesList"].has(srcUsername))
     {
         srcDoc["messagesList"].set(destUsername, false);
-        await srcDoc.save((err) => { if(err) console.log(err) });
+        await srcDoc.save((err) => { if(err) throw err });
     }
 
     if(!dstDoc["messagesList"])
@@ -206,26 +210,31 @@ async function updateUserMessages(srcUsername, roomName)
     if(!hasEntry)
     {
         dstDoc.messagesList.set(srcUsername, true);
-        await dstDoc.save((err) => { if(err) console.log(err) });
+        await dstDoc.save((err) => { if(err) throw err });
     }
 }
 
-/*
+
 async function updateRoomHistory(srcUsername, roomName, message)
 {
-    const doc = await msgHistory.findOne({ name: 'main' });
+    var doc = await msgHistory.findOne({ name: 'main' });
 
     if(!doc)
     {
         var newHistory = new msgHistory();
         newHistory.name = 'main';
         newHistory.messageHistory = {};
+        await newHistory.save((err) => { if(err) throw err });
+        console.log(newHistory);
+        doc = await msgHistory.findOne({ name: 'main' });
     }
-    else if(!doc.messageHistory)
+    if(!doc["messageHistory"])
     {
         console.log("messageHistory not initialized correctly!");
         return;
     }
+
+    console.log(doc["messageHistory"]);
 
     var roomHistory = doc.messageHistory.get(roomName);
 
@@ -237,8 +246,10 @@ async function updateRoomHistory(srcUsername, roomName, message)
         doc.messageHistory.set(roomName, roomHistory);
     }
 
-    await doc.save((err) => { if(err) console.log(err) });
-}*/
+    console.log("Doc", doc);
+
+    await doc.save((err) => { if(err) throw err });
+}
 
 
 app.listen(3000, () => console.log("Listening on port 3000"));

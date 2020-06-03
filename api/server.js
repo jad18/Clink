@@ -156,24 +156,30 @@ io.on('connect', (socket) => {
 
 async function connectToRoom(socket, name, room)
 {
-    const doc = await msgHistory.findOne({ email: name });
+    const doc = await msgHistory.findOne({ name: 'main' }, (err) => { if(err) throw err });
+
+    if(!doc) return;
+    
     if(!doc.messageHistory)
     {
-        doc.messageHistory = {room: []};
-        doc.save();
+        doc.messageHistory = {};
+        doc.messageHistory.set(room, []);
+        await doc.save((err) => { if(err) throw err });
     }
     else
     {
         var chatList = doc.messageHistory.get(room);
+        console.log("ChatList", chatList);
         if(!chatList)
         {
             doc.messageHistory.set(room, []);
-            doc.save();
+            await doc.save((err) => { if(err) throw err });
         }
         else
         {
             for(let i=0; (i+1)<chatList.length; i+=2)
             {
+                console.log("emit", chatList[i]);
                 socket.emit('message', {user: chatList[i], text: chatList[i+1]});
             }
         }
@@ -182,13 +188,15 @@ async function connectToRoom(socket, name, room)
 
 async function updateUserMessages(srcUsername, roomName)
 {
-    const srcDoc = await user.findOne({ email: srcUsername });
+    const srcDoc = await user.findOne({ email: srcUsername }, (err) => { if(err) throw err });
 
     var twoUsers = roomName.split(' ');
     var destUsername = ((twoUsers[0] === srcUsername) ? twoUsers[1] : twoUsers[0]);
 
-    const dstDoc = await user.findOne({ email: destUsername });
+    const dstDoc = await user.findOne({ email: destUsername }, (err) => { if(err) throw err });
     var hasEntry;
+
+    if(!srcDoc || !dstDoc) return;
 
     if(!srcDoc["messagesList"])
     {
@@ -237,18 +245,20 @@ async function updateRoomHistory(srcUsername, roomName, message)
     console.log(doc["messageHistory"]);
 
     var roomHistory = doc.messageHistory.get(roomName);
+    console.log("Before", roomHistory);
 
     if(!roomHistory) doc.messageHistory.set(roomName, [srcUsername, message]);
     else
     {
         roomHistory.push(srcUsername);
         roomHistory.push(message);
+        console.log("After", roomHistory);
         doc.messageHistory.set(roomName, roomHistory);
     }
 
     console.log("Doc", doc);
 
-    await doc.save((err) => { if(err) throw err });
+    await doc.save();
 }
 
 

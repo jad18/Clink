@@ -10,7 +10,7 @@ const MessageSchema = new mongoose.Schema(
         messageHistory: {
             type: Map,
             of: [String],
-            required: true
+            //required: true
         }
     },
     {strict: false}

@@ -50,7 +50,7 @@ At this point, everything done here should not have to be done again.
 To start up the program, first go to the 'api' folder and run the
 following command:
 
-  npm run devStart
+  node server.js
 
 This will start up the back-end server on port 3000. Next, navigate
 back to the main folder, and then go into the 'clink' folder and

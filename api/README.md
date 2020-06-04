@@ -8,6 +8,7 @@ npm i bcrypt
 npm i passport passport-local  
 npm i express-session express-flash  
 npm i method-override  
-npm install --save cors socket.io  
+npm install --save cors socket.io
+
 To launch development mode server:  
 npm run devStart  

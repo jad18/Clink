@@ -11,8 +11,6 @@ const flash    = require('connect-flash');
 const user = require('./models/User')
 
 const msgHistory = require('./models/MessageHistory');
-////^^^^^^^^^^^^^^^^^^^^^^^^^^ new change here!
-///////////////////////////////////////////////
 
 const methodOverride = require('method-override');
 const http = require('http');
@@ -26,9 +24,7 @@ app.use(cors());
 const PORT = 5000;
 var bodyParser = require("body-parser");
 
-// mongodb connection string, this is differnet for different people so will not work on your computer 
-//const url= 'mongodb+srv://rohanbattula:rohan12345@clinkdb-9xql0.mongodb.net/user-list?retryWrites=true&w=majority'
-
+// mongodb connection string
 const url = "mongodb+srv://rohanbattula:rohan12345@clinkdb-9xql0.mongodb.net/official?retryWrites=true&w=majority"
 
 

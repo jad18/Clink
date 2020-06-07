@@ -76,7 +76,16 @@ module.exports = function (app, passport, mongooseModel) {
 
       var request = req.body;
       var ratings = [];
-      // probably have to do some handling if user is null
+      
+      if(!user)
+      {
+        res.json(null);
+        return;
+      }
+
+      //reset once they have seen most users
+      if(user.matchHistory.length > user.candidates.length)
+        user.matchHistory = [];
 
       // assigning a rating to each username
       for (var j = 0; j < userCollection.length; j++) {

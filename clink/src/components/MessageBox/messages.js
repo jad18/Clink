@@ -62,7 +62,7 @@ let socket;
 	    <h1>Messages</h1>
 	    <div className="outerContainer">
 	    <div className="container">
-	    <ChatBar room={room} />
+	    <ChatBar room={getOtherUsername(room)} />
 	    <Text messages={messages} name={name} />
 	    <Input message={message} setMessage={setMessage} sendMessage={sendMessage} />
 	    </div>
@@ -77,6 +77,16 @@ let socket;
       <br/><br/>
 	    </div>
     );
+}
+
+function getOtherUsername(room)
+{
+  var namePair = room.split(' ');
+  if(namePair.length !== 2) return room;
+  var otherUsername;
+  if(namePair[0] === sessionStorage.getItem("username")) otherUsername = namePair[1];
+  else otherUsername = namePair[0];
+  return otherUsername;
 }
 
 export default MessagesPage;

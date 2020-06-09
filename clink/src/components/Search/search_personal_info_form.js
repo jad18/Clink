@@ -51,7 +51,7 @@ class SearchPersonalInfoForm extends React.Component
     displayChanges() {
         if (this.state.hasChanges)
           return <p>Don't forget to save your changes below:</p>;
-        else return <p>Your profile is up-to-date.</p>;
+        else return <p>Your request is up-to-date.</p>;
     }
 
     listingChange()
